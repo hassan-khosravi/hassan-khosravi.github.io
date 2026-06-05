@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hassan Khosravi — Teaching</title>
+<style>
+:root {
+  --sidebar-w: 240px;
+  --accent: #5b50d6;
+  --accent-light: #eeecfb;
+  --text: #1a1a2e;
+  --muted: #64748b;
+  --border: #e8e8f0;
+  --bg: #f5f5fa;
+  --card: #ffffff;
+  --sidebar-bg: #ffffff;
+  --radius: 12px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); font-size: 15px; line-height: 1.6; }
+
+.layout { display: flex; min-height: 100vh; }
+.sidebar { width: var(--sidebar-w); background: var(--sidebar-bg); border-right: 1px solid var(--border); position: fixed; top: 0; left: 0; bottom: 0; overflow-y: auto; z-index: 200; display: flex; flex-direction: column; padding: 28px 20px 24px; transition: transform 0.25s ease; }
+.main { margin-left: var(--sidebar-w); flex: 1; min-width: 0; padding: 0 0 60px; }
+
+.sidebar-avatar-wrap { display: flex; justify-content: center; margin-bottom: 12px; }
+.sidebar-avatar { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 3px solid var(--border); display: flex; flex-direction: column; }
+.sidebar-avatar-fb { width: 150px; height: 150px; border-radius: 50%; background: linear-gradient(135deg,#5b50d6,#818cf8); display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 700; color: #fff; }
+.sidebar-name { text-align: center; font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.sidebar-role { text-align: center; font-size: 12px; color: var(--muted); margin-bottom: 24px; line-height: 1.4; }
+.sidebar-nav { list-style: none; margin-bottom: 28px; }
+.sidebar-nav li { margin-bottom: 2px; }
+.sidebar-nav a { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 8px; font-size: 14px; color: var(--muted); text-decoration: none; transition: background 0.15s, color 0.15s; }
+.sidebar-nav a:hover { background: var(--accent-light); color: var(--accent); }
+.sidebar-nav a.active { background: var(--accent-light); color: var(--accent); font-weight: 600; }
+.nav-icon { font-size: 16px; width: 20px; text-align: center; }
+.sidebar-divider { height: 1px; background: var(--border); margin-bottom: 20px; }
+.sidebar-contact { margin-bottom: 20px; }
+.contact-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); margin-bottom: 8px; text-decoration: none; }
+.contact-item:hover { color: var(--accent); }
+.contact-icon { font-size: 14px; width: 16px; }
+.sidebar-socials { display: flex; gap: 8px; justify-content: center; }
+.social-icon { width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; text-decoration: none; color: var(--muted); font-size: 14px; font-weight: 700; transition: background 0.15s, color 0.15s, border-color 0.15s; }
+.social-icon:hover { background: var(--accent-light); color: var(--accent); border-color: var(--accent); }
+
+.topbar { display: none; position: fixed; top: 0; left: 0; right: 0; height: 54px; background: var(--sidebar-bg); border-bottom: 1px solid var(--border); z-index: 300; align-items: center; justify-content: space-between; padding: 0 16px; }
+.topbar-name { font-size: 15px; font-weight: 700; color: var(--text); }
+.hamburger { background: none; border: none; cursor: pointer; padding: 6px; border-radius: 8px; }
+.hamburger:hover { background: var(--accent-light); }
+.hamburger span { display: block; width: 22px; height: 2px; background: var(--text); margin: 4px 0; border-radius: 2px; }
+.sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.35); z-index: 199; }
+
+/* HERO */
+.page-hero { position: relative; width: 100%; height: 280px; overflow: hidden; }
+.page-hero img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; display: block; }
+.page-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to right, rgba(15,23,42,0.7) 0%, rgba(15,23,42,0.2) 100%); display: flex; align-items: flex-end; padding: 32px 44px; }
+.page-hero h1 { font-size: 36px; font-weight: 800; color: #fff; letter-spacing: -0.02em; }
+
+/* CONTENT */
+.page-content { padding: 36px 44px; }
+
+/* PHILOSOPHY */
+.phi-box { background: transparent; border: none; padding: 0 0 36px 0; margin-bottom: 0; }
+.phi-box p { font-size: 17px; color: #334155; line-height: 1.9; margin-bottom: 16px; text-align: justify; }
+
+/* METRICS */
+.metrics-row { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 36px; justify-content: center; }
+.metric-pill {
+  background: #fff; border: 1px solid #e2e8f0; border-radius: 18px;
+  padding: 20px 24px; display: flex; align-items: center; gap: 16px;
+  box-shadow: 0 4px 16px rgba(15,23,42,0.06), 0 0 0 1px rgba(255,255,255,0.8) inset;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative; overflow: hidden;
+}
+.metric-pill::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(circle at 85% 10%, rgba(91,80,214,0.10) 0, transparent 45%),
+    radial-gradient(circle at 10% 90%, rgba(91,80,214,0.07) 0, transparent 35%);
+}
+.metric-pill:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(91,80,214,0.14); }
+.metric-icon-wrap { width: 48px; height: 48px; border-radius: 14px; background: var(--accent-light); display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative; z-index: 1; }
+.metric-icon-wrap svg { width: 24px; height: 24px; stroke: var(--accent); }
+.metric-val { font-size: 24px; font-weight: 800; color: var(--accent); letter-spacing: -0.02em; position: relative; z-index: 1; }
+.metric-lbl { font-size: 12px; color: var(--muted); position: relative; z-index: 1; }
+
+/* SECTION */
+.col-head { font-size: 20px; font-weight: 700; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 2px solid var(--accent); display: inline-block; }
+.inst-label { font-size: 12px; color: var(--muted); margin-bottom: 16px; }
+
+/* COURSES */
+.courses-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-bottom: 36px; padding: 0 32px; }
+.course-card {
+  --s-theme: #5b50d6; --s-glow: rgba(91,80,214,0.13);
+  position: relative; overflow: hidden;
+  background: #fff; border: 1px solid #e2e8f0; border-radius: 18px;
+  display: flex; flex-direction: column;
+  box-shadow: 0 4px 20px rgba(15,23,42,0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.course-card:hover { transform: translateY(-3px); box-shadow: 0 14px 36px rgba(15,23,42,0.10); }
+
+.course-img { width: 100%; height: auto; object-fit: contain; display: block; border-radius: 18px 18px 0 0; background: #f8fafc; }
+.course-body { padding: 20px 22px 22px; display: flex; flex-direction: column; gap: 10px; flex: 1; position: relative; z-index: 2; background: #fff; }
+.course-card.uq  { --s-theme: #5b50d6; --s-glow: rgba(91,80,214,0.13); }
+.course-card.ubc { --s-theme: #0369a1; --s-glow: rgba(3,105,161,0.13); }
+.course-card.sfu { --s-theme: #b45309; --s-glow: rgba(180,83,9,0.13); }
+.course-code {
+  display: inline-block;
+  background: var(--s-theme);
+  color: #fff;
+  font-size: 12px; font-weight: 700;
+  padding: 5px 14px;
+  border-radius: 20px;
+  letter-spacing: 0.02em;
+  width: fit-content;
+}
+.course-title-line {
+  width: 36px; height: 3px;
+  background: var(--s-theme);
+  border-radius: 2px;
+  margin: 8px 0 4px 0;
+}
+.course-name {
+  font-size: 24px; font-weight: 800;
+  color: #0f172a;
+  line-height: 1.2;
+  margin: 4px 0 0 0;
+}
+.course-desc { font-size: 15px; color: #475569; line-height: 1.75; position: relative; z-index: 2; margin-top: 2px; }
+.course-tags { display: flex; gap: 6px; flex-wrap: wrap; position: relative; z-index: 2; margin-top: auto; }
+.course-tag {
+  font-size: 13px; font-weight: 600;
+  padding: 7px 16px;
+  border-radius: 20px;
+  background: #eef6f6;
+  color: #0d7c7c;
+  border: 1px solid #c8e6e6;
+  display: inline-flex; align-items: center; gap: 7px;
+}
+
+/* APPROACH */
+.approach-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; margin-bottom: 36px; }
+.approach-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; border-left-width: 4px; border-left-style: solid; }
+.approach-card.a1 { border-left-color: #5b50d6; }
+.approach-card.a2 { border-left-color: #10b981; }
+.approach-card.a3 { border-left-color: #f59e0b; }
+.approach-card.a4 { border-left-color: #ef4444; }
+.approach-title { font-size: 15px; font-weight: 700; margin-bottom: 7px; }
+.approach-desc { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+/* FELLOWSHIP */
+.fellowship-box { background: var(--accent-light); border: 1px solid #c7c0f5; border-radius: var(--radius); padding: 20px 24px; margin-bottom: 36px; display: flex; gap: 16px; align-items: flex-start; }
+.fellowship-title { font-size: 15px; font-weight: 700; color: #3730a3; margin-bottom: 4px; }
+.fellowship-desc { font-size: 13px; color: #475569; line-height: 1.7; }
+
+@media (max-width: 768px) {
+  .topbar { display: flex; }
+  .sidebar { transform: translateX(-100%); box-shadow: 4px 0 20px rgba(0,0,0,.1); }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-overlay.open { display: block; }
+  .main { margin-left: 0; }
+  .page-hero { height: 200px; margin-top: 54px; }
+  .page-hero-overlay { padding: 20px; }
+  .page-hero h1 { font-size: 26px; }
+  .page-content { padding: 24px 20px; }
+  .metrics-row { flex-direction: column; }
+}
+
+    .sidebar-profile-links { display: flex; flex-direction: column; gap: 6px; padding: 0 8px; }
+    .sidebar-plink {
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 14px; border-radius: 10px;
+      background: var(--bg); border: 1px solid var(--border);
+      font-size: 13px; font-weight: 500; color: var(--text);
+      text-decoration: none;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .sidebar-plink:hover { background: #e8edf5; border-color: var(--accent); color: var(--accent); }
+    .sidebar-plink svg { flex-shrink: 0; opacity: 0.7; }
+
+
+/* Level-based tag colors */
+.course-code.ug, .course-tag.ug { background: #1d4ed8; color: #fff; border-color: #1d4ed8; }
+.course-tag.ug { background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
+
+.course-code.pg, .course-tag.pg { background: #0f766e; color: #fff; border-color: #0f766e; }
+.course-tag.pg { background: #f0fdfb; color: #0f766e; border-color: #99f6e4; }
+
+.course-code.pd, .course-tag.pd { background: #7c3aed; color: #fff; border-color: #7c3aed; }
+.course-tag.pd { background: #f5f3ff; color: #7c3aed; border-color: #ddd6fe; }
+
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="topbar-name">Hassan Khosravi</span>
+  <button class="hamburger" onclick="toggleSidebar()" aria-label="Menu"><span></span><span></span><span></span></button>
+</div>
+<div class="sidebar-overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-avatar-wrap">
+      <img class="sidebar-avatar" src="assets/avatar.jpg" alt="Hassan Khosravi"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="sidebar-avatar-fb" style="display:none">HK</div>
+    </div>
+    <div class="sidebar-name">Hassan Khosravi</div>
+    <div class="sidebar-role">Associate Professor<br>AI &amp; Education · UQ</div>
+    <ul class="sidebar-nav">
+      <li><a href="index.html"><span class="nav-icon">🏠</span> Overview</a></li>
+      <li><a href="research.html"><span class="nav-icon">💡</span> Research</a></li>
+      <li><a href="teaching.html" class="active"><span class="nav-icon">🎓</span> Teaching</a></li>
+      <li><a href="publications.html"><span class="nav-icon">📚</span> Publications</a></li>
+      <li><a href="media.html"><span class="nav-icon">▶️</span> Media</a></li>
+      <li><a href="supervision.html"><span class="nav-icon">👥</span> Supervision</a></li>
+    </ul>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-profile-links">
+      <a href="mailto:h.khosravi@uq.edu.au" class="sidebar-plink">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
+        Email
+      </a>
+      <a href="https://researchers.uq.edu.au/researcher/15849" target="_blank" class="sidebar-plink">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        UQ Profile
+      </a>
+      <a href="https://au.linkedin.com/in/hassan-khosravi" target="_blank" class="sidebar-plink">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+      <a href="https://scholar.google.ca/citations?user=0U7jTbYAAAAJ&hl=en" target="_blank" class="sidebar-plink">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        Scholar
+      </a>
+      <a href="https://orcid.org/0000-0001-8664-6117" target="_blank" class="sidebar-plink">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zm-1.76 4.8c.693 0 1.254.56 1.254 1.254 0 .692-.561 1.253-1.254 1.253-.693 0-1.254-.561-1.254-1.253 0-.694.561-1.254 1.254-1.254zM9.6 9.12h1.44v7.68H9.6V9.12zm2.88 0h3.84c2.016 0 3.36 1.44 3.36 3.84 0 2.4-1.344 3.84-3.36 3.84H12.48V9.12zm1.44 1.44v5.04h2.4c1.2 0 1.92-.768 1.92-2.52 0-1.752-.72-2.52-1.92-2.52h-2.4z"/></svg>
+        ORCID
+      </a>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <!-- HERO IMAGE -->
+    <div class="page-hero">
+      <img src="Teaching/lecture.jpg" alt="Teaching">
+    </div>
+
+    <div class="page-content">
+
+      <!-- METRICS -->
+      <div class="metrics-row">
+        <div class="metric-pill"><div class="metric-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div><div class="metric-val">10,000+</div><div class="metric-lbl">Students taught</div></div></div>
+        <div class="metric-pill"><div class="metric-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/><path d="M16 3.5C17.5 4.5 18 6 17.5 7.5"/><path d="M18 11l3 3-3 3"/></svg></div><div><div class="metric-val">1,500+</div><div class="metric-lbl">Teaching staff mentored</div></div></div>
+        <div class="metric-pill"><div class="metric-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="13" y2="13"/></svg></div><div><div class="metric-val">40+</div><div class="metric-lbl">Course offerings</div></div></div>
+        <div class="metric-pill"><div class="metric-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div><div><div class="metric-val">10</div><div class="metric-lbl">Distinct courses</div></div></div>
+      </div>
+
+      <!-- PHILOSOPHY -->
+      <div class="phi-box">
+        <p>Research achievements and breakthroughs are critical to the growth and reputation of universities; however, the very core of any post-secondary institute is its students and facilitating their learning. I strongly believe in the importance of excellent teaching and have dedicated much of my time during the last decade towards this goal.</p>
+        <p style="margin-top:14px"><strong>Teaching Philosophy:</strong> Reflecting on the great teachers who have made a lasting impact on my life, I see that they all share similar qualities. I strive to incorporate these qualities into my teaching to enable my students to (1) become active learners, (2) develop their own vision, reasoning, and practical skills, (3) prepare for future employment, (4) study in a social, student-centred learning environment, (5) develop an appreciation for inquiry, investigation, innovation and research-based activities, and finally (6) become team players. As a Senior Lecturer in ITaLI, I now have the privilege of empowering other teaching staff with some of these qualities. The students that I have been interacting with for the last ten years are diverse in their cultures and ethnicity, their experiences and many other dimensions, which shape their personality and how they best learn. My office and classroom are safe spaces, in which I promote inclusion and diversity. My aim is to prepare every student for successfully pursuing their career goals and to create a positive environment in which everyone accepts and embraces diversity and the opportunities that come with it.</p>
+        <p style="margin-top:14px">Being an educator is about learning every day, and a decade of teaching and learning has taught me that beneath the lofty heights of the philosophy of teaching, a successful educator is one who truly cares about the future of students and their success, and that requires more than mastery of the material. Sometimes it requires a word of encouragement, aimed at students with low self-esteem, and sometimes it involves counselling them on their personal or career goals. It includes helping them develop their own vision, reasoning, and practical skills and an appreciation for inquiry, investigation, innovation and research-based activities. It also includes taking the time to listen to those who are going through a difficult time, and of course, it requires writing letters of recommendation and assisting them in landing their dream job. Beyond all, being a good educator includes inspiring your students to be better human beings and to live up to their true potentials.</p>
+      </div>
+      </div>
+
+      
+      <div class="courses-grid">
+        <div class="course-card uq">
+        <img class="course-img" src="Teaching/INFS1200_introduction_to_information_systems.png" alt="INFS1200">
+          <div class="course-body">
+          <div class="course-code ug">INFS1200</div>
+          <div class="course-name">Introduction to Information Systems</div>
+          <div class="course-title-line"></div>
+            <div class="course-desc">Foundation course covering information systems analysis and design, data modelling, relational database principles, SQL querying, and building small-scale database applications using MySQL.</div>
+            <div class="course-tags"><span class="course-tag ug"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg>Undergraduate</span></div>
+          </div>
+        </div>
+        <div class="course-card uq">
+        <img class="course-img" src="Teaching/BSAN7206_business_data_management.png" alt="BSAN7206">
+          <div class="course-body">
+          <div class="course-code pg">BSAN7206</div>
+          <div class="course-name">Business Data Management</div>
+          <div class="course-title-line"></div>
+            <div class="course-desc">Covers transactional and analytical information systems including relational data modelling, SQL, data warehousing, dimensional modelling, ETL processes, and big data technologies such as NoSQL and Apache Spark.</div>
+            <div class="course-tags"><span class="course-tag pg"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3L1 9l4 2.18V15h2v-2.82l1 .55V15c0 1.66 1.79 3 4 3s4-1.34 4-3v-2.27l4-2.18L12 3zm4.18 6L12 11.72 7.82 9 12 6.28 16.18 9zM16 15c0 .55-1.79 1-4 1s-4-.45-4-1v-1.46l4 2.18 4-2.18V15z"/></svg>Postgraduate</span></div>
+          </div>
+        </div>
+        <div class="course-card uq">
+        <img class="course-img" src="Teaching/CoordinatingUQ_teaching_foundations.png" alt="Coordinating@UQ">
+          <div class="course-body">
+          <div class="course-code pd">Coordinating@UQ</div>
+          <div class="course-name">Teaching Coordination</div>
+          <div class="course-title-line"></div>
+            <div class="course-desc">Professional learning program for academic staff new to course coordination. Covers curriculum design, pedagogy, assessment, and student engagement — leading to the Teaching Foundations Certificate and Associate Fellowship of the Higher Education Academy (AFHEA).</div>
+            <div class="course-tags"><span class="course-tag pd"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20 6h-2.18c.07-.44.18-.88.18-1.36C18 2.06 15.96 0 13.36 0c-1.46 0-2.75.66-3.64 1.7L12 4 14.28 1.7C14.82 1.27 15.56 1 16.36 1c1.93 0 3.5 1.57 3.5 3.5 0 1.02-.43 1.93-1.12 2.57L17.58 8H20c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V10c0-1.1.9-2 2-2h3.5L6.26 6.93C5.57 6.29 5.14 5.38 5.14 4.36 5.14 2.43 6.71.86 8.64.86c.8 0 1.54.27 2.08.7L13 4l-2.28-2.3C10.18 1.27 9.44 1 8.64 1c-1.93 0-3.5 1.57-3.5 3.5 0 1.02.43 1.93 1.12 2.57L7.42 8H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>Professional Development</span></div>
+          </div>
+        </div>
+        <div class="course-card">
+          <img class="course-img" src="Teaching/Storytelling_data.png" alt="Storytelling with Data">
+          <div class="course-body">
+          <div class="course-code pd">Storytelling with Data</div>
+          <div class="course-name">Storytelling with Data</div>
+          <div class="course-title-line"></div>
+            <div class="course-desc">A professional development course on communicating insights through data visualisation and narrative. Participants learn to transform complex data into clear, compelling stories for diverse audiences using evidence-based design principles.</div>
+            <div class="course-tags"><span class="course-tag pd"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20 6h-2.18c.07-.44.18-.88.18-1.36C18 2.06 15.96 0 13.36 0c-1.46 0-2.75.66-3.64 1.7L12 4 14.28 1.7C14.82 1.27 15.56 1 16.36 1c1.93 0 3.5 1.57 3.5 3.5 0 1.02-.43 1.93-1.12 2.57L17.58 8H20c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V10c0-1.1.9-2 2-2h3.5L6.26 6.93C5.57 6.29 5.14 5.38 5.14 4.36 5.14 2.43 6.71.86 8.64.86c.8 0 1.54.27 2.08.7L13 4l-2.28-2.3C10.18 1.27 9.44 1 8.64 1c-1.93 0-3.5 1.57-3.5 3.5 0 1.02.43 1.93 1.12 2.57L7.42 8H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>Professional Development</span></div>
+
+        </div>
+        </div>
+<div class="course-card uq">
+        <img class="course-img" src="Teaching/TutorsUQ_teaching_foundations.png" alt="Tutors@UQ">
+          <div class="course-body">
+          <div class="course-code pd">Tutors@UQ</div>
+          <div class="course-name">Preparing First-Time Tutors</div>
+          <div class="course-title-line"></div>
+            <div class="course-desc">Professional learning program designed for first-time tutors and casual academic staff. Builds foundational teaching skills including facilitating tutorials, supporting student learning, giving feedback, and creating inclusive learning environments.</div>
+            <div class="course-tags"><span class="course-tag pd"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20 6h-2.18c.07-.44.18-.88.18-1.36C18 2.06 15.96 0 13.36 0c-1.46 0-2.75.66-3.64 1.7L12 4 14.28 1.7C14.82 1.27 15.56 1 16.36 1c1.93 0 3.5 1.57 3.5 3.5 0 1.02-.43 1.93-1.12 2.57L17.58 8H20c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V10c0-1.1.9-2 2-2h3.5L6.26 6.93C5.57 6.29 5.14 5.38 5.14 4.36 5.14 2.43 6.71.86 8.64.86c.8 0 1.54.27 2.08.7L13 4l-2.28-2.3C10.18 1.27 9.44 1 8.64 1c-1.93 0-3.5 1.57-3.5 3.5 0 1.02.43 1.93 1.12 2.57L7.42 8H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>Professional Development</span></div>
+          </div>
+        </div>
+<div class="course-card ubc">
+            <img class="course-img" src="Teaching/CPSC101_connecting_with_computer_science.png" alt="CPSC 101">
+          <div class="course-body">
+          <div class="course-code ug">CPSC 101</div>
+          <div class="course-name">Connecting with Computer Science</div>
+          <div class="course-title-line"></div>
+            <div class="course-desc">Introductory course for non-majors exploring the social and technical dimensions of computing in everyday life.</div>
+            <div class="course-tags"><span class="course-tag ug"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg>Undergraduate</span></div>
+
+        </div>
+        </div>
+<div class="course-card ubc">
+            <img class="course-img" src="Teaching/CPSC221_basic_algorithms_and_data_structures.png" alt="CPSC 221">
+          <div class="course-body">
+          <div class="course-code ug">CPSC 221</div>
+          <div class="course-name">Basic Algorithms and Data Structures</div>
+          <div class="course-title-line"></div>
+            <div class="course-desc">Core course covering fundamental data structures, algorithm design, and complexity analysis.</div>
+            <div class="course-tags"><span class="course-tag ug"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg>Undergraduate</span></div>
+
+        </div>
+        </div>
+<div class="course-card ubc">
+            <img class="course-img" src="Teaching/CPSC259_data_structures_and_algorithms_for_ECE.png" alt="CPSC 259">
+          <div class="course-body">
+          <div class="course-code ug">CPSC 259</div>
+          <div class="course-name">Data Structures and Algorithms for ECE</div>
+          <div class="course-title-line"></div>
+            <div class="course-desc">Algorithms and data structures tailored for electrical and computer engineering students, with applied programming projects.</div>
+            <div class="course-tags"><span class="course-tag ug"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg>Undergraduate</span></div>
+
+        </div>
+        </div>
+<div class="course-card ubc">
+            <img class="course-img" src="Teaching/CPSC304_introduction_to_relational_databases.png" alt="CPSC 304">
+          <div class="course-body">
+          <div class="course-code ug">CPSC 304</div>
+          <div class="course-name">Introduction to Relational Databases</div>
+          <div class="course-title-line"></div>
+            <div class="course-desc">Relational database design, SQL, query optimisation, and the principles of data management at scale.</div>
+            <div class="course-tags"><span class="course-tag ug"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg>Undergraduate</span></div>
+
+        </div>
+        </div>
+<div class="course-card ubc">
+            <img class="course-img" src="Teaching/APSC160_introduction_to_computation_in_engineering.png" alt="APSC 160">
+          <div class="course-body">
+          <div class="course-code ug">APSC 160</div>
+          <div class="course-name">Introduction to Computation in Engineering</div>
+          <div class="course-title-line"></div>
+            <div class="course-desc">Foundational programming for engineering students, covering algorithms, problem solving, and computation fundamentals.</div>
+            <div class="course-tags"><span class="course-tag ug"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg>Undergraduate</span></div>
+
+        </div>
+        </div>
+<div class="course-card sfu">
+            <img class="course-img" src="Teaching/CMPT120_introduction_to_computing_science.png" alt="CMPT 120">
+          <div class="course-body">
+          <div class="course-code ug">CMPT 120</div>
+          <div class="course-name">Introduction to Computing Science</div>
+          <div class="course-title-line"></div>
+            <div class="course-desc">First course in computing science, introducing programming concepts, problem solving, and algorithmic thinking.</div>
+            <div class="course-tags"><span class="course-tag ug"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg>Undergraduate</span></div>
+
+        </div>
+        </div>
+<div class="course-card sfu">
+            <img class="course-img" src="Teaching/CMPT310_artificial_intelligence_survey.png" alt="CMPT 310">
+          <div class="course-body">
+          <div class="course-code ug">CMPT 310</div>
+          <div class="course-name">Artificial Intelligence Survey</div>
+          <div class="course-title-line"></div>
+            <div class="course-desc">Survey of AI techniques including search, knowledge representation, probabilistic reasoning, learning, and planning.</div>
+            <div class="course-tags"><span class="course-tag ug"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg>Undergraduate</span></div>
+
+        </div>
+        </div>
+<div class="course-card sfu">
+            <img class="course-img" src="Teaching/CMPT354_database_systems.png" alt="CMPT 354">
+          <div class="course-body">
+          <div class="course-code ug">CMPT 354</div>
+          <div class="course-name">Database Systems</div>
+          <div class="course-title-line"></div>
+            <div class="course-desc">Theory and practice of relational databases, from data modelling and SQL through to query optimisation and transactions.</div>
+            <div class="course-tags"><span class="course-tag ug"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg>Undergraduate</span></div>
+
+        </div>
+        </div>
+                    </div><!-- /courses-grid -->
+
+
+    </div><!-- /page-content -->
+  </main>
+</div>
+
+<script>
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('overlay').classList.toggle('open')}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('overlay').classList.remove('open')}
+</script>
+</body>
+</html>

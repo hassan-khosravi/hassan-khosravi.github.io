@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hassan Khosravi — Supervision</title>
+<style>
+:root{--sidebar-w:240px;--accent:#5b50d6;--accent-light:#eeecfb;--text:#1a1a2e;--muted:#64748b;--subtle:#94a3b8;--border:#e8e8f0;--bg:#f5f5fa;--card:#ffffff;--sidebar-bg:#ffffff;--radius:12px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.6}
+.layout{display:flex;min-height:100vh}.sidebar{width:var(--sidebar-w);background:var(--sidebar-bg);border-right:1px solid var(--border);position:fixed;top:0;left:0;bottom:0;overflow-y:auto;z-index:200;display:flex;flex-direction:column;padding:28px 20px 24px;transition:transform .25s ease}.main{margin-left:var(--sidebar-w);width:calc(100vw - var(--sidebar-w));min-width:0;padding:40px 44px;overflow-x:hidden;box-sizing:border-box;}
+.sidebar-avatar-wrap{display:flex;justify-content:center;margin-bottom:12px}.sidebar-avatar{width:150px;height:150px;border-radius:50%;object-fit:cover;border:3px solid var(--border);display:block}.sidebar-avatar-fb{width:150px;height:150px;border-radius:50%;background:linear-gradient(135deg,#5b50d6,#818cf8);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;color:#fff}
+.sidebar-name{text-align:center;font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px}.sidebar-role{text-align:center;font-size:12px;color:var(--muted);margin-bottom:24px;line-height:1.4}
+.sidebar-nav{list-style:none;margin-bottom:28px}.sidebar-nav li{margin-bottom:2px}.sidebar-nav a{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:14px;color:var(--muted);text-decoration:none;transition:background .15s,color .15s}.sidebar-nav a:hover{background:var(--accent-light);color:var(--accent)}.sidebar-nav a.active{background:var(--accent-light);color:var(--accent);font-weight:600}.nav-icon{font-size:16px;width:20px;text-align:center}
+.sidebar-divider{height:1px;background:var(--border);margin-bottom:20px}.sidebar-contact{margin-bottom:20px}.contact-item{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);margin-bottom:8px;text-decoration:none}.contact-item:hover{color:var(--accent)}.contact-icon{font-size:14px;width:16px}
+.sidebar-socials{display:flex;gap:8px;justify-content:center}.social-icon{width:32px;height:32px;border-radius:8px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;text-decoration:none;color:var(--muted);font-size:14px;font-weight:700;transition:background .15s,color .15s,border-color .15s}.social-icon:hover{background:var(--accent-light);color:var(--accent);border-color:var(--accent)}
+.topbar{display:none;position:fixed;top:0;left:0;right:0;height:54px;background:var(--sidebar-bg);border-bottom:1px solid var(--border);z-index:300;align-items:center;justify-content:space-between;padding:0 16px}.topbar-name{font-size:15px;font-weight:700;color:var(--text)}.hamburger{background:none;border:none;cursor:pointer;padding:6px;border-radius:8px}.hamburger:hover{background:var(--accent-light)}.hamburger span{display:block;width:22px;height:2px;background:var(--text);margin:4px 0;border-radius:2px}.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:199}
+.page-header{margin-bottom:36px}.page-header h1{font-size:28px;font-weight:800;letter-spacing:-.02em;margin-bottom:6px}.page-header p{font-size:14px;color:var(--muted)}
+.col-head{font-size:20px;font-weight:700;margin-bottom:20px;padding-bottom:10px;border-bottom:2px solid var(--accent);display:inline-block}
+.students-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;margin-bottom:48px;max-width:100%;box-sizing:border-box;}
+.student-card{
+  --s-theme:#5b50d6;--s-light:#eeecfb;--s-glow:rgba(91,80,214,0.13);
+  position:relative;overflow:hidden;
+  background:#fff;border:1px solid #e2e8f0;border-radius:18px;
+  padding:24px;display:flex;flex-direction:column;gap:10px;
+  box-shadow:0 8px 24px rgba(15,23,42,0.06),0 0 0 1px rgba(255,255,255,0.75) inset;
+  transition:transform .2s ease,box-shadow .2s ease;
+}
+.student-card:hover{transform:translateY(-3px);box-shadow:0 14px 36px rgba(15,23,42,0.10),0 0 0 1px rgba(255,255,255,0.8) inset;}
+.student-card::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 88% 8%,var(--s-glow) 0,transparent 38%),radial-gradient(circle at 8% 100%,var(--s-glow) 0,transparent 28%);opacity:.5;pointer-events:none;}
+.grad-card{--s-theme:#5b50d6;--s-light:#eeecfb;--s-glow:rgba(91,80,214,0.13);}
+.current-card{--s-theme:#0369a1;--s-light:#e0f2fe;--s-glow:rgba(3,105,161,0.13);}
+.highlight-card{--s-glow:rgba(3,105,161,0.18);}
+.student-card-top{display:flex;align-items:center;gap:12px;position:relative;z-index:2;}
+.student-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--s-light),#c4bff5);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:var(--s-theme);flex-shrink:0;}
+.current-card .student-avatar{background:linear-gradient(135deg,#e0f2fe,#bae6fd);color:#0369a1;}
+.student-name{font-size:15px;font-weight:800;color:#0f172a;line-height:1.3;}
+.student-badge{font-size:11px;padding:3px 10px;border-radius:999px;font-weight:700;display:inline-block;margin-top:2px;}
+.badge-grad{background:#ede9fe;color:#6d28d9;}
+.badge-current{background:#e0f2fe;color:#0369a1;}
+.student-topic{font-size:13px;color:#475569;line-height:1.6;position:relative;z-index:2;}
+.career-line{font-size:13px;color:var(--s-theme);font-weight:600;line-height:1.5;position:relative;z-index:2;margin-top:2px;}
+.thesis-title{font-size:13px;font-weight:700;color:#1e293b;line-height:1.5;position:relative;z-index:2;font-style:italic;}
+.uni-badge{font-size:11px;font-weight:600;color:var(--muted);margin-top:auto;padding-top:8px;position:relative;z-index:2;}
+.prospective-banner{background:#f8f7ff;border:1px solid #e0dcfb;border-radius:12px;padding:18px 22px;margin-bottom:36px;display:flex;align-items:flex-start;justify-content:space-between;gap:24px;flex-wrap:wrap;}
+.prospective-banner p{font-size:13px;color:#475569;line-height:1.65;margin:0;flex:1;}
+.prospective-banner a{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--accent);text-decoration:none;white-space:nowrap;padding:8px 16px;border-radius:8px;background:#eeecfb;flex-shrink:0;}
+.prospective-banner a:hover{background:#ddd9f8;}
+
+.student-link{text-decoration:none;color:inherit;transition:color .15s;}
+.student-link:hover{color:var(--s-theme);}
+.badge-assoc { background: #e0f2fe; color: #0369a1; }
+.badge-current { background: #dcfce7; color: #15803d; }
+.enquiry-box{background:linear-gradient(135deg,var(--accent),#818cf8);border-radius:var(--radius);padding:32px;color:#fff;margin-bottom:40px}
+.enquiry-box h3{font-size:20px;font-weight:700;margin-bottom:10px}
+.enquiry-box p{font-size:14px;line-height:1.7;opacity:.9;margin-bottom:20px}
+.enquiry-areas{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.enquiry-area{font-size:12px;padding:4px 12px;border-radius:20px;background:rgba(255,255,255,.2);color:#fff}
+.enquiry-btn{display:inline-flex;align-items:center;gap:6px;font-size:13px;padding:9px 18px;border-radius:8px;background:#fff;color:var(--accent);text-decoration:none;font-weight:600}
+.enquiry-btn:hover{background:#f0f0ff}
+@media(max-width:768px){.topbar{display:flex}.sidebar{transform:translateX(-100%);box-shadow:4px 0 20px rgba(0,0,0,.1)}.sidebar.open{transform:translateX(0)}.sidebar-overlay.open{display:block}.main{margin-left:0;padding:80px 20px 40px}}
+
+    .sidebar-profile-links { display: flex; flex-direction: column; gap: 6px; padding: 0 8px; }
+    .sidebar-plink {
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 14px; border-radius: 10px;
+      background: var(--bg); border: 1px solid var(--border);
+      font-size: 13px; font-weight: 500; color: var(--text);
+      text-decoration: none;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .sidebar-plink:hover { background: #e8edf5; border-color: var(--accent); color: var(--accent); }
+    .sidebar-plink svg { flex-shrink: 0; opacity: 0.7; }
+
+</style>
+</head>
+<body>
+<div class="topbar"><span class="topbar-name">Hassan Khosravi</span><button class="hamburger" onclick="toggleSidebar()" aria-label="Menu"><span></span><span></span><span></span></button></div>
+<div class="sidebar-overlay" id="overlay" onclick="closeSidebar()"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-avatar-wrap">
+      <img class="sidebar-avatar" src="assets/avatar.jpg" alt="Hassan Khosravi" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="sidebar-avatar-fb" style="display:none">HK</div>
+    </div>
+    <div class="sidebar-name">Hassan Khosravi</div>
+    <div class="sidebar-role">Associate Professor<br>AI &amp; Education · UQ</div>
+    <ul class="sidebar-nav">
+      <li><a href="index.html"><span class="nav-icon">🏠</span> Overview</a></li>
+      <li><a href="research.html"><span class="nav-icon">💡</span> Research</a></li>
+      <li><a href="teaching.html"><span class="nav-icon">🎓</span> Teaching</a></li>
+      <li><a href="publications.html"><span class="nav-icon">📚</span> Publications</a></li>
+      <li><a href="media.html"><span class="nav-icon">▶️</span> Media</a></li>
+      <li><a href="supervision.html" class="active"><span class="nav-icon">👥</span> Supervision</a></li>
+    </ul>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-profile-links">
+      <a href="mailto:h.khosravi@uq.edu.au" class="sidebar-plink">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
+        Email
+      </a>
+      <a href="https://researchers.uq.edu.au/researcher/15849" target="_blank" class="sidebar-plink">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        UQ Profile
+      </a>
+      <a href="https://au.linkedin.com/in/hassan-khosravi" target="_blank" class="sidebar-plink">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+      <a href="https://scholar.google.ca/citations?user=0U7jTbYAAAAJ&hl=en" target="_blank" class="sidebar-plink">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        Scholar
+      </a>
+      <a href="https://orcid.org/0000-0001-8664-6117" target="_blank" class="sidebar-plink">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zm-1.76 4.8c.693 0 1.254.56 1.254 1.254 0 .692-.561 1.253-1.254 1.253-.693 0-1.254-.561-1.254-1.253 0-.694.561-1.254 1.254-1.254zM9.6 9.12h1.44v7.68H9.6V9.12zm2.88 0h3.84c2.016 0 3.36 1.44 3.36 3.84 0 2.4-1.344 3.84-3.36 3.84H12.48V9.12zm1.44 1.44v5.04h2.4c1.2 0 1.92-.768 1.92-2.52 0-1.752-.72-2.52-1.92-2.52h-2.4z"/></svg>
+        ORCID
+      </a>
+    </div>
+  </aside>
+  <main class="main">
+    <div class="page-header">
+      <h1>Supervision</h1>
+
+    </div>
+
+    <div class="prospective-banner">
+      <p><strong>Prospective Students</strong> &mdash; I welcome enquiries from strong candidates interested in PhD or postdoctoral research in AI and education. UQ scholarships are competitive and typically require a strong prior publication record in reputable venues. Please include a CV and brief research statement when reaching out.</p>
+      <a href="mailto:h.khosrav@uq.edu.au">✉ Get in touch</a>
+    </div>
+
+    <div class="col-head" style="margin-bottom:16px">Current Students</div>
+    <div class="students-grid" style="margin-bottom:48px">
+      <div class="student-card current-card highlight-card">
+        <div class="student-card-top">
+          <div class="student-avatar">MM</div>
+          <div>
+            <a class="student-name student-link" href="https://www.linkedin.com/in/mehrnoush-mohammadi-bb8638b1/" target="_blank">Mehrnoush Mohammadi Bolbanabad</a>
+            <span class="student-badge badge-current">PhD · Current</span>
+          </div>
+        </div>
+        <div class="thesis-title">AI-powered Actionable Insights and Interventions in Multi-Sourced Educational Data</div>
+        <div class="uni-badge">🎓 The University of Queensland</div>
+      </div>
+      <div class="student-card current-card highlight-card">
+        <div class="student-card-top">
+          <div class="student-avatar">OA</div>
+          <div>
+            <a class="student-name student-link" href="https://sa.linkedin.com/in/omar-alsaiari-7a515416a" target="_blank">Omar Alsaiari</a>
+            <span class="student-badge badge-current">PhD · Current</span>
+          </div>
+        </div>
+        <div class="thesis-title">Artificial Intelligence for Educational Feedback</div>
+        <div class="uni-badge">🎓 The University of Queensland</div>
+      </div>
+      <div class="student-card current-card highlight-card">
+        <div class="student-card-top">
+          <div class="student-avatar">KK</div>
+          <div>
+            <a class="student-name student-link" href="https://www.linkedin.com/in/karenglish2017/" target="_blank">Karen Haeng-A Kim</a>
+            <span class="student-badge badge-current">PhD · Current</span>
+          </div>
+        </div>
+        <div class="thesis-title">AI-Mediated Conversational Tool to Elicit Student Understanding of Submitted Work</div>
+        <div class="uni-badge">🎓 The University of Queensland</div>
+      </div>
+      <div class="student-card current-card highlight-card">
+        <div class="student-card-top">
+          <div class="student-avatar">MK</div>
+          <div>
+            <a class="student-name student-link" href="https://www.linkedin.com/in/martin-komitski-bb0911183/" target="_blank">Martin Komitski</a>
+            <span class="student-badge badge-current">PhD · Current</span>
+          </div>
+        </div>
+        <div class="thesis-title">Thesis title to be confirmed</div>
+        <div class="uni-badge">🎓 The University of Queensland</div>
+      </div>
+      <div class="student-card current-card highlight-card">
+        <div class="student-card-top">
+          <div class="student-avatar">XZ</div>
+          <div>
+            <span class="student-name">Xiaoyu Zhuang</span>
+            <span class="student-badge badge-current">PhD · Current</span>
+          </div>
+        </div>
+        <div class="thesis-title">Co-Constructing Knowledge through Dialogue: Students, AI, and the Future of Learning</div>
+        <div class="uni-badge">🎓 The University of Queensland</div>
+      </div>
+      <div class="student-card current-card highlight-card">
+        <div class="student-card-top">
+          <div class="student-avatar">SY</div>
+          <div>
+            <span class="student-name">Shuyue Yan</span>
+            <span class="student-badge badge-current">Masters · Current</span>
+          </div>
+        </div>
+        <div class="thesis-title">Thesis title to be confirmed</div>
+        <div class="uni-badge">🎓 The University of Queensland</div>
+      </div>
+      <div class="student-card current-card">
+        <div class="student-card-top">
+          <div class="student-avatar">BS</div>
+          <div>
+            <div class="student-name"><a href="https://research.wur.nl/en/persons/bo-sichterman" target="_blank" class="student-link">Bo Sichterman</a></div>
+            <span class="student-badge badge-current">PhD · Current</span>
+          </div>
+        </div>
+        <div class="thesis-title"><a href="https://research.wur.nl/en/projects/fostering-peer-feedback-with-generative-ai/" target="_blank" style="color:inherit;text-decoration:underline;text-decoration-color:#c4bff5;">Fostering Peer Feedback with Generative AI</a></div>
+        <div class="uni-badge">🎓 Wageningen University &amp; Research</div>
+      </div>
+    </div>
+    <div class="col-head" style="margin-bottom:16px">PhD Completions</div>
+    <div class="students-grid" style="margin-bottom:48px">
+      <div class="student-card grad-card">
+        <div class="student-card-top">
+          <div class="student-avatar">SA</div>
+          <div>
+            <a class="student-name student-link" href="https://www.linkedin.com/in/solmaz-abdi-phd-98742495/" target="_blank">Dr Solmaz Abdi</a>
+            <span class="student-badge badge-grad">PhD · Completed</span>
+          </div>
+        </div>
+        <div class="thesis-title">Utilising Recommender Systems to Enhance the Learning Experience of Students</div>
+        <div class="uni-badge">🎓 The University of Queensland</div>
+      </div>
+      <div class="student-card grad-card">
+        <div class="student-card-top">
+          <div class="student-avatar">AD</div>
+          <div>
+            <a class="student-name student-link" href="https://www.linkedin.com/in/ali-darvishi-59058357/" target="_blank">Dr Ali Darvishi</a>
+            <span class="student-badge badge-grad">PhD · Completed</span>
+          </div>
+        </div>
+        <div class="thesis-title"><a href="https://espace.library.uq.edu.au/view/UQ:40d7932" target="_blank" class="student-link">AI and Learning Analytics to Improve Peer Review and Feedback in Learnersourcing</a></div>
+        <div class="uni-badge">🎓 The University of Queensland</div>
+      </div>
+      <div class="student-card grad-card">
+        <div class="student-card-top">
+          <div class="student-avatar">SS</div>
+          <div>
+            <a class="student-name student-link" href="https://au.linkedin.com/in/shiva-leemans-shabaninejad-29b3a836" target="_blank">Dr Shiva Shabaninejad</a>
+            <span class="student-badge badge-grad">PhD · Completed</span>
+          </div>
+        </div>
+        <div class="thesis-title">Design Framework and System for Learning Process Reconstruction and Analysis</div>
+        <div class="uni-badge">🎓 The University of Queensland</div>
+      </div>
+      <div class="student-card grad-card">
+        <div class="student-card-top">
+          <div class="student-avatar">HL</div>
+          <div>
+            <a href="https://www.linkedin.com/in/hatim-lahza-0956b4167/" target="_blank" class="student-name student-link">Dr Hatim Lahza</a>
+            <span class="student-badge badge-grad">PhD · Completed</span>
+          </div>
+        </div>
+        <div class="thesis-title">Integrating Human and Machine Intelligence Towards the Development of Adaptive Learning Systems</div>
+        <div class="uni-badge">🎓 The University of Queensland</div>
+      </div>
+      <div class="student-card grad-card">
+        <div class="student-card-top">
+          <div class="student-avatar">GG</div>
+          <div>
+            <a class="student-name student-link" href="https://www.linkedin.com/in/george-gyamfi-846b6013a/" target="_blank">Dr George Gyamfi</a>
+            <span class="student-badge badge-grad">PhD · Completed</span>
+          </div>
+        </div>
+        <div class="thesis-title">Fostering Evaluative Judgement via a Crowdsourced Adaptive Learning System</div>
+        <div class="uni-badge">🎓 The University of Queensland</div>
+      </div>
+      <div class="student-card grad-card">
+        <div class="student-card-top">
+          <div class="student-avatar">LB</div>
+          <div>
+            Dr Lauren Baade
+            <span class="student-badge badge-grad">PhD · Completed</span>
+          </div>
+        </div>
+        <div class="thesis-title">The Role of Mental Imagery Vividness in Chemistry Learning</div>
+        <div class="uni-badge">🎓 The University of Queensland</div>
+      </div>
+      <div class="student-card grad-card">
+        <div class="student-card-top">
+          <div class="student-avatar">KM</div>
+          <div>
+            <a class="student-name student-link" href="https://www.linkedin.com/in/maxwellk/" target="_blank">Dr Kane Maxwell</a>
+            <span class="student-badge badge-grad">PhD · Completed</span>
+          </div>
+        </div>
+        <div class="thesis-title">Application of Machine Learning and Big Data Techniques to Mining Geology</div>
+        <div class="uni-badge">🎓 The University of Queensland</div>
+      </div>
+      <div class="student-card grad-card">
+        <div class="student-card-top">
+          <div class="student-avatar">MO</div>
+          <div>
+            <div class="student-name">Mauro Ocana</div>
+            <span class="student-badge badge-grad">PhD · Completed</span>
+          </div>
+        </div>
+        <div class="thesis-title">Motivational and Self-Regulated Learning Components in Higher Education</div>
+        <div class="uni-badge">🎓 The University of Queensland</div>
+      </div>
+
+
+
+    </div>
+    <div class="col-head" style="margin-bottom:16px">Masters</div>
+    <div class="students-grid" style="margin-bottom:48px">
+      <div class="student-card grad-card">
+        <div class="student-card-top">
+          <div class="student-avatar">BC</div>
+          <div>
+            <div class="student-name">Bruno Cheung</div>
+            <span class="student-badge badge-grad">Masters</span>
+          </div>
+        </div>
+        <div class="thesis-title">Apply Machine Learning to Predict Student's Academic Performance</div>
+        <div class="uni-badge">🎓 The University of Queensland</div>
+      </div>
+      <div class="student-card grad-card">
+        <div class="student-card-top">
+          <div class="student-avatar">YC</div>
+          <div>
+            <div class="student-name">Yan Cheng</div>
+            <span class="student-badge badge-grad">Masters</span>
+          </div>
+        </div>
+        <div class="thesis-title">Design and Enhancement of the COPUS protocol</div>
+        <div class="uni-badge">🎓 The University of Queensland</div>
+      </div>
+      <div class="student-card grad-card">
+        <div class="student-card-top">
+          <div class="student-avatar">XX</div>
+          <div>
+            <div class="student-name">Xinling Xu</div>
+            <span class="student-badge badge-grad">Masters</span>
+          </div>
+        </div>
+        <div class="thesis-title">Design and Enhancement of the COPUS protocol</div>
+        <div class="uni-badge">🎓 The University of Queensland</div>
+      </div>
+      <div class="student-card grad-card">
+        <div class="student-card-top">
+          <div class="student-avatar">HM</div>
+          <div>
+            <div class="student-name">Hemaima Moveni</div>
+            <span class="student-badge badge-grad">Masters</span>
+          </div>
+        </div>
+        <div class="thesis-title">Formal Learning Space Demand and Modelling in Higher Education</div>
+        <div class="uni-badge">🎓 The University of Queensland</div>
+      </div>
+      <div class="student-card grad-card">
+        <div class="student-card-top">
+          <div class="student-avatar">XL</div>
+          <div>
+            <div class="student-name">Xiaoyin Liu</div>
+            <span class="student-badge badge-grad">Masters</span>
+          </div>
+        </div>
+        <div class="thesis-title">Formal Learning Space Demand and Modelling in Higher Education</div>
+        <div class="uni-badge">🎓 The University of Queensland</div>
+      </div>
+      <div class="student-card grad-card">
+        <div class="student-card-top">
+          <div class="student-avatar">SL</div>
+          <div>
+            <div class="student-name">Siying Lei</div>
+            <span class="student-badge badge-grad">Masters</span>
+          </div>
+        </div>
+        <div class="thesis-title">Graph-Based Visual Analytics for Communicating Assessment Data</div>
+        <div class="uni-badge">🎓 The University of Queensland</div>
+      </div>
+      <div class="student-card grad-card">
+        <div class="student-card-top">
+          <div class="student-avatar">CF</div>
+          <div>
+            <div class="student-name">Chen Fang</div>
+            <span class="student-badge badge-grad">Masters</span>
+          </div>
+        </div>
+        <div class="thesis-title">Exploratory Analysis for Classifying Users Based on Session Types in MOOCs</div>
+        <div class="uni-badge">🎓 The University of Queensland</div>
+      </div>
+      <div class="student-card grad-card">
+        <div class="student-card-top">
+          <div class="student-avatar">BP</div>
+          <div>
+            <div class="student-name">Boyd Potts</div>
+            <span class="student-badge badge-grad">MPhil</span>
+          </div>
+        </div>
+        <div class="thesis-title">Enhancing learning outcomes using small-world properties in student social networks</div>
+        <div class="uni-badge">🎓 The University of Queensland</div>
+      </div>
+    </div>
+    <div class="col-head" style="margin-bottom:16px">Honours &amp; Undergraduate</div>
+    <div class="students-grid" style="margin-bottom:48px">
+      <div class="student-card grad-card">
+        <div class="student-card-top">
+          <div class="student-avatar">MB</div>
+          <div>
+            <div class="student-name">Mark Belonogoff</div>
+            <span class="student-badge badge-grad">Honours</span>
+          </div>
+        </div>
+        <div class="thesis-title">Reciprocal Peer Recommendation Based on Knowledge Gaps and Preferences</div>
+        <div class="uni-badge">🎓 The University of Queensland</div>
+      </div>
+      <div class="student-card grad-card">
+        <div class="student-card-top">
+          <div class="student-avatar">HY</div>
+          <div>
+            <div class="student-name">Henry Yin</div>
+            <span class="student-badge badge-grad">Honours</span>
+          </div>
+        </div>
+        <div class="thesis-title">Measuring Similarity of Educational Items Using the PeerWise Platform</div>
+        <div class="uni-badge">🎓 The University of Queensland</div>
+      </div>
+      <div class="student-card grad-card">
+        <div class="student-card-top">
+          <div class="student-avatar">HT</div>
+          <div>
+            <div class="student-name">Hirotsugu Takahashi</div>
+            <span class="student-badge badge-grad">Undergraduate</span>
+          </div>
+        </div>
+        <div class="thesis-title">Modelling learner retention on the 'Do Math Good' mathematics learning platform</div>
+        <div class="uni-badge">🎓 The University of Queensland</div>
+      </div>
+      <div class="student-card grad-card">
+        <div class="student-card-top">
+          <div class="student-avatar">NF</div>
+          <div>
+            <div class="student-name">Nicholas Folk</div>
+            <span class="student-badge badge-grad">Summer Intern</span>
+          </div>
+        </div>
+        <div class="thesis-title">Mining rules and predicting grades from a CS education dataset</div>
+        <div class="uni-badge">🎓 University of British Columbia</div>
+      </div>
+      <div class="student-card grad-card">
+        <div class="student-card-top">
+          <div class="student-avatar">BN</div>
+          <div>
+            <div class="student-name">Boshra Nabaei</div>
+            <span class="student-badge badge-grad">MPhil</span>
+          </div>
+        </div>
+        <div class="thesis-title">Behavioural authentication on smart mobile devices using probabilistic graphical models</div>
+        <div class="uni-badge">🎓 Simon Fraser University</div>
+      </div>
+    </div>
+    <div class="col-head" style="margin-bottom:16px">Research Assistants &amp; Other</div>
+    <div class="students-grid" style="margin-bottom:32px">
+      <div class="student-card grad-card">
+        <div class="student-card-top">
+          <div class="student-avatar">AD</div>
+          <div>
+            <div class="student-name">Akshat Divekar</div>
+            <span class="student-badge badge-grad">Research Assistant</span>
+          </div>
+        </div>
+        <div class="thesis-title">Peer learning outside the classroom</div>
+        <div class="uni-badge">🎓 The University of Queensland</div>
+      </div>
+      <div class="student-card grad-card">
+        <div class="student-card-top">
+          <div class="student-avatar">DH</div>
+          <div>
+            <div class="student-name">Dirk Haupt</div>
+            <span class="student-badge badge-grad">Research Assistant</span>
+          </div>
+        </div>
+        <div class="thesis-title">Studying the effectiveness of screencasts in flipped lectures</div>
+        <div class="uni-badge">🎓 The University of Queensland</div>
+      </div>
+      <div class="student-card grad-card">
+        <div class="student-card-top">
+          <div class="student-avatar">ALI</div>
+          <div>
+            <div class="student-name">Alireza Davoodi</div>
+            <span class="student-badge badge-grad">Research</span>
+          </div>
+        </div>
+        <div class="thesis-title">User modeling on smart devices</div>
+        <div class="uni-badge">🎓 The University of Queensland</div>
+      </div>
+      <div class="student-card grad-card">
+        <div class="student-card-top">
+          <div class="student-avatar">PR</div>
+          <div>
+            <div class="student-name">Pariya Raoufi</div>
+            <span class="student-badge badge-grad">Research</span>
+          </div>
+        </div>
+        <div class="thesis-title">Smart device log analytics using MapReduce</div>
+        <div class="uni-badge">🎓 The University of Queensland</div>
+      </div>
+      <div class="student-card grad-card">
+        <div class="student-card-top">
+          <div class="student-avatar">AZ</div>
+          <div>
+            <div class="student-name">Alexander Zarei</div>
+            <span class="student-badge badge-grad">Research</span>
+          </div>
+        </div>
+        <div class="thesis-title">Optimisation of cloud usage on Amazon AWS</div>
+        <div class="uni-badge">🎓 The University of Queensland</div>
+      </div>
+      <div class="student-card grad-card">
+        <div class="student-card-top">
+          <div class="student-avatar">YZ</div>
+          <div>
+            <div class="student-name">Yuke Zhu</div>
+            <span class="student-badge badge-grad">B.Sc.</span>
+          </div>
+        </div>
+        <div class="thesis-title">Modelling relational statistics with Bayes nets using pseudo-likelihood</div>
+        <div class="uni-badge">🎓 The University of Queensland</div>
+      </div>
+      <div class="student-card grad-card">
+        <div class="student-card-top">
+          <div class="student-avatar">AB</div>
+          <div>
+            <div class="student-name">Ali Bozorgkhan</div>
+            <span class="student-badge badge-grad">Research</span>
+          </div>
+        </div>
+        <div class="thesis-title">Transaction-based link strength prediction in an on-line social network</div>
+        <div class="uni-badge">🎓 The University of Queensland</div>
+      </div>
+      <div class="student-card grad-card">
+        <div class="student-card-top">
+          <div class="student-avatar">MM2</div>
+          <div>
+            <div class="student-name">Michael Man</div>
+            <span class="student-badge badge-grad">Research</span>
+          </div>
+        </div>
+        <div class="thesis-title">Structure learning for Markov Logic Networks with many descriptive attributes</div>
+        <div class="uni-badge">🎓 The University of Queensland</div>
+      </div>
+      <div class="student-card grad-card">
+        <div class="student-card-top">
+          <div class="student-avatar">XV</div>
+          <div>
+            <div class="student-name">Xiaoyuan Vivian Xu</div>
+            <span class="student-badge badge-grad">Research</span>
+          </div>
+        </div>
+        <div class="thesis-title">Structure learning for Markov Logic Networks with many descriptive attributes</div>
+        <div class="uni-badge">🎓 The University of Queensland</div>
+      </div>
+      <div class="student-card grad-card">
+        <div class="student-card-top">
+          <div class="student-avatar">IM</div>
+          <div>
+            <div class="student-name">Ildar Musluhkov</div>
+            <span class="student-badge badge-grad">Research</span>
+          </div>
+        </div>
+        <div class="thesis-title">Securing smartphones and tablets for BYOD management</div>
+        <div class="uni-badge">🎓 The University of Queensland</div>
+      </div>
+    </div>
+  </main>
+</div>
+<script>
+}
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('overlay').classList.toggle('open')}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('overlay').classList.remove('open')}
+</script>
+</body>
+</html>

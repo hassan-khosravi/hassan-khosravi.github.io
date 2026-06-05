@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hassan Khosravi — Publications</title>
+<style>
+:root {
+  --sidebar-w: 240px;
+  --accent: #5b50d6;
+  --accent-light: #eeecfb;
+  --text: #1a1a2e;
+  --muted: #64748b;
+  --subtle: #94a3b8;
+  --border: #e8e8f0;
+  --bg: #f5f5fa;
+  --card: #ffffff;
+  --sidebar-bg: #ffffff;
+  --radius: 12px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); font-size: 15px; line-height: 1.6; }
+
+.layout { display: flex; min-height: 100vh; }
+.sidebar { width: var(--sidebar-w); background: var(--sidebar-bg); border-right: 1px solid var(--border); position: fixed; top: 0; left: 0; bottom: 0; overflow-y: auto; z-index: 200; display: flex; flex-direction: column; padding: 28px 20px 24px; transition: transform 0.25s ease; }
+.main { margin-left: var(--sidebar-w); flex: 1; min-width: 0; padding: 40px 44px; }
+
+.sidebar-avatar-wrap { display: flex; justify-content: center; margin-bottom: 12px; }
+.sidebar-avatar { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 3px solid var(--border); display: block; }
+.sidebar-avatar-fb { width: 150px; height: 150px; border-radius: 50%; background: linear-gradient(135deg, #5b50d6, #818cf8); display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 700; color: #fff; }
+.sidebar-name { text-align: center; font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.sidebar-role { text-align: center; font-size: 12px; color: var(--muted); margin-bottom: 24px; line-height: 1.4; }
+.sidebar-nav { list-style: none; margin-bottom: 28px; }
+.sidebar-nav li { margin-bottom: 2px; }
+.sidebar-nav a { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 8px; font-size: 14px; color: var(--muted); text-decoration: none; transition: background 0.15s, color 0.15s; }
+.sidebar-nav a:hover { background: var(--accent-light); color: var(--accent); }
+.sidebar-nav a.active { background: var(--accent-light); color: var(--accent); font-weight: 600; }
+.nav-icon { font-size: 16px; width: 20px; text-align: center; }
+.sidebar-divider { height: 1px; background: var(--border); margin-bottom: 20px; }
+.sidebar-contact { margin-bottom: 20px; }
+.contact-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); margin-bottom: 8px; text-decoration: none; }
+.contact-item:hover { color: var(--accent); }
+.contact-icon { font-size: 14px; width: 16px; }
+.sidebar-socials { display: flex; gap: 8px; justify-content: center; }
+.social-icon { width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; text-decoration: none; color: var(--muted); font-size: 14px; font-weight: 700; transition: background 0.15s, color 0.15s, border-color 0.15s; }
+.social-icon:hover { background: var(--accent-light); color: var(--accent); border-color: var(--accent); }
+
+.topbar { display: none; position: fixed; top: 0; left: 0; right: 0; height: 54px; background: var(--sidebar-bg); border-bottom: 1px solid var(--border); z-index: 300; align-items: center; justify-content: space-between; padding: 0 16px; }
+.topbar-name { font-size: 15px; font-weight: 700; color: var(--text); }
+.hamburger { background: none; border: none; cursor: pointer; padding: 6px; border-radius: 8px; }
+.hamburger:hover { background: var(--accent-light); }
+.hamburger span { display: block; width: 22px; height: 2px; background: var(--text); margin: 4px 0; border-radius: 2px; }
+.sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.35); z-index: 199; }
+
+/* LIBRARY */
+.lib-title { font-size: 32px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 6px; }
+.lib-desc { font-size: 14px; color: var(--muted); margin-bottom: 24px; }
+.lib-controls { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 16px; }
+.search-wrap { position: relative; flex: 1; min-width: 220px; }
+.search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--subtle); font-size: 14px; pointer-events: none; }
+.search-input { width: 100%; padding: 9px 12px 9px 36px; border: 1px solid var(--border); border-radius: 10px; font-size: 14px; background: var(--card); color: var(--text); outline: none; transition: border-color 0.15s; }
+.search-input:focus { border-color: var(--accent); }
+.sort-select { padding: 9px 32px 9px 12px; border: 1px solid var(--border); border-radius: 10px; font-size: 14px; background: var(--card); color: var(--text); outline: none; cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2364748b' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; }
+
+/* FILTER PILLS */
+.filter-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; }
+.filter-btn {
+  --btn-color: #94a3b8;
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 13px; font-weight: 600; padding: 8px 16px;
+  border: 1.5px solid var(--border); border-radius: 12px;
+  background: var(--card); color: #475569;
+  cursor: pointer; white-space: nowrap;
+  transition: all 0.18s ease;
+  box-shadow: 0 1px 3px rgba(15,23,42,0.06);
+}
+.filter-btn:hover {
+  border-color: var(--btn-color);
+  color: var(--btn-color);
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(15,23,42,0.10);
+  transform: translateY(-1px);
+}
+.filter-btn.active {
+  background: var(--btn-color);
+  color: #fff;
+  border-color: var(--btn-color);
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--btn-color) 35%, transparent);
+  transform: translateY(-1px);
+}
+.filter-btn .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex-shrink: 0; background: var(--btn-color); }
+.filter-btn.active .dot { background: rgba(255,255,255,0.7); }
+
+/* CARDS */
+.cards-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+
+.pub-card {
+  --theme: #5b50d6;
+  --theme-light: #eeecfb;
+  --theme-glow: rgba(91,80,214,0.14);
+  position: relative; overflow: hidden; min-height: 305px;
+  padding: 24px; border: 1px solid var(--line, #e2e8f0); border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 8px 24px rgba(15,23,42,0.06), 0 0 0 1px rgba(255,255,255,0.75) inset;
+  display: flex; flex-direction: column; gap: 14px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.pub-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 36px rgba(15,23,42,0.10), 0 0 0 1px rgba(255,255,255,0.8) inset;
+}
+/* colour wash behind content */
+.pub-card::after {
+  content: "";
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(circle at 88% 8%, var(--theme-glow) 0, transparent 38%),
+    radial-gradient(circle at 8% 100%, var(--theme-glow) 0, transparent 28%);
+  opacity: 0.45;
+  pointer-events: none;
+}
+/* corner circle accent — removed */
+.pub-card::before { content: none; }
+/* theme variants */
+.t-foundational-ml    { --theme:#1e3a8a; --theme-light:#e8efff; --theme-glow:rgba(30,58,138,0.14); }
+.t-learner-modelling  { --theme:#0f766e; --theme-light:#dcfdfa; --theme-glow:rgba(15,118,110,0.15); }
+.t-adaptive-learning  { --theme:#2563eb; --theme-light:#dbeafe; --theme-glow:rgba(37,99,235,0.14); }
+.t-students-creators  { --theme:#ef4444; --theme-light:#fee2e2; --theme-glow:rgba(239,68,68,0.14); }
+.t-peer-feedback      { --theme:#0891b2; --theme-light:#cffafe; --theme-glow:rgba(8,145,178,0.16); }
+.t-ai-education       { --theme:#6d28d9; --theme-light:#ede9fe; --theme-glow:rgba(109,40,217,0.14); }
+.t-evidence-synthesis { --theme:#d97706; --theme-light:#ffedd5; --theme-glow:rgba(217,119,6,0.15); }
+
+/* elements — all z-index:2 to sit above ::before/::after */
+.card-meta, .card-title, .card-authors, .card-abstract, .card-footer { position: relative; z-index: 2; }
+
+.card-meta { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.card-meta-left { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.card-year { color: #64748b; font-size: 14px; font-weight: 700; white-space: nowrap; }
+.card-category { display: inline-flex; align-items: center; padding: 5px 12px; border-radius: 999px; background: var(--theme-light); color: var(--theme); font-size: 12px; font-weight: 700; white-space: nowrap; }
+.card-featured { display: inline-flex; align-items: center; gap: 4px; color: #f59e0b; font-size: 13px; font-weight: 700; white-space: nowrap; }
+.card-title { margin: 0; color: #0f172a; font-size: 18px; line-height: 1.35; font-weight: 800; letter-spacing: -0.02em; }
+.card-authors { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.55; }
+.card-authors strong { color: #0f172a; font-weight: 700; }
+.card-abstract { margin: 0; color: #334155; font-size: 13px; line-height: 1.65; flex: 1; }
+.card-footer { margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.card-venue-link { color: var(--theme); font-size: 13px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 5px; min-width: 0; overflow: hidden; }
+.card-venue-link:hover { text-decoration: underline; }
+.card-venue-link svg { flex-shrink: 0; opacity: 0.75; }
+.card-venue-text { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.card-btn { display: inline-flex; align-items: center; justify-content: center; min-width: 64px; height: 36px; padding: 0 16px; border-radius: 10px; background: var(--theme-light); color: var(--theme); font-size: 13px; font-weight: 700; text-decoration: none; border: none; cursor: pointer; transition: background 0.16s, color 0.16s, transform 0.16s; flex-shrink: 0; }
+.card-btn:hover { background: var(--theme); color: #ffffff; transform: translateY(-1px); }
+.card-btn-disabled { opacity: 0.35; cursor: default; pointer-events: none; }
+.card-glow { display: none; }
+
+.lib-status { font-size: 13px; color: var(--muted); margin-bottom: 16px; }
+.no-results { text-align: center; padding: 60px 20px; color: var(--muted); }
+.no-results-icon { font-size: 40px; margin-bottom: 12px; }
+
+/* SCHOLAR BANNER */
+.scholar-banner { display: flex; align-items: center; justify-content: space-between; background: white; border: 1px solid var(--border); border-radius: 12px; padding: 14px 20px; margin-bottom: 24px; gap: 12px; flex-wrap: wrap; }
+.scholar-banner-left { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--muted); }
+.scholar-banner-left svg { flex-shrink: 0; }
+.scholar-banner a { display: inline-flex; align-items: center; gap: 6px; background: var(--accent); color: white; font-size: 13px; font-weight: 600; padding: 7px 16px; border-radius: 8px; text-decoration: none; transition: background 0.15s; white-space: nowrap; }
+.scholar-banner a:hover { background: #4841b8; }
+
+/* STATS CARDS */
+.stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 28px; }
+.stat-card {
+  background: #fff; border: 1px solid #e2e8f0; border-radius: 16px;
+  padding: 16px 20px; display: flex; align-items: center; gap: 14px;
+  box-shadow: 0 4px 16px rgba(15,23,42,0.06), 0 0 0 1px rgba(255,255,255,0.8) inset;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative; overflow: hidden;
+}
+.stat-card::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(circle at 85% 10%, rgba(91,80,214,0.10) 0, transparent 45%),
+    radial-gradient(circle at 10% 90%, rgba(91,80,214,0.07) 0, transparent 35%);
+}
+.stat-card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(91,80,214,0.14); }
+.stat-card-text { display: flex; flex-direction: column; position: relative; z-index: 1; }
+.stat-num { font-size: 26px; font-weight: 800; color: var(--accent); letter-spacing: -0.03em; line-height: 1; margin-bottom: 3px; }
+.stat-label { font-size: 12px; color: var(--muted); line-height: 1.3; }
+@media (max-width: 900px) { .stats-row { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .stats-row { grid-template-columns: repeat(2, 1fr); } }
+
+/* ACTIVE THEME BANNER */
+.theme-banner { display: none; align-items: center; justify-content: space-between; background: var(--accent-light); border: 1px solid #c4bff5; border-radius: 10px; padding: 10px 16px; margin-bottom: 20px; font-size: 13px; color: var(--accent); font-weight: 600; }
+.theme-banner.visible { display: flex; }
+.theme-banner-clear { background: none; border: none; color: var(--accent); cursor: pointer; font-size: 18px; line-height: 1; padding: 0 4px; }
+
+
+@media (max-width: 768px) {
+  .topbar { display: flex; }
+  .sidebar { transform: translateX(-100%); box-shadow: 4px 0 20px rgba(0,0,0,0.1); }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-overlay.open { display: block; }
+  .main { margin-left: 0; padding: 80px 20px 40px; }
+  .cards-grid { grid-template-columns: 1fr; }
+  .lib-controls { flex-direction: column; align-items: stretch; }
+  .search-wrap { min-width: unset; }
+}
+
+    .sidebar-profile-links { display: flex; flex-direction: column; gap: 6px; padding: 0 8px; }
+    .sidebar-plink {
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 14px; border-radius: 10px;
+      background: var(--bg); border: 1px solid var(--border);
+      font-size: 13px; font-weight: 500; color: var(--text);
+      text-decoration: none;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .sidebar-plink:hover { background: #e8edf5; border-color: var(--accent); color: var(--accent); }
+    .sidebar-plink svg { flex-shrink: 0; opacity: 0.7; }
+
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="topbar-name">Hassan Khosravi</span>
+  <button class="hamburger" onclick="toggleSidebar()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</div>
+<div class="sidebar-overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-avatar-wrap">
+      <img class="sidebar-avatar" src="assets/avatar.jpg" alt="Hassan Khosravi"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="sidebar-avatar-fb" style="display:none">HK</div>
+    </div>
+    <div class="sidebar-name">Hassan Khosravi</div>
+    <div class="sidebar-role">Associate Professor<br>AI &amp; Education · UQ</div>
+    <ul class="sidebar-nav">
+      <li><a href="index.html"><span class="nav-icon">🏠</span> Overview</a></li>
+      <li><a href="research.html"><span class="nav-icon">💡</span> Research</a></li>
+      <li><a href="teaching.html"><span class="nav-icon">🎓</span> Teaching</a></li>
+      <li><a href="publications.html" class="active"><span class="nav-icon">📚</span> Publications</a></li>
+      <li><a href="media.html"><span class="nav-icon">▶️</span> Media</a></li>
+      <li><a href="supervision.html"><span class="nav-icon">👥</span> Supervision</a></li>
+    </ul>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-profile-links">
+      <a href="mailto:h.khosravi@uq.edu.au" class="sidebar-plink">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
+        Email
+      </a>
+      <a href="https://researchers.uq.edu.au/researcher/15849" target="_blank" class="sidebar-plink">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        UQ Profile
+      </a>
+      <a href="https://au.linkedin.com/in/hassan-khosravi" target="_blank" class="sidebar-plink">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+      <a href="https://scholar.google.ca/citations?user=0U7jTbYAAAAJ&hl=en" target="_blank" class="sidebar-plink">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        Scholar
+      </a>
+      <a href="https://orcid.org/0000-0001-8664-6117" target="_blank" class="sidebar-plink">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zm-1.76 4.8c.693 0 1.254.56 1.254 1.254 0 .692-.561 1.253-1.254 1.253-.693 0-1.254-.561-1.254-1.253 0-.694.561-1.254 1.254-1.254zM9.6 9.12h1.44v7.68H9.6V9.12zm2.88 0h3.84c2.016 0 3.36 1.44 3.36 3.84 0 2.4-1.344 3.84-3.36 3.84H12.48V9.12zm1.44 1.44v5.04h2.4c1.2 0 1.92-.768 1.92-2.52 0-1.752-.72-2.52-1.92-2.52h-2.4z"/></svg>
+        ORCID
+      </a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <h1 class="lib-title">Publications</h1>
+
+    <!-- Google Scholar banner -->
+    <div class="scholar-banner">
+      <div class="scholar-banner-left">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L2 7l10 5 10-5-10-5z" fill="#4285F4"/>
+          <path d="M2 17l10 5 10-5" stroke="#34A853" stroke-width="2" stroke-linecap="round"/>
+          <path d="M2 12l10 5 10-5" stroke="#FBBC05" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        Full publication list and citation metrics are available on Google Scholar
+      </div>
+      <a href="https://scholar.google.com/citations?user=0U7jTbYAAAAJ&hl=en" target="_blank">
+        View on Google Scholar
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </a>
+    </div>
+
+    <!-- Stats cards -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div style="width:52px;height:52px;border-radius:14px;background:var(--accent-light);display:flex;align-items:center;justify-content:center;margin:0;flex-shrink:0;position:relative;z-index:1"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- back page -->
+  <rect x="9" y="5" width="16" height="20" rx="2.5" fill="var(--accent)" opacity="0.25"/>
+  <!-- front page -->
+  <rect x="6" y="8" width="16" height="20" rx="2.5" fill="var(--accent)" opacity="0.55"/>
+  <!-- lines on front page -->
+  <line x1="10" y1="14" x2="18" y2="14" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="10" y1="18" x2="18" y2="18" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="10" y1="22" x2="15" y2="22" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+</svg></div>
+        <div class="stat-card-text"><div class="stat-num">105</div>
+        <div class="stat-label">Publications</div></div>
+      </div>
+      <div class="stat-card">
+        <div style="width:52px;height:52px;border-radius:14px;background:var(--accent-light);display:flex;align-items:center;justify-content:center;margin:0;flex-shrink:0;position:relative;z-index:1"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- left quote -->
+  <path d="M8 10 C8 8.3 9.3 7 11 7 L13 7 L13 13 L9 13 C8.4 13 8 12.6 8 12 Z" fill="var(--accent)" opacity="0.9"/>
+  <path d="M9 13 C9 14.7 9.8 16 11.5 16" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" opacity="0.9"/>
+  <!-- right quote -->
+  <path d="M16 10 C16 8.3 17.3 7 19 7 L21 7 L21 13 L17 13 C16.4 13 16 12.6 16 12 Z" fill="var(--accent)" opacity="0.9"/>
+  <path d="M17 13 C17 14.7 17.8 16 19.5 16" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" opacity="0.9"/>
+  <!-- chain link -->
+  <path d="M12 22 C12 20.3 13.3 19 15 19 L17 19 C18.7 19 20 20.3 20 22 C20 23.7 18.7 25 17 25 L15 25 C13.3 25 12 23.7 12 22 Z" stroke="var(--accent)" stroke-width="1.8" fill="none"/>
+  <line x1="15" y1="22" x2="17" y2="22" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round"/>
+  <!-- connector -->
+  <line x1="16" y1="17" x2="16" y2="19" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+</svg></div>
+        <div class="stat-card-text"><div class="stat-num">8,500+</div>
+        <div class="stat-label">Citations</div></div>
+      </div>
+      <div class="stat-card">
+        <div style="width:52px;height:52px;border-radius:14px;background:var(--accent-light);display:flex;align-items:center;justify-content:center;margin:0;flex-shrink:0;position:relative;z-index:1"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- bars -->
+  <rect x="5" y="20" width="5" height="7" rx="1.5" fill="var(--accent)" opacity="0.4"/>
+  <rect x="13" y="15" width="5" height="12" rx="1.5" fill="var(--accent)" opacity="0.65"/>
+  <rect x="21" y="10" width="5" height="17" rx="1.5" fill="var(--accent)"/>
+  <!-- upward trend arrow -->
+  <polyline points="6,22 13,16 20,11 26,6" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <polyline points="22,6 26,6 26,10" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+</svg></div>
+        <div class="stat-card-text"><div class="stat-num">39</div>
+        <div class="stat-label">h-index</div></div>
+      </div>
+      <div class="stat-card">
+        <div style="width:52px;height:52px;border-radius:14px;background:var(--accent-light);display:flex;align-items:center;justify-content:center;margin:0;flex-shrink:0;position:relative;z-index:1"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- globe circle -->
+  <circle cx="16" cy="14" r="9" stroke="var(--accent)" stroke-width="1.8" fill="none"/>
+  <!-- vertical line -->
+  <line x1="16" y1="5" x2="16" y2="23" stroke="var(--accent)" stroke-width="1.4" opacity="0.5"/>
+  <!-- horizontal lines -->
+  <path d="M7.5 14 Q16 10 24.5 14" stroke="var(--accent)" stroke-width="1.4" fill="none" opacity="0.5"/>
+  <line x1="7.5" y1="14" x2="24.5" y2="14" stroke="var(--accent)" stroke-width="1.4" opacity="0.3"/>
+  <!-- left person -->
+  <circle cx="8" cy="26" r="2.5" fill="var(--accent)" opacity="0.7"/>
+  <path d="M4 31 C4 28.8 5.8 27 8 27 C10.2 27 12 28.8 12 31" stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round" fill="none" opacity="0.7"/>
+  <!-- right person -->
+  <circle cx="24" cy="26" r="2.5" fill="var(--accent)" opacity="0.7"/>
+  <path d="M20 31 C20 28.8 21.8 27 24 27 C26.2 27 28 28.8 28 31" stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round" fill="none" opacity="0.7"/>
+</svg></div>
+        <div class="stat-card-text"><div class="stat-num">300+</div>
+        <div class="stat-label">Co-authors<br>worldwide</div></div>
+      </div>
+    </div>
+
+    <div class="theme-banner" id="theme-banner">
+      <span id="theme-banner-label"></span>
+      <button class="theme-banner-clear" onclick="clearTheme()" title="Show all">✕</button>
+    </div>
+
+    <div class="lib-controls">
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input class="search-input" type="search" id="search" placeholder="Search title, authors, venue…" oninput="applyFilters()">
+      </div>
+      <select class="sort-select" id="sort" onchange="applyFilters()">
+        <option value="newest">Sort: Newest</option>
+        <option value="oldest">Sort: Oldest</option>
+      </select>
+    </div>
+
+    <div class="filter-bar" id="filter-bar">
+      <button class="filter-btn active" data-filter="all" style="--btn-color:#94a3b8" onclick="setFilter('all',this)">
+        <span class="dot" style="background:#94a3b8"></span> All
+      </button>
+      <button class="filter-btn" data-filter="foundational-ml" style="--btn-color:#1e3a8a" onclick="setFilter('foundational-ml',this)">
+        <span class="dot" style="background:#3b82f6"></span> Foundational ML
+      </button>
+      <button class="filter-btn" data-filter="learner-modelling" style="--btn-color:#0f766e" onclick="setFilter('learner-modelling',this)">
+        <span class="dot" style="background:#10b981"></span> Learner Modelling
+      </button>
+      <button class="filter-btn" data-filter="adaptive-learning" style="--btn-color:#2563eb" onclick="setFilter('adaptive-learning',this)">
+        <span class="dot" style="background:#5b50d6"></span> Adaptive Learning
+      </button>
+      <button class="filter-btn" data-filter="students-creators" style="--btn-color:#ef4444" onclick="setFilter('students-creators',this)">
+        <span class="dot" style="background:#ef4444"></span> Students as Creators
+      </button>
+      <button class="filter-btn" data-filter="peer-feedback" style="--btn-color:#0891b2" onclick="setFilter('peer-feedback',this)">
+        <span class="dot" style="background:#0891b2"></span> Peer Learning
+      </button>
+      <button class="filter-btn" data-filter="ai-education" style="--btn-color:#6d28d9" onclick="setFilter('ai-education',this)">
+        <span class="dot" style="background:#7c3aed"></span> AI in Education
+      </button>
+      <button class="filter-btn" data-filter="evidence-synthesis" style="--btn-color:#d97706" onclick="setFilter('evidence-synthesis',this)">
+        <span class="dot" style="background:#d97706"></span> Evidence Synthesis
+      </button>
+      <button class="filter-btn" data-filter="featured" onclick="setFilter('featured',this)" style="--btn-color:#f59e0b">
+        ⭐ Featured
+      </button>
+    </div>
+
+    <p class="lib-status" id="lib-status"></p>
+    <div class="cards-grid" id="cards-grid"></div>
+    <div class="no-results" id="no-results" style="display:none">
+      <div class="no-results-icon">🔍</div>
+      <p>No publications match your search.</p>
+    </div>
+  </main>
+</div>
+
+<script>
+// ── CATEGORY STYLES ──────────────────────────────────────────────────────────
+const CAT = {
+  'foundational-ml':   {label:'Foundational ML',      bg:'#dbeafe', color:'#1d4ed8', glow:'#3b82f6'},
+  'learner-modelling': {label:'Learner Modelling',    bg:'#d1fae5', color:'#065f46', glow:'#10b981'},
+  'adaptive-learning': {label:'Adaptive Learning',    bg:'#eeecfb', color:'#4338ca', glow:'#5b50d6'},
+  'students-creators': {label:'Students as Creators', bg:'#fee2e2', color:'#991b1b', glow:'#ef4444'},
+  'peer-feedback':     {label:'Peer Learning',        bg:'#cffafe', color:'#164e63', glow:'#0891b2'},
+  'ai-education':      {label:'AI in Education',      bg:'#ede9fe', color:'#5b21b6', glow:'#7c3aed'},
+  'evidence-synthesis':{label:'Evidence Synthesis',   bg:'#fef3c7', color:'#92400e', glow:'#d97706'},
+};
+
+// ── PUBLICATIONS ─────────────────────────────────────────────────────────────
+// Each paper has categories[] aligned to the 7 research strands
+const PUBS = [
+  // 2026
+  {year:2026,title:"Building AI Companions that Prioritise Learning over Performance",
+   authors:"<strong>H. Khosravi</strong>, D. Gasevic, S. Sadiq, L. Yan, J. Lodge, J. Tangen, P. Denny, K. DiCerbo, S. B. Shum, R. S. Baker",
+   abstract:"Proposes a framework for AI companions that prioritise student learning and agency over short-term performance optimisation, offering design principles for generative AI in educational contexts.",
+   venue:"arXiv preprint arXiv:2605.04816",categories:["ai-education"],featured:true,doi:"https://arxiv.org/abs/2605.04816",type:"preprint"},
+
+  {year:2026,title:"AI assistance in peer feedback provision: Pedagogically sound, but minimally adopted",
+   authors:"S. Pozdniakov, J. Brazil, S. K. Banihashem, O. Noroozi, D. Gašević, S. Sadiq, <strong>H. Khosravi</strong>",
+   abstract:"Examines how AI-assisted peer feedback tools are perceived and adopted in practice. Finds strong pedagogical promise but identifies significant adoption barriers in authentic learning contexts.",
+   venue:"Computers & Education",categories:["peer-feedback"],featured:true,doi:"",type:"journal"},
+
+  {year:2026,title:"Directive, metacognitive, or a blend? AI-generated feedback types on student engagement and outcomes",
+   authors:"O. Alsaiari, N. Baghaei, J. M. Lodge, O. Noroozi, D. Gašević, M. Boden, <strong>H. Khosravi</strong>",
+   abstract:"Compares directive and metacognitive AI-generated feedback types, examining their differential effects on student engagement, confidence, and learning outcomes.",
+   venue:"Computers and Education: Artificial Intelligence",categories:["peer-feedback"],doi:"",type:"journal"},
+
+  {year:2026,title:"Pedagogical framework for hybrid intelligent feedback",
+   authors:"S. K. Banihashem, O. Noroozi, <strong>H. Khosravi</strong>, C. D. Schunn, H. Drachsler",
+   abstract:"Introduces a pedagogical framework integrating human and AI-generated feedback, theorising how hybrid feedback systems can be designed to maximise learning outcomes.",
+   venue:"Innovations in Education and Teaching International, 63(2), 554–570",categories:["peer-feedback","ai-education"],doi:"",type:"journal"},
+
+  {year:2026,title:"Generative AI offers more, but students revise less: comparing effects of teacher and AI feedback on essay revisions",
+   authors:"M. Farrokhnia, S. Latifi, P. M. Papadopoulos, L. Hogenkamp, H. Gijlers, <strong>H. Khosravi</strong>, O. Noroozi",
+   abstract:"Compares the quantity and quality of student essay revisions in response to teacher versus AI-generated feedback, finding a surprising gap between AI offer and student uptake.",
+   venue:"International Journal of Educational Technology in Higher Education, 23(1), 6",categories:["peer-feedback"],doi:"",type:"journal"},
+
+  {year:2026,title:"Augmenting knowledge tracing through modeling dynamic higher-order concept interactions",
+   authors:"M. Mohammadi, K. Berahmand, S. Sadiq, <strong>H. Khosravi</strong>",
+   abstract:"Presents a temporal hypergraph memory network that models dynamic higher-order concept interactions to improve knowledge tracing accuracy in adaptive learning systems.",
+   venue:"Computers and Education: Artificial Intelligence",categories:["learner-modelling","foundational-ml"],doi:"",type:"journal"},
+
+  // 2025
+  {year:2025,title:"Generative AI and learning analytics: Pushing boundaries, preserving principles",
+   authors:"<strong>H. Khosravi</strong>, A. Shibani, J. Jovanovic, Z. A. Pardos, L. Yan",
+   abstract:"Examines how generative AI is reshaping learning analytics research, arguing for an approach that pushes methodological boundaries while preserving core ethical and pedagogical principles.",
+   venue:"Journal of Learning Analytics, 12(1), 1–11",categories:["ai-education"],featured:true,doi:"",type:"journal"},
+
+  {year:2025,title:"Enhancing peer feedback provision through user interface scaffolding",
+   authors:"H. F. Lahza, G. Demartini, O. Noroozi, D. Gašević, S. Sadiq, <strong>H. Khosravi</strong>",
+   abstract:"Compares scripting and self-monitoring UI scaffolding techniques for improving peer feedback quality, finding differential effects depending on student prior experience with review tasks.",
+   venue:"Computers & Education, 230, 105260",categories:["peer-feedback"],doi:"",type:"journal"},
+
+  {year:2025,title:"Emotionally enriched AI-generated feedback: Supporting student well-being without compromising learning",
+   authors:"O. Alsaiari, N. Baghaei, H. Lahza, J. M. Lodge, M. Boden, <strong>H. Khosravi</strong>",
+   abstract:"Investigates whether AI-generated feedback incorporating emotional awareness can support student well-being, finding positive effects on engagement without compromising learning outcomes.",
+   venue:"Computers & Education",categories:["peer-feedback","ai-education"],doi:"",type:"journal"},
+
+  {year:2025,title:"From knowledge gaps to learning opportunities: Leveraging student questions and generative AI at scale",
+   authors:"S. Pozdniakov, J. Brazil, O. Poquet, S. Krusche, S. Berrezueta-Guzman, S. Sadiq, <strong>H. Khosravi</strong>",
+   abstract:"Presents a system that uses student questions and generative AI to identify knowledge gaps and automatically generate tailored learning opportunities for large cohorts.",
+   venue:"Computers and Education: Artificial Intelligence",categories:["adaptive-learning","ai-education"],doi:"",type:"journal"},
+
+  {year:2025,title:"Fostering human agency in the age of AI: A learning analytics perspective",
+   authors:"O. Viberg, O. Poquet, V. Kovanovic, <strong>H. Khosravi</strong>",
+   abstract:"Argues that learning analytics must explicitly centre human agency in its design and deployment, offering a conceptual framework for evaluating agentic learning environments.",
+   venue:"Journal of Learning Analytics, 12(3), 1–7",categories:["ai-education"],doi:"",type:"journal"},
+
+  {year:2025,title:"Enhancing peer assessment with artificial intelligence",
+   authors:"K. J. Topping, E. Gehringer, <strong>H. Khosravi</strong>, S. Gudipati, K. Jadhav, S. Susarla",
+   abstract:"Reviews AI approaches to augmenting peer assessment, covering automated rubric generation, feedback quality scoring, and AI-mediated calibration of peer judgements.",
+   venue:"International Journal of Educational Technology in Higher Education, 22(1), 3",categories:["peer-feedback"],doi:"",type:"journal"},
+
+  {year:2025,title:"Artificial intelligence in multimodal learning analytics: A systematic literature review",
+   authors:"M. Mohammadi, E. Tajik, R. Martinez-Maldonado, S. Sadiq, W. Tomaszewski, <strong>H. Khosravi</strong>",
+   abstract:"Systematically reviews AI applications in multimodal learning analytics, synthesising methods, data sources, and gaps in the literature across physical and digital learning environments.",
+   venue:"Computers and Education: Artificial Intelligence, 8, 100426",categories:["evidence-synthesis"],doi:"",type:"journal"},
+
+  {year:2025,title:"Supporting peer learning with artificial intelligence: A systematic literature review",
+   authors:"B. Sichterman, O. Noroozi, J. Boetje, S. van Ginkel, <strong>H. Khosravi</strong>, J. Versendaal",
+   abstract:"Systematically reviews the literature on AI-supported peer learning, identifying key approaches, outcomes, and future research directions across higher education contexts.",
+   venue:"Innovations in Education and Teaching International, 62(5), 1648–1664",categories:["evidence-synthesis","peer-feedback"],doi:"",type:"journal"},
+
+  {year:2025,title:"A systematic mapping review at the intersection of AI and self-regulated learning",
+   authors:"S. K. Banihashem, M. Bond, N. Bergdahl, <strong>H. Khosravi</strong>, O. Noroozi",
+   abstract:"Maps the intersection of AI and self-regulated learning research, calling for increased theoretical grounding, focus on motivation, and diversification of study contexts.",
+   venue:"International Journal of Educational Technology in Higher Education, 22(1), 50",categories:["evidence-synthesis","adaptive-learning"],doi:"",type:"journal"},
+
+  {year:2025,title:"Exploring the impact of generative AI on peer review: Insights from journal reviewers",
+   authors:"S. Ebadi, H. Nejadghanbar, A. R. Salman, <strong>H. Khosravi</strong>",
+   abstract:"Surveys journal reviewers on their experience with generative AI in peer review, uncovering tensions between efficiency gains and concerns about quality, integrity, and epistemic trust.",
+   venue:"Journal of Academic Ethics, 23(3), 1383–1397",categories:["peer-feedback","ai-education"],doi:"",type:"journal"},
+
+  {year:2025,title:"Sparse feature selection using hypergraph Laplacian-based semi-supervised discriminant analysis",
+   authors:"R. Sheikhpour, K. Berahmand, M. Mohammadi, <strong>H. Khosravi</strong>",
+   abstract:"Proposes a sparse feature selection method based on hypergraph Laplacian regularisation for semi-supervised settings, demonstrating improvements on benchmark classification tasks.",
+   venue:"Pattern Recognition, 157, 110882",categories:["foundational-ml"],doi:"",type:"journal"},
+
+  {year:2025,title:"Robust semi-supervised multi-label feature selection based on shared subspace and manifold learning",
+   authors:"R. Sheikhpour, M. Mohammadi, K. Berahmand, F. Saberi-Movahed, <strong>H. Khosravi</strong>",
+   abstract:"Develops a robust multi-label feature selection framework combining shared subspace learning and manifold regularisation for semi-supervised data with label noise.",
+   venue:"Information Sciences, 699, 121800",categories:["foundational-ml"],doi:"",type:"journal"},
+
+  {year:2025,title:"'Seeing' chemistry: Mental imagery and visuospatial problem solving",
+   authors:"L. Baade, E. Kartsonaki, <strong>H. Khosravi</strong>, G. A. Lawrie",
+   abstract:"Investigates how mental imagery strength contributes to students' visuospatial problem solving in chemistry, with implications for how representational competency is taught and assessed.",
+   venue:"Chemistry Education Research and Practice, 26(1), 65–87",categories:["learner-modelling"],doi:"",type:"journal"},
+
+  {year:2025,title:"Knowledge tracing with a temporal hypergraph memory network",
+   authors:"M. Mohammadi, K. Berahmand, S. Sadiq, <strong>H. Khosravi</strong>",
+   abstract:"Introduces a temporal hypergraph memory network for knowledge tracing that captures dynamic higher-order dependencies between concepts and learning events.",
+   venue:"AIED 2025, 77–85",categories:["learner-modelling","foundational-ml"],doi:"",type:"conference"},
+
+  {year:2025,title:"Turning real-time analytics into adaptive scaffolds for self-regulated learning using generative AI",
+   authors:"T. Li, D. Nath, Y. Cheng, Y. Fan, X. Li, M. Raković, <strong>H. Khosravi</strong>, Z. Swiecki, Y.-S. Tsai, D. Gašević",
+   abstract:"Presents a system that converts real-time learning analytics into personalised generative AI scaffolds to support self-regulated learning strategies during online study sessions.",
+   venue:"LAK '25, 667–679",categories:["adaptive-learning","ai-education"],doi:"",type:"conference"},
+
+  {year:2025,title:"From misunderstandings to learning opportunities: Leveraging generative AI in discussion forums",
+   authors:"S. Pozdniakov, J. Brazil, O. Poquet, S. Krusche, S. Berrezueta-Guzman, S. Sadiq, <strong>H. Khosravi</strong>",
+   abstract:"Analyses student discussion forum posts to detect misconceptions and uses generative AI to automatically generate targeted learning opportunities at scale.",
+   venue:"AIED 2025, 291–298",categories:["adaptive-learning","ai-education"],doi:"",type:"conference"},
+
+  {year:2025,title:"Enhancing Peer Feedback Practices with Generative AI",
+   authors:"M. Greisel, J. Hornstein, I. Kollar, O. Noroozi, G. Haddadian, X. Gao, M. Alqassab, K. Banihashem, <strong>H. Khosravi</strong>, S. Pozdniakov et al.",
+   abstract:"Explores how generative AI tools can enhance the quality and consistency of peer feedback in collaborative learning settings, combining experimental and design-based approaches.",
+   venue:"CSCL 2025, 490–498",categories:["peer-feedback"],doi:"",type:"conference"},
+
+  {year:2025,title:"Learnersourcing: Student-generated Content @ Scale (3rd Annual Workshop)",
+   authors:"S. Moore, A. Singh, X. Lu, H. Jin, <strong>H. Khosravi</strong>, P. Denny, C. Brooks, X. Wang, J. Kim, J. Stamper",
+   abstract:"Workshop on learnersourcing at scale, exploring student-generated content systems, AI curation methods, and quality control for large-scale deployment in educational technology.",
+   venue:"L@S 2025, 410–413",categories:["students-creators"],doi:"",type:"conference"},
+
+  {year:2025,title:"Dual-view entropy-regularized nonnegative matrix factorization for attributed graph clustering",
+   authors:"M. Mohammadi, K. Berahmand, S. Forouzandeh, X. Zhou, <strong>H. Khosravi</strong>",
+   abstract:"Proposes a dual-view NMF method with entropy regularisation for attributed graph clustering, achieving improved community detection on real-world network datasets.",
+   venue:"Information Sciences",categories:["foundational-ml"],doi:"",type:"journal"},
+
+  {year:2025,title:"Relative entropy-based regularized NMF for attributed graph clustering",
+   authors:"K. Berahmand, M. Mohammadi, R. Sheikhpour, M. Jalili, R. Nayak, <strong>H. Khosravi</strong>",
+   abstract:"Develops a relative entropy-based regularisation scheme for NMF to improve attributed graph clustering, with theoretical analysis and strong empirical results.",
+   venue:"ACM Transactions on Knowledge Discovery from Data, 19(9), 1–28",categories:["foundational-ml"],doi:"",type:"journal"},
+
+  {year:2025,title:"Semi-supervised adaptive symmetric NMF for multi-view clustering",
+   authors:"M. Mohammadi, K. Berahmand, S. Azizi, R. Sheikhpour, <strong>H. Khosravi</strong>",
+   abstract:"Presents a semi-supervised adaptive symmetric nonnegative matrix factorisation framework for multi-view clustering with partial label information.",
+   venue:"IEEE Transactions on Network Science and Engineering",categories:["foundational-ml"],doi:"",type:"journal"},
+
+  // 2024
+  {year:2024,title:"Impact of AI assistance on student agency",
+   authors:"A. Darvishi, <strong>H. Khosravi</strong>, S. Sadiq, D. Gašević, G. Siemens",
+   abstract:"Examines how different forms of AI assistance affect student agency in learning, finding that poorly designed AI tools can reduce self-determination even when learning outcomes improve.",
+   venue:"Computers & Education, 210, 104967",categories:["ai-education"],featured:true,doi:"",type:"journal"},
+
+  {year:2024,title:"Large language models meet user interfaces: The case of provisioning feedback",
+   authors:"S. Pozdniakov, J. Brazil, S. Abdi, A. Bakharia, S. Sadiq, D. Gašević, P. Denny, <strong>H. Khosravi</strong>",
+   abstract:"Investigates how user interface design mediates the effectiveness of LLM-generated feedback, demonstrating that interface affordances significantly shape how students engage with AI feedback.",
+   venue:"Computers and Education: Artificial Intelligence, 7, 100289",categories:["peer-feedback","ai-education"],featured:true,doi:"",type:"journal"},
+
+  {year:2024,title:"Explainable Artificial Intelligence (XAI) 2.0: A manifesto of open challenges",
+   authors:"L. Longo, M. Brcic, F. Cabitza, J. Choi, R. Confalonieri, J. Del Ser, R. Guidotti, <strong>H. Khosravi</strong> et al.",
+   abstract:"A collaborative manifesto identifying open challenges and interdisciplinary research directions for the next generation of explainable AI, covering technical, ethical, and sociotechnical dimensions.",
+   venue:"Information Fusion, 106, 102301",categories:["ai-education"],doi:"",type:"journal"},
+
+  {year:2024,title:"A meta systematic review of AI in higher education: Ethics, collaboration, and rigor",
+   authors:"M. Bond, <strong>H. Khosravi</strong>, M. De Laat, N. Bergdahl, V. Negrea, E. Oxley, P. Pham, S. W. Chong, G. Siemens",
+   abstract:"Synthesises systematic reviews of AI in higher education, calling for stronger ethical frameworks, greater interdisciplinary collaboration, and more rigorous methodological standards.",
+   venue:"International Journal of Educational Technology in Higher Education, 21, 1",categories:["evidence-synthesis"],featured:true,doi:"",type:"journal"},
+
+  {year:2024,title:"Skills and competencies for thriving in the age of generative AI",
+   authors:"V. Kovanovic, O. Viberg, <strong>H. Khosravi</strong>, R. Ferguson",
+   abstract:"Identifies the skills and competencies learners need to thrive alongside generative AI, arguing that learning analytics has a critical role to play in developing and assessing these competencies.",
+   venue:"Journal of Learning Analytics, 11(3), 1–5",categories:["ai-education"],doi:"",type:"journal"},
+
+  {year:2024,title:"Impact of an instructional guide and examples on the quality of feedback",
+   authors:"G. Gyamfi, B. E. Hanna, <strong>H. Khosravi</strong>",
+   abstract:"A randomised controlled study examining how instructional guides and worked examples affect the quality of peer feedback produced by students, with strong effects on specificity and actionability.",
+   venue:"Educational Technology Research and Development, 72(3), 1419–1437",categories:["peer-feedback"],doi:"",type:"journal"},
+
+  {year:2024,title:"Emerging technologies and research ethics: Developing editorial policy",
+   authors:"S. Knight, O. Viberg, M. Mavrikis, V. Kovanović, <strong>H. Khosravi</strong>, R. Ferguson, L. Corrin et al.",
+   abstract:"Documents the development of an editorial ethics policy for a learning analytics journal through a scoping review and expert panel consultation, providing a model for other venues.",
+   venue:"PLoS ONE, 19(10), e0309715",categories:["evidence-synthesis","ai-education"],doi:"",type:"journal"},
+
+  {year:2024,title:"Navigating (dis)agreement: AI assistance to uncover peer feedback discrepancies",
+   authors:"M. P. Rashid, E. Gehringer, <strong>H. Khosravi</strong>",
+   abstract:"Presents an AI system that identifies disagreements between peer reviewers and assists students in navigating conflicting feedback, supporting more reflective engagement with review discrepancies.",
+   venue:"LAK '24, 907–914",categories:["peer-feedback"],doi:"",type:"conference"},
+
+  {year:2024,title:"Analytics of planning behaviours in self-regulated learning",
+   authors:"T. Li, Y. Fan, N. Srivastava, Z. Zeng, X. Li, <strong>H. Khosravi</strong>, Y.-S. Tsai, Z. Swiecki, D. Gašević",
+   abstract:"Analyses trace data of student planning behaviours in self-regulated learning tasks, linking planning patterns to strategy use and prior knowledge through advanced process mining techniques.",
+   venue:"LAK '24, 438–449",categories:["learner-modelling","adaptive-learning"],doi:"",type:"conference"},
+
+  {year:2024,title:"How critically can an AI think? A framework for evaluating generative AI reasoning",
+   authors:"L. Zaphir, J. M. Lodge, J. Lisec, D. McGrath, <strong>H. Khosravi</strong>",
+   abstract:"Proposes a framework for evaluating the quality and depth of reasoning exhibited by generative AI systems, drawing on critical thinking theory to assess AI outputs in educational contexts.",
+   venue:"arXiv preprint arXiv:2406.14769",categories:["ai-education"],doi:"https://arxiv.org/abs/2406.14769",type:"preprint"},
+
+  {year:2024,title:"Representational competency, visuospatial ability, and mental imagery",
+   authors:"L. Baade, G. Lawrie, E. Kartsonaki, <strong>H. Khosravi</strong>",
+   abstract:"Exploratory study linking representational competency and visuospatial ability with mental imagery strength, with implications for STEM education and learning environment design.",
+   venue:"ACSME 2024",categories:["learner-modelling"],doi:"",type:"conference"},
+
+  {year:2024,title:"Is scalable 'students as partners' possible? Towards large-scale inclusive in-class partnerships",
+   authors:"M. Dollinger, J. Brazil, K. Matthews, <strong>H. Khosravi</strong>",
+   abstract:"Explores the feasibility and design of scalable student-as-partners models in large university courses, proposing a framework for inclusive co-creation of learning experiences.",
+   venue:"ASCILITE Publications, 1–11",categories:["students-creators"],doi:"",type:"journal"},
+
+  // 2023
+  {year:2023,title:"Learnersourcing in the age of AI: Student, educator and machine partnerships for content creation",
+   authors:"<strong>H. Khosravi</strong>, P. Denny, S. Moore, J. Stamper",
+   abstract:"Examines how AI changes the dynamics of learnersourcing, arguing for a model of collaborative content creation involving students, educators, and AI systems working in partnership.",
+   venue:"Computers and Education: Artificial Intelligence, 5, 100151",categories:["students-creators"],featured:true,doi:"https://doi.org/10.1016/j.caeai.2023.100151",type:"journal"},
+
+  {year:2023,title:"Aligning the goals of learning analytics with its research scholarship: An open peer commentary approach",
+   authors:"R. Ferguson, <strong>H. Khosravi</strong>, V. Kovanović, O. Viberg, et al.",
+   abstract:"Uses open peer commentary to examine how learning analytics research aligns with the field's stated goals, surfacing productive tensions and directions for future scholarship.",
+   venue:"Journal of Learning Analytics",categories:["evidence-synthesis"],doi:"https://doi.org/10.18608/jla.2023.7822",type:"journal"},
+
+  {year:2023,title:"Generative AI and learning analytics (editorial)",
+   authors:"<strong>H. Khosravi</strong>, O. Viberg, V. Kovanovic, R. Ferguson",
+   abstract:"Editorial introducing a special section on generative AI and learning analytics, mapping the emerging landscape and identifying key research priorities for the field.",
+   venue:"Journal of Learning Analytics, 10(3), 1–6",categories:["ai-education"],doi:"https://doi.org/10.18608/jla.2023.8027",type:"journal"},
+
+  {year:2023,title:"Analytics of learning tactics and strategies in an online learnersourcing environment",
+   authors:"H. Lahza, <strong>H. Khosravi</strong>, G. Demartini",
+   abstract:"Analyses student learning tactics and strategies in a learnersourcing environment, identifying patterns that distinguish effective and ineffective learners contributing content.",
+   venue:"Journal of Computer Assisted Learning, 39(1), 94–112",categories:["students-creators"],doi:"https://doi.org/10.1111/jcal.12742",type:"journal"},
+
+  {year:2023,title:"Beyond item analysis: Connecting student behaviour and performance using e-assessment logs",
+   authors:"H. Lahza, T. G. Smith, <strong>H. Khosravi</strong>",
+   abstract:"Uses e-assessment log data to go beyond traditional item analysis, connecting fine-grained student behaviours during assessments to learning outcomes.",
+   venue:"British Journal of Educational Technology, 54(1), 335–354",categories:["learner-modelling"],doi:"https://doi.org/10.1111/bjet.13270",type:"journal"},
+
+  {year:2023,title:"Learner-centred analytics of feedback content in higher education",
+   authors:"J. Lin, W. Dai, L.-A. Lim, Y.-S. Tsai, R. F. Mello, <strong>H. Khosravi</strong>, D. Gasevic, G. Chen",
+   abstract:"Presents a learner-centred framework for analysing written feedback in higher education, using NLP techniques to characterise feedback quality and its relationship to student outcomes.",
+   venue:"LAK23: 13th International Learning Analytics and Knowledge Conference, 100–110",categories:["peer-feedback"],doi:"https://doi.org/10.1145/3576050.3576062",type:"conference"},
+
+  {year:2023,title:"Using learning analytics to support teachers",
+   authors:"S. Pozdniakov, R. Martinez-Maldonado, S. Singh, <strong>H. Khosravi</strong>, D. Gašević",
+   abstract:"Book chapter reviewing approaches to using learning analytics to support teachers, covering dashboard design, actionable insights, and the challenges of translating data into pedagogical decisions.",
+   venue:"Handbook of Artificial Intelligence in Education, Edward Elgar Publishing, 322–349",categories:["learner-modelling"],doi:"",type:"book"},
+
+  {year:2023,title:"Are deeper reflectors better goal-setters? AI-empowered analytics of reflective writing",
+   authors:"Y. Li, M. Raković, W. Dai, J. Lin, <strong>H. Khosravi</strong>, K. Galbraith, K. Lyons, D. Gašević, G. Chen",
+   abstract:"Applies AI-powered analytics to reflective writing in pharmaceutical education to examine whether deeper reflective practice predicts more effective goal-setting and learning outcomes.",
+   venue:"Computers and Education: Artificial Intelligence, 5, 100157",categories:["ai-education"],doi:"https://doi.org/10.1016/j.caeai.2023.100157",type:"journal"},
+
+  {year:2023,title:"Empowering education with LLMs: The next-gen interface and content generation",
+   authors:"S. Moore, R. Tong, A. Singh, Z. Liu, X. Hu, Y. Lu, J. Liang, C. Cao, <strong>H. Khosravi</strong>, P. Denny, et al.",
+   abstract:"Workshop paper exploring how large language models can serve as next-generation interfaces for educational content generation, and what this means for learning system design.",
+   venue:"International Conference on Artificial Intelligence in Education (AIED 2023), 32–37",categories:["ai-education","students-creators"],doi:"https://link.springer.com/chapter/10.1007/978-3-031-36336-8_4",type:"conference"},
+
+  {year:2023,title:"Human vs machine: Comparison of student-generated and AI-generated educational content",
+   authors:"P. Denny, <strong>H. Khosravi</strong>, A. Hellas, J. Leinonen, S. Sarsa",
+   abstract:"Compares the quality, accuracy, and pedagogical value of educational content generated by students versus large language models, with implications for the future of learnersourcing.",
+   venue:"arXiv preprint arXiv:2306.10509",categories:["students-creators","ai-education"],doi:"https://arxiv.org/abs/2306.10509",type:"preprint"},
+
+  // 2022
+  {year:2022,title:"Assessment in the age of artificial intelligence",
+   authors:"Z. Swiecki, <strong>H. Khosravi</strong>, G. Chen, R. Martinez-Maldonado, J. M. Lodge, S. Milligan, N. Selwyn, D. Gašević",
+   abstract:"Examines how AI is reshaping educational assessment, covering implications for validity, fairness, and the future of high-stakes testing in an era of intelligent systems.",
+   venue:"Computers and Education: Artificial Intelligence, 3, 100075",categories:["ai-education"],featured:true,doi:"https://doi.org/10.1016/j.caeai.2022.100075",type:"journal"},
+
+  {year:2022,title:"Explainable artificial intelligence in education",
+   authors:"<strong>H. Khosravi</strong>, S. B. Shum, G. Chen, C. Conati, Y.-S. Tsai, J. Kay, S. Knight, R. Martinez-Maldonado, S. Sadiq, D. Gašević",
+   abstract:"Surveys the landscape of explainable AI in education, proposing a framework for designing XAI systems that are meaningful to students and educators in authentic learning contexts.",
+   venue:"Computers and Education: Artificial Intelligence, 3, 100074",categories:["ai-education"],featured:true,doi:"https://doi.org/10.1016/j.caeai.2022.100074",type:"journal"},
+
+  {year:2022,title:"Incorporating training, self-monitoring and AI-assistance to improve peer feedback quality",
+   authors:"A. Darvishi, <strong>H. Khosravi</strong>, S. Abdi, S. Sadiq, D. Gašević",
+   abstract:"Evaluates a multi-component intervention combining training, self-monitoring tools, and AI assistance to improve the quality of peer feedback in large-scale educational settings.",
+   venue:"Proceedings of the Ninth ACM Conference on Learning @ Scale (L@S 2022), 35–47",categories:["peer-feedback"],doi:"https://doi.org/10.1145/3491140.3528285",type:"conference"},
+
+  {year:2022,title:"Incorporating AI and learning analytics to build trustworthy peer assessment systems",
+   authors:"A. Darvishi, <strong>H. Khosravi</strong>, S. Sadiq, D. Gašević",
+   abstract:"Proposes a framework integrating AI and learning analytics to detect and mitigate bias in peer assessment, improving reliability and trustworthiness at scale.",
+   venue:"British Journal of Educational Technology, 53(4), 844–875",categories:["peer-feedback"],featured:true,doi:"https://doi.org/10.1111/bjet.13232",type:"journal"},
+
+  {year:2022,title:"Assessing the quality of student-generated content at scale: A comparative analysis of peer-review models",
+   authors:"A. Darvishi, <strong>H. Khosravi</strong>, A. Rahimi, S. Sadiq, D. Gašević",
+   abstract:"Compares different peer-review models for evaluating student-generated content at scale, examining the trade-offs between reliability, efficiency, and learner experience.",
+   venue:"IEEE Transactions on Learning Technologies, 16(1), 106–120",categories:["students-creators","peer-feedback"],doi:"https://doi.org/10.1109/TLT.2022.3223395",type:"journal"},
+
+  {year:2022,title:"The effects of rubrics on evaluative judgement: A randomised controlled experiment",
+   authors:"G. Gyamfi, B. E. Hanna, <strong>H. Khosravi</strong>",
+   abstract:"Reports a randomised experiment examining how rubrics affect students' evaluative judgement when assessing peer work, with implications for the design of peer learning activities.",
+   venue:"Assessment & Evaluation in Higher Education, 47(1), 126–143",categories:["peer-feedback"],doi:"https://doi.org/10.1080/02602938.2021.1887812",type:"journal"},
+
+  {year:2022,title:"Supporting peer evaluation of student-generated content: A study of three approaches",
+   authors:"G. Gyamfi, B. Hanna, <strong>H. Khosravi</strong>",
+   abstract:"Compares three scaffolding approaches for supporting students to evaluate peer-generated content, examining their effects on feedback quality and evaluative judgement development.",
+   venue:"Assessment & Evaluation in Higher Education, 47(7), 1129–1147",categories:["peer-feedback","students-creators"],doi:"https://doi.org/10.1080/02602938.2021.1972410",type:"journal"},
+
+  {year:2022,title:"Effects of technological interventions for self-regulation in learnersourcing",
+   authors:"H. Lahza, <strong>H. Khosravi</strong>, G. Demartini, D. Gasevic",
+   abstract:"Reports a controlled experiment examining how technological self-regulation interventions affect student contributions to a learnersourcing platform.",
+   venue:"LAK22: 12th International Learning Analytics and Knowledge Conference, 542–548",categories:["students-creators"],doi:"https://doi.org/10.1145/3506860.3506949",type:"conference"},
+
+  {year:2022,title:"Incorporating explainable learning analytics to assist educators with identifying students in need",
+   authors:"S. Shabaninejad, <strong>H. Khosravi</strong>, S. Abdi, M. Indulska, S. Sadiq",
+   abstract:"Develops an explainable learning analytics system that helps educators identify at-risk students, providing interpretable reasoning to support informed and timely intervention.",
+   venue:"Proceedings of the Ninth ACM Conference on Learning @ Scale (L@S 2022), 384–388",categories:["ai-education","learner-modelling"],doi:"https://doi.org/10.1145/3491140.3528316",type:"conference"},
+
+  {year:2022,title:"Learnersourcing: Student-generated content @ scale",
+   authors:"S. Moore, J. Stamper, C. Brooks, P. Denny, <strong>H. Khosravi</strong>",
+   abstract:"Workshop introducing the learnersourcing community, defining the research agenda around student-generated content at scale and the tools, algorithms, and pedagogies needed to support it.",
+   venue:"Proceedings of the Ninth ACM Conference on Learning @ Scale (L@S 2022), 259–262",categories:["students-creators"],doi:"https://doi.org/10.1145/3491140.3528274",type:"conference"},
+
+  {year:2022,title:"Neurophysiological measurements in higher education: A systematic literature review",
+   authors:"A. Darvishi, <strong>H. Khosravi</strong>, S. Sadiq, B. Weber",
+   abstract:"Systematically reviews neurophysiological measurement techniques applied in higher education research, mapping the state of the field and identifying methodological gaps.",
+   venue:"International Journal of Artificial Intelligence in Education, 32(2), 413–453",categories:["evidence-synthesis"],doi:"https://doi.org/10.1007/s40593-021-00256-0",type:"journal"},
+
+  {year:2022,title:"Incorporating AI and analytics to derive insights from e-exam logs",
+   authors:"H. F. Lahza, <strong>H. Khosravi</strong>, G. Demartini",
+   abstract:"Applies AI and process mining techniques to e-examination log data, demonstrating how detailed digital traces can reveal student behaviour patterns and support formative feedback.",
+   venue:"International Conference on Artificial Intelligence in Education (AIED 2022), 749–755",categories:["learner-modelling"],doi:"https://doi.org/10.1007/978-3-031-11647-6_153",type:"conference"},
+
+  // 2021
+  {year:2021,title:"Charting the design and analytics agenda of learnersourcing systems",
+   authors:"<strong>H. Khosravi</strong>, G. Demartini, S. Sadiq, D. Gasevic",
+   abstract:"Sets out the design and analytics research agenda for learnersourcing systems, identifying open problems in quality control, incentive design, and the use of analytics to close the loop.",
+   venue:"Proceedings of the 11th International Conference on Learning Analytics and Knowledge (LAK21)",categories:["students-creators"],doi:"https://doi.org/10.1145/3448139.3448181",type:"conference"},
+
+  {year:2021,title:"Modelling learners in adaptive educational systems: A multivariate Glicko-based approach",
+   authors:"S. Abdi, <strong>H. Khosravi</strong>, S. Sadiq",
+   abstract:"Proposes a multivariate extension of the Glicko rating system for modelling learner knowledge across multiple competencies in adaptive educational systems.",
+   venue:"Proceedings of the 11th International Conference on Learning Analytics and Knowledge (LAK21)",categories:["learner-modelling"],doi:"https://doi.org/10.1145/3448139.3448196",type:"conference"},
+
+  {year:2021,title:"Evaluating the quality of learning resources: A learnersourcing approach",
+   authors:"S. Abdi, <strong>H. Khosravi</strong>, S. Sadiq, G. Demartini",
+   abstract:"Proposes a learnersourcing-based approach to evaluating learning resource quality, aggregating student judgements to surface high-quality content and identify areas for improvement.",
+   venue:"IEEE Transactions on Learning Technologies, 14(3)",categories:["students-creators"],doi:"https://doi.org/10.1109/TLT.2021.3092068",type:"journal"},
+
+  {year:2021,title:"Intelligent learning analytics dashboards: Automated drill-down recommendations",
+   authors:"<strong>H. Khosravi</strong>, S. Shabaninejad, A. Bakharia, S. Sadiq, M. Indulska, D. Gasevic",
+   abstract:"Presents an intelligent dashboard system that automatically recommends meaningful drill-down analyses to educators, reducing the cognitive load of exploring complex learning data.",
+   venue:"Journal of Learning Analytics, 8(3), 133–154",categories:["learner-modelling"],featured:true,doi:"https://doi.org/10.18608/jla.2021.7279",type:"journal"},
+
+  {year:2021,title:"Employing peer review to evaluate quality of student-generated content at scale",
+   authors:"A. Darvishi, <strong>H. Khosravi</strong>, S. Sadiq",
+   abstract:"Develops a trust propagation approach for using peer review to assess the quality of student-generated content in large-scale learnersourcing systems.",
+   venue:"Proceedings of the Eighth ACM Conference on Learning @ Scale (L@S 2021), 139–150",categories:["students-creators","peer-feedback"],doi:"https://doi.org/10.1145/3430895.3460134",type:"conference"},
+
+  {year:2021,title:"Open learner models for multi-activity educational systems",
+   authors:"S. Abdi, <strong>H. Khosravi</strong>, S. Sadiq, A. Darvishi",
+   abstract:"Extends open learner models to settings where students engage in multiple activity types, enabling more holistic and transparent representations of learner knowledge states.",
+   venue:"International Conference on Artificial Intelligence in Education (AIED 2021), 11–17",categories:["learner-modelling"],doi:"https://doi.org/10.1007/978-3-030-78292-4_2",type:"conference"},
+
+  {year:2021,title:"Repositioning students as co-creators of curriculum for online learning resources",
+   authors:"A. McDonald, H. McGowan, M. Dollinger, R. Naylor, <strong>H. Khosravi</strong>",
+   abstract:"Reports on a university initiative repositioning students as curriculum co-creators for online learning resources, examining the outcomes and lessons learned for students-as-partners practice.",
+   venue:"Australasian Journal of Educational Technology, 37(6), 102–118",categories:["students-creators"],doi:"https://doi.org/10.14742/ajet.6996",type:"journal"},
+
+  // 2020
+  {year:2020,title:"Development and adoption of an adaptive learning system: Reflections and lessons learned",
+   authors:"<strong>H. Khosravi</strong>, S. Sadiq, D. Gasevic",
+   abstract:"Reflects on the multi-year development and institutional adoption of RiPPLE, an adaptive learning system, sharing lessons learned about the technical, pedagogical, and organisational challenges involved.",
+   venue:"Proceedings of the 51st ACM Technical Symposium on Computer Science Education (SIGCSE 2020), 58–64",categories:["adaptive-learning"],doi:"https://doi.org/10.1145/3328778.3366900",type:"conference"},
+
+  {year:2020,title:"Complementing educational recommender systems with open learner models",
+   authors:"S. Abdi, <strong>H. Khosravi</strong>, S. Sadiq, D. Gasevic",
+   abstract:"Argues that educational recommender systems should be complemented by open learner models, giving students visibility into how recommendations are generated and empowering self-directed learning.",
+   venue:"Proceedings of the 10th International Conference on Learning Analytics and Knowledge (LAK20)",categories:["learner-modelling","adaptive-learning"],doi:"https://doi.org/10.1145/3375462.3375471",type:"conference"},
+
+  {year:2020,title:"Fostering and supporting empirical research on evaluative judgement via a crowdsourced adaptive learning system",
+   authors:"<strong>H. Khosravi</strong>, G. Gyamfi, B. Hanna, J. Lodge",
+   abstract:"Describes how a crowdsourced adaptive learning system can serve as an infrastructure for large-scale empirical research on evaluative judgement, enabling randomised experiments in authentic educational contexts.",
+   venue:"Proceedings of the 10th International Conference on Learning Analytics and Knowledge (LAK20)",categories:["students-creators","peer-feedback"],doi:"https://doi.org/10.1145/3375462.3375483",type:"conference"},
+
+  {year:2020,title:"Automated insightful drill-down recommendations for learning analytics dashboards",
+   authors:"S. Shabaninejad, <strong>H. Khosravi</strong>, M. Indulska, A. Bakharia, P. Isaias",
+   abstract:"Proposes an automated approach to recommending insightful data drill-downs for teachers using learning analytics dashboards, reducing the expertise required to extract actionable insights.",
+   venue:"Proceedings of the 10th International Conference on Learning Analytics and Knowledge (LAK20)",categories:["learner-modelling"],doi:"https://doi.org/10.1145/3375462.3375500",type:"conference"},
+
+  {year:2020,title:"Utilising learnersourcing to inform design loop adaptivity",
+   authors:"A. Darvishi, <strong>H. Khosravi</strong>, S. Sadiq",
+   abstract:"Proposes using learnersourcing — students contributing data and content — to inform adaptive system design, creating a feedback loop between student contributions and personalised learning pathways.",
+   venue:"European Conference on Technology Enhanced Learning (EC-TEL 2020), 332–346",categories:["students-creators","adaptive-learning"],doi:"https://doi.org/10.1007/978-3-030-57717-9_24",type:"conference"},
+
+  {year:2020,title:"Modelling learners in crowdsourcing educational systems",
+   authors:"S. Abdi, <strong>H. Khosravi</strong>, S. Sadiq",
+   abstract:"Develops learner models specifically tailored to crowdsourcing educational settings, where students contribute, rate, and refine learning resources.",
+   venue:"International Conference on Artificial Intelligence in Education (AIED 2020), 3–9",categories:["learner-modelling"],doi:"https://doi.org/10.1007/978-3-030-52237-7_1",type:"conference"},
+
+  {year:2020,title:"Recommending insightful drill-downs based on learning processes for learning analytics dashboards",
+   authors:"S. Shabaninejad, <strong>H. Khosravi</strong>, S. J. J. Leemans, S. Sadiq, M. Indulska",
+   abstract:"Combines process mining and recommender systems techniques to surface meaningful patterns in learning process data for educator dashboards.",
+   venue:"International Conference on Artificial Intelligence in Education (AIED 2020), 486–499",categories:["learner-modelling"],doi:"https://doi.org/10.1007/978-3-030-52237-7_39",type:"conference"},
+
+  {year:2020,title:"Identifying cohorts: Recommending drill-downs based on differences in behaviour for process mining",
+   authors:"S. J. J. Leemans, S. Shabaninejad, K. Goel, <strong>H. Khosravi</strong>, S. Sadiq, M. T. Wynn",
+   abstract:"Applies process mining to identify cohorts of learners with distinct behavioural patterns, supporting educators in understanding and responding to different engagement profiles.",
+   venue:"International Conference on Conceptual Modeling (ER 2020), 92–102",categories:["learner-modelling"],doi:"https://doi.org/10.1007/978-3-030-62522-1_7",type:"conference"},
+
+  // 2019
+  {year:2019,title:"RiPPLE: A crowdsourced adaptive platform for recommendation of learning activities",
+   authors:"<strong>H. Khosravi</strong>, K. Kitto, J. J. Williams",
+   abstract:"Introduces RiPPLE, a crowdsourced adaptive learning platform that combines student-generated content with personalised recommendation, demonstrating feasibility and effectiveness in large undergraduate courses.",
+   venue:"Journal of Learning Analytics, 6(3), 91–105",categories:["adaptive-learning","students-creators"],featured:true,doi:"https://doi.org/10.18608/jla.2019.63.6",type:"journal"},
+
+  {year:2019,title:"A multivariate ELO-based learner model for adaptive educational systems",
+   authors:"S. Abdi, <strong>H. Khosravi</strong>, S. Sadiq, D. Gasevic",
+   abstract:"Proposes a multivariate extension of the ELO rating system for modelling learner competency across multiple knowledge dimensions in adaptive educational settings.",
+   venue:"The 12th International Conference on Educational Data Mining (EDM 2019), 228–233",categories:["learner-modelling"],doi:"https://educationaldatamining.org/edm2019/",type:"conference"},
+
+  {year:2019,title:"Modelling topic dependencies in educational assessment: A hypergraph-based approach with multilevel visualisations",
+   authors:"K. M. L. Cooper, <strong>H. Khosravi</strong>",
+   abstract:"Proposes a hypergraph-based model of topic dependencies in educational assessment, accompanied by multilevel visualisations that communicate complex assessment structures to educators and students.",
+   venue:"Journal of Visual Language and Computing, 69–82",categories:["learner-modelling"],doi:"",type:"journal"},
+
+  {year:2019,title:"Multilevel visualisation of topic dependency models for assessment design and delivery",
+   authors:"K. M. L. Cooper, <strong>H. Khosravi</strong>",
+   abstract:"Extends topic dependency models with multilevel hypergraph visualisations, providing educators with scalable tools for communicating assessment structure and dependencies to students.",
+   venue:"Proceedings of the 25th International Conference on Distributed Multimedia Systems, 30–39",categories:["learner-modelling"],doi:"",type:"conference"},
+
+  {year:2019,title:"Profiling language learners in the big data era",
+   authors:"M. Ocana, <strong>H. Khosravi</strong>, A. Bakharia",
+   abstract:"Applies big data techniques to profile language learners at scale, identifying distinct learning patterns that can inform personalised instruction in language education.",
+   venue:"ASCILITE 2019, 237–245",categories:["learner-modelling"],doi:"",type:"conference"},
+
+  // 2018
+  {year:2018,title:"Topic dependency models: Graph-based visual analytics for communicating assessment data",
+   authors:"<strong>H. Khosravi</strong>, K. M. L. Cooper",
+   abstract:"Introduces topic dependency models — graph-based visual representations of assessment relationships — as tools for helping educators and students understand curriculum structure and performance patterns.",
+   venue:"Journal of Learning Analytics, 5(3), 136–153",categories:["learner-modelling"],doi:"https://doi.org/10.18608/jla.2018.53.8",type:"journal"},
+
+  {year:2018,title:"Graph-based visual topic dependency models: Supporting assessment design and delivery at scale",
+   authors:"K. Cooper, <strong>H. Khosravi</strong>",
+   abstract:"Applies graph-based topic dependency models to support assessment design at scale, demonstrating how visual analytics can help educators identify curriculum gaps and dependencies.",
+   venue:"Proceedings of the 8th International Conference on Learning Analytics and Knowledge (LAK18)",categories:["learner-modelling"],doi:"https://doi.org/10.1145/3170358.3170418",type:"conference"},
+
+  {year:2018,title:"Reciprocal peer recommendation for learning purposes",
+   authors:"B. Potts, <strong>H. Khosravi</strong>, C. Reidsema, A. Bakharia, M. Belonogoff, M. Fleming",
+   abstract:"Proposes a reciprocal peer recommendation approach that matches students for study sessions based on complementary knowledge gaps and interests, supporting peer learning at scale.",
+   venue:"Proceedings of the 8th International Conference on Learning Analytics and Knowledge (LAK18), 226–235",categories:["adaptive-learning","peer-feedback"],doi:"https://doi.org/10.1145/3170358.3170371",type:"conference"},
+
+  {year:2018,title:"Reciprocal content recommendation for peer learning study sessions",
+   authors:"B. A. Potts, <strong>H. Khosravi</strong>, C. Reidsema",
+   abstract:"Extends reciprocal peer recommendation to content selection, enabling adaptive study session recommendations based on complementary student knowledge profiles.",
+   venue:"International Conference on Artificial Intelligence in Education (AIED 2018), 462–475",categories:["adaptive-learning"],doi:"https://doi.org/10.1007/978-3-319-93843-1_34",type:"conference"},
+
+  {year:2018,title:"Predicting student performance: Combining knowledge tracing and collaborative filtering",
+   authors:"S. Abdi, <strong>H. Khosravi</strong>, S. Sadiq",
+   abstract:"Combines knowledge tracing with collaborative filtering to improve student performance prediction, leveraging both sequential learning signals and peer similarity for more accurate models.",
+   venue:"International Conference on Educational Data Mining (EDM 2018), 545–550",categories:["learner-modelling"],doi:"",type:"conference"},
+
+  {year:2018,title:"Students as partners in action: Evaluating a university-wide initiative",
+   authors:"L. Coombe, J. Huang, S. Russell, K. Sheppard, <strong>H. Khosravi</strong>",
+   abstract:"Evaluates a university-wide students-as-partners initiative, examining how structured co-creation opportunities affect student engagement, ownership, and the quality of educational resources produced.",
+   venue:"International Journal for Students as Partners, 2(2), 85–95",categories:["students-creators"],doi:"https://doi.org/10.15173/ijsap.v2i2.3576",type:"journal"},
+
+  // 2017
+  {year:2017,title:"Using learning analytics to investigate patterns of performance and engagement in large classes",
+   authors:"<strong>H. Khosravi</strong>, K. M. L. Cooper",
+   abstract:"Applies learning analytics to a large undergraduate computer science class, identifying distinct patterns of student performance and engagement and their relationship to course outcomes.",
+   venue:"Proceedings of the 2017 ACM SIGCSE Technical Symposium on Computer Science Education, 309–314",categories:["learner-modelling"],doi:"https://doi.org/10.1145/3017680.3017711",type:"conference"},
+
+  {year:2017,title:"RiPLE: Recommendation in peer-learning environments based on knowledge gaps and interests",
+   authors:"<strong>H. Khosravi</strong>, K. Cooper, K. Kitto",
+   abstract:"Presents RiPLE, a recommendation system for peer-learning environments that matches students based on complementary knowledge gaps and learning interests, facilitating effective peer interactions.",
+   venue:"Journal of Educational Data Mining, 9(1), 42–67",categories:["adaptive-learning","learner-modelling"],featured:true,doi:"https://doi.org/10.5281/zenodo.3554603",type:"journal"},
+
+  // Foundational ML (2009–2014)
+  {year:2014,title:"Modelling relational statistics with Bayes nets",
+   authors:"O. Schulte, <strong>H. Khosravi</strong>, A. E. Kirkpatrick, T. Gao, Y. Zhu",
+   abstract:"Develops a Bayesian network framework for modelling statistical dependencies in relational databases, providing a principled probabilistic approach to learning from multi-table data.",
+   venue:"Machine Learning, 94(1), 105–125",categories:["foundational-ml"],doi:"https://doi.org/10.1007/s10994-013-5362-7",type:"journal"},
+
+  {year:2013,title:"Transaction-based link strength prediction in a social network",
+   authors:"<strong>H. Khosravi</strong>, A. Bozorgkhan, O. Schulte",
+   abstract:"Proposes a method for predicting link strength in social networks from transaction data, combining relational learning with probabilistic modelling of social interaction patterns.",
+   venue:"IEEE Symposium on Computational Intelligence and Data Mining (CIDM 2013), 191–198",categories:["foundational-ml"],doi:"https://doi.org/10.1109/CIDM.2013.6597243",type:"conference"},
+
+  {year:2012,title:"Learning graphical models for relational data via lattice search",
+   authors:"O. Schulte, <strong>H. Khosravi</strong>",
+   abstract:"Introduces a lattice-based search algorithm for learning graphical models from relational data, offering improved scalability and accuracy compared to existing approaches.",
+   venue:"Machine Learning, 88(3), 331–368",categories:["foundational-ml"],featured:true,doi:"https://doi.org/10.1007/s10994-012-5289-3",type:"journal"},
+
+  {year:2012,title:"Learning directed relational models with recursive dependencies",
+   authors:"O. Schulte, <strong>H. Khosravi</strong>, T. Man",
+   abstract:"Extends directed graphical models to relational settings with recursive dependencies, enabling more expressive probabilistic models for complex relational data.",
+   venue:"Machine Learning, 89(3), 299–316",categories:["foundational-ml"],doi:"https://doi.org/10.1007/s10994-012-5285-7",type:"journal"},
+
+  {year:2012,title:"Learning compact Markov logic networks with decision trees",
+   authors:"<strong>H. Khosravi</strong>, O. Schulte, J. Hu, T. Gao",
+   abstract:"Proposes using decision trees to learn compact, interpretable Markov logic networks from relational data, balancing expressiveness with computational tractability.",
+   venue:"Machine Learning, 89(3), 257–277",categories:["foundational-ml"],doi:"https://doi.org/10.1007/s10994-012-5307-7",type:"journal"},
+
+  {year:2012,title:"Fast parameter learning for Markov logic networks using Bayes nets",
+   authors:"<strong>H. Khosravi</strong>",
+   abstract:"Presents a fast parameter estimation method for Markov logic networks that leverages Bayesian network structure to achieve significant computational speedups without sacrificing accuracy.",
+   venue:"International Conference on Inductive Logic Programming (ILP 2012), 102–115",categories:["foundational-ml"],doi:"https://doi.org/10.1007/978-3-642-38812-5_8",type:"conference"},
+
+  {year:2010,title:"Structure learning for Markov logic networks with many descriptive attributes",
+   authors:"<strong>H. Khosravi</strong>, O. Schulte, T. Man, X. Xu, B. Bina",
+   abstract:"Addresses the challenge of structure learning for Markov logic networks in domains with many descriptive attributes, proposing efficient search strategies for high-dimensional relational settings.",
+   venue:"Proceedings of the AAAI Conference on Artificial Intelligence, 24(1), 487–493",categories:["foundational-ml"],featured:true,doi:"https://ojs.aaai.org/index.php/AAAI/article/view/7702",type:"conference"},
+
+  {year:2010,title:"A survey on statistical relational learning",
+   authors:"<strong>H. Khosravi</strong>, B. Bina",
+   abstract:"Provides a comprehensive survey of statistical relational learning, covering key formalisms, algorithms, and applications at the intersection of probabilistic reasoning and relational data.",
+   venue:"Canadian Conference on Artificial Intelligence, 256–268",categories:["foundational-ml"],doi:"https://doi.org/10.1007/978-3-642-13059-5_25",type:"conference"},
+
+  {year:2010,title:"The IMAP hybrid method for learning Gaussian Bayes nets",
+   authors:"O. Schulte, G. Frigo, R. Greiner, <strong>H. Khosravi</strong>",
+   abstract:"Proposes a hybrid constraint-based and score-based method for learning Gaussian Bayesian networks, combining the strengths of both paradigms for improved structure recovery.",
+   venue:"Canadian Conference on Artificial Intelligence, 123–134",categories:["foundational-ml"],doi:"https://doi.org/10.1007/978-3-642-13059-5_13",type:"conference"},
+
+  {year:2009,title:"A new hybrid method for Bayesian network learning with dependency constraints",
+   authors:"O. Schulte, G. Frigo, R. Greiner, W. Luo, <strong>H. Khosravi</strong>",
+   abstract:"Proposes a hybrid method for Bayesian network structure learning that incorporates dependency constraints, improving accuracy in settings where domain knowledge about variable relationships is available.",
+   venue:"IEEE Symposium on Computational Intelligence and Data Mining (CIDM 2009), 53–60",categories:["foundational-ml"],doi:"https://doi.org/10.1109/CIDM.2009.4938642",type:"conference"},
+
+  {year:2009,title:"Virtual joins with nonexistent links",
+   authors:"<strong>H. Khosravi</strong>, O. Schulte, B. Bina",
+   abstract:"Introduces virtual join operators for handling missing or nonexistent links in relational databases, enabling more robust statistical relational learning in sparse or incomplete data settings.",
+   venue:"19th International Conference on Inductive Logic Programming (ILP 2009)",categories:["foundational-ml"],doi:"",type:"conference"},
+
+  {year:2025,title:"AI-Assisted Co-Creation: Bridging Skill Gaps in Student-Generated Content",
+   authors:"S. Pozdniakov, J. Brazil, M. Mohammadi, M. Dollinger, S. Sadiq, <strong>H. Khosravi</strong>",
+   abstract:"Proposes AI-assisted co-creation as a scalable approach to learnersourcing, where AI supports students and educators in generating, refining, and evaluating educational content at scale.",
+   venue:"Journal of Learning Analytics",categories:["students-creators","ai-education"],doi:"https://learning-analytics.info/index.php/JLA/article/view/8601",type:"journal"},
+
+  {year:2017,title:"Enhanced security authentication methods, systems and media (US Patent App. 15/545,556)",
+   authors:"A. Csinger, I. Muslukhov, <strong>H. Khosravi</strong>, P. T. Luong",
+   abstract:"Patent application for enhanced authentication methods extending decoupled authentication architectures to support a broader range of security scenarios on mobile and connected devices.",
+   venue:"US Patent Application 15/545,556",categories:["foundational-ml"],doi:"https://patents.google.com/patent/US9137659B2/en",type:"patent"},
+
+  {year:2015,title:"Method and system for decoupling user authentication and data encryption on mobile devices (US Patent 9,137,659)",
+   authors:"<strong>H. Khosravi</strong>, I. Muslukhov, P. Luong",
+   abstract:"A patented method for decoupling user authentication from data encryption on mobile devices, enabling flexible security architectures that maintain data protection even when authentication credentials change.",
+   venue:"US Patent 9,137,659",categories:["foundational-ml"],doi:"https://patents.google.com/patent/US9137659B2/en",type:"patent"},
+
+  {year:2008,title:"TACtic — A multi-behavioural agent for the Trading Agent Competition",
+   authors:"<strong>H. Khosravi</strong>, M. E. Shiri, H. Khosravi, E. Iranmanesh, A. Davoodi",
+   abstract:"Describes TACtic, a multi-strategy trading agent built for the Trading Agent Competition (TAC), combining multiple bidding behaviours and market models to compete in a simulated travel marketplace.",
+   venue:"Computer Society of Iran Computer Conference (CSICC 2008), 811–815",categories:["foundational-ml"],doi:"https://link.springer.com/chapter/10.1007/978-3-540-89985-3_109",type:"conference"},
+
+  {year:2009,title:"LNBC: A link-based naive Bayes classifier",
+   authors:"B. Bina, O. Schulte, <strong>H. Khosravi</strong>",
+   abstract:"Presents a link-based extension of the naive Bayes classifier for relational data, demonstrating that simple relational feature engineering can substantially improve classification accuracy.",
+   venue:"IEEE International Conference on Data Mining Workshops (ICDM 2009), 489–494",categories:["foundational-ml"],doi:"https://doi.org/10.1109/ICDMW.2009.55",type:"conference"}
+];
+
+// ── STATE & LOGIC ─────────────────────────────────────────────────────────────
+let activeFilter = 'all';
+
+function setFilter(f, btn) {
+  activeFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  else {
+    const match = document.querySelector(`.filter-btn[data-filter="${f}"]`);
+    if (match) match.classList.add('active');
+  }
+  updateThemeBanner(f);
+  applyFilters();
+}
+
+function updateThemeBanner(f) {
+  const banner = document.getElementById('theme-banner');
+  const label = document.getElementById('theme-banner-label');
+  if (f !== 'all' && CAT[f]) {
+    label.textContent = 'Showing: ' + CAT[f].label;
+    banner.classList.add('visible');
+  } else {
+    banner.classList.remove('visible');
+  }
+}
+
+function clearTheme() {
+  setFilter('all', document.querySelector('.filter-btn[data-filter="all"]'));
+}
+
+function applyFilters() {
+  const q = document.getElementById('search').value.toLowerCase();
+  const sortVal = document.getElementById('sort').value;
+  let pubs = [...PUBS];
+  if (sortVal === 'oldest') pubs.sort((a,b) => a.year - b.year);
+  else pubs.sort((a,b) => b.year - a.year);
+  const filtered = pubs.filter(p => {
+    const matchCat = activeFilter === 'all' || (activeFilter === 'featured' ? p.featured : p.categories.includes(activeFilter));
+    const matchQ = !q || p.title.toLowerCase().includes(q) || p.authors.toLowerCase().includes(q) || (p.abstract||'').toLowerCase().includes(q) || p.venue.toLowerCase().includes(q);
+    return matchCat && matchQ;
+  });
+  renderFiltered(filtered);
+}
+
+function renderFiltered(pubs) {
+  const grid = document.getElementById('cards-grid');
+  const status = document.getElementById('lib-status');
+  const noRes = document.getElementById('no-results');
+  if (pubs.length === 0) {
+    grid.innerHTML = ''; noRes.style.display = 'block'; status.textContent = '';
+  } else {
+    noRes.style.display = 'none';
+    status.textContent = 'Showing ' + pubs.length + ' publication' + (pubs.length !== 1 ? 's' : '');
+    grid.innerHTML = pubs.map(renderCard).join('');
+  }
+}
+
+function renderCard(p) {
+  const cat = p.categories[0];
+  const style = CAT[cat] || {label:cat, bg:'#f3f4f6', color:'#555', glow:'#aaa'};
+  const featured = p.featured ? '<span class="card-featured">⭐ Featured</span>' : '';
+  const extIcon = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`;
+  const venueEl = p.doi
+    ? `<a class="card-venue-link" href="${p.doi}" target="_blank"><span class="card-venue-text">${p.venue}</span>${extIcon}</a>`
+    : `<span class="card-venue-link" style="pointer-events:none;color:#94a3b8"><span class="card-venue-text">${p.venue}</span></span>`;
+  const btn = p.doi
+    ? `<a class="card-btn" href="${p.doi}" target="_blank">View</a>`
+    : `<span class="card-btn card-btn-disabled">View</span>`;
+  return `<article class="pub-card t-${cat}">
+    <div class="card-meta">
+      <div class="card-meta-left">
+        <span class="card-year">${p.year}</span>
+        <span class="card-category">${style.label}</span>
+      </div>
+      ${featured}
+    </div>
+    <h3 class="card-title">${p.title}</h3>
+    <p class="card-authors">${p.authors}</p>
+    <p class="card-abstract">${p.abstract}</p>
+    <div class="card-footer">
+      ${venueEl}
+      ${btn}
+    </div>
+  </article>`;
+}
+
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('open');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+
+// ── INIT — read ?filter= from URL ────────────────────────────────────────────
+(function init() {
+  const params = new URLSearchParams(window.location.search);
+  const theme = params.get('filter') || params.get('theme');
+  if (theme && CAT[theme]) {
+    setFilter(theme, null);
+  } else {
+    applyFilters();
+  }
+})();
+</script>
+</body>
+</html>

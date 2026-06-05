@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hassan Khosravi — Media</title>
+<style>
+:root{--sidebar-w:240px;--accent:#5b50d6;--accent-light:#eeecfb;--text:#1a1a2e;--muted:#64748b;--subtle:#94a3b8;--border:#e8e8f0;--bg:#f5f5fa;--card:#ffffff;--sidebar-bg:#ffffff;--radius:12px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.6}
+.layout{display:flex;min-height:100vh}.sidebar{width:var(--sidebar-w);background:var(--sidebar-bg);border-right:1px solid var(--border);position:fixed;top:0;left:0;bottom:0;overflow-y:auto;z-index:200;display:flex;flex-direction:column;padding:28px 20px 24px;transition:transform .25s ease}.main{margin-left:var(--sidebar-w);flex:1;min-width:0;padding:40px 44px}
+.sidebar-avatar-wrap{display:flex;justify-content:center;margin-bottom:12px}.sidebar-avatar{width:150px;height:150px;border-radius:50%;object-fit:cover;border:3px solid var(--border);display:block}.sidebar-avatar-fb{width:150px;height:150px;border-radius:50%;background:linear-gradient(135deg,#5b50d6,#818cf8);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;color:#fff}
+.sidebar-name{text-align:center;font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px}.sidebar-role{text-align:center;font-size:12px;color:var(--muted);margin-bottom:24px;line-height:1.4}
+.sidebar-nav{list-style:none;margin-bottom:28px}.sidebar-nav li{margin-bottom:2px}.sidebar-nav a{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:14px;color:var(--muted);text-decoration:none;transition:background .15s,color .15s}.sidebar-nav a:hover{background:var(--accent-light);color:var(--accent)}.sidebar-nav a.active{background:var(--accent-light);color:var(--accent);font-weight:600}.nav-icon{font-size:16px;width:20px;text-align:center}
+.sidebar-divider{height:1px;background:var(--border);margin-bottom:20px}.sidebar-contact{margin-bottom:20px}.contact-item{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);margin-bottom:8px;text-decoration:none}.contact-item:hover{color:var(--accent)}.contact-icon{font-size:14px;width:16px}
+.sidebar-socials{display:flex;gap:8px;justify-content:center}.social-icon{width:32px;height:32px;border-radius:8px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;text-decoration:none;color:var(--muted);font-size:14px;font-weight:700;transition:background .15s,color .15s,border-color .15s}.social-icon:hover{background:var(--accent-light);color:var(--accent);border-color:var(--accent)}
+.topbar{display:none;position:fixed;top:0;left:0;right:0;height:54px;background:var(--sidebar-bg);border-bottom:1px solid var(--border);z-index:300;align-items:center;justify-content:space-between;padding:0 16px}.topbar-name{font-size:15px;font-weight:700;color:var(--text)}.hamburger{background:none;border:none;cursor:pointer;padding:6px;border-radius:8px}.hamburger:hover{background:var(--accent-light)}.hamburger span{display:block;width:22px;height:2px;background:var(--text);margin:4px 0;border-radius:2px}.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:199}
+.page-header{margin-bottom:36px}.page-header h1{font-size:28px;font-weight:800;letter-spacing:-.02em;margin-bottom:6px}.page-header p{font-size:14px;color:var(--muted)}
+.section-head{font-size:20px;font-weight:700;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--accent);display:inline-block;margin-top:8px}
+.media-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-bottom:40px}
+.media-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:box-shadow .15s,transform .15s}
+.media-card:hover{box-shadow:0 8px 24px rgba(91,80,214,.1);transform:translateY(-2px)}
+.media-thumb{height:160px;background:linear-gradient(135deg,var(--accent-light),#c4bff5);display:flex;align-items:center;justify-content:center;font-size:48px;position:relative}
+.media-play{position:absolute;width:52px;height:52px;border-radius:50%;background:rgba(91,80,214,.9);display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px}
+.media-body{padding:18px}
+.media-type{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);margin-bottom:6px}
+.media-title{font-size:15px;font-weight:700;margin-bottom:6px;line-height:1.4}
+.media-meta{font-size:12px;color:var(--muted)}
+.press-list{margin-bottom:40px}
+.press-item{display:flex;gap:16px;padding:18px 0;border-bottom:1px solid var(--border);align-items:flex-start}
+.press-item:last-child{border-bottom:none}
+.press-outlet{font-size:13px;font-weight:700;min-width:100px;color:var(--accent)}
+.press-title{font-size:14px;color:var(--text);margin-bottom:4px}
+.press-date{font-size:12px;color:var(--muted)}
+.placeholder-box{background:var(--card);border:1px dashed var(--border);border-radius:var(--radius);padding:40px;text-align:center;color:var(--muted);margin-bottom:40px}
+.placeholder-box .ph-icon{font-size:36px;margin-bottom:12px}
+@media(max-width:768px){.topbar{display:flex}.sidebar{transform:translateX(-100%);box-shadow:4px 0 20px rgba(0,0,0,.1)}.sidebar.open{transform:translateX(0)}.sidebar-overlay.open{display:block}.main{margin-left:0;padding:80px 20px 40px}}
+
+    .sidebar-profile-links { display: flex; flex-direction: column; gap: 6px; padding: 0 8px; }
+    .sidebar-plink {
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 14px; border-radius: 10px;
+      background: var(--bg); border: 1px solid var(--border);
+      font-size: 13px; font-weight: 500; color: var(--text);
+      text-decoration: none;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .sidebar-plink:hover { background: #e8edf5; border-color: var(--accent); color: var(--accent); }
+    .sidebar-plink svg { flex-shrink: 0; opacity: 0.7; }
+
+
+/* MEDIA PAGE */
+.media-banner { border-radius: 18px; overflow: hidden; margin-bottom: 4px; max-height: 300px; }
+.media-banner-img { width: 100%; height: 300px; object-fit: contain; object-position: center; display: block; background: #000; }
+.media-filters { display: flex; gap: 10px; flex-wrap: wrap; margin: 20px 0 24px; }
+.media-filter { display: flex; align-items: center; gap: 7px; padding: 9px 18px; border-radius: 30px; border: 1.5px solid var(--border); background: #fff; color: var(--muted); font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.15s; }
+.media-filter:hover { border-color: var(--accent); color: var(--accent); }
+.media-filter.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.media-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+#storiesGrid { grid-template-columns: repeat(2, 1fr); }
+.media-card { background: #fff; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; transition: box-shadow 0.2s, transform 0.2s; }
+.media-card:hover { box-shadow: 0 8px 30px rgba(15,23,42,0.1); transform: translateY(-2px); }
+.media-card.hidden { display: none; }
+.media-thumb-wrap { display: block; position: relative; aspect-ratio: 16/9; overflow: hidden; background: #0f172a; width: 100%; }
+.media-thumb-img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; transition: opacity 0.2s; position: absolute; inset: 0; }
+.media-thumb-wrap:hover .media-thumb-img { opacity: 0.85; }
+.media-play-btn { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+.media-play-btn div, .media-play-btn > * { pointer-events: none; }
+.media-play-btn { background: rgba(0,0,0,0.15); }
+.media-play-btn svg { background: rgba(91,80,214,0.85); border-radius: 50%; padding: 10px; width: 44px; height: 44px; box-shadow: 0 2px 12px rgba(0,0,0,0.3); }
+.media-thumb-article { background: linear-gradient(135deg, #eeecfb, #e0e7ff); aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; }
+.media-article-icon { display: flex; align-items: center; justify-content: center; }
+.media-body { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.media-tag { display: inline-block; font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 20px; width: fit-content; }
+.media-title { font-size: 15px; font-weight: 700; color: var(--text); text-decoration: none; line-height: 1.4; }
+.media-title:hover { color: var(--accent); }
+.media-desc { font-size: 13px; color: var(--muted); line-height: 1.65; }
+.media-date { font-size: 12px; color: var(--subtle); margin-top: auto; padding-top: 6px; }
+@media (max-width: 900px) { .media-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .media-grid { grid-template-columns: 1fr; } }
+
+</style>
+</head>
+<body>
+<div class="topbar"><span class="topbar-name">Hassan Khosravi</span><button class="hamburger" onclick="toggleSidebar()" aria-label="Menu"><span></span><span></span><span></span></button></div>
+<div class="sidebar-overlay" id="overlay" onclick="closeSidebar()"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-avatar-wrap">
+      <img class="sidebar-avatar" src="assets/avatar.jpg" alt="Hassan Khosravi" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="sidebar-avatar-fb" style="display:none">HK</div>
+    </div>
+    <div class="sidebar-name">Hassan Khosravi</div>
+    <div class="sidebar-role">Associate Professor<br>AI &amp; Education · UQ</div>
+    <ul class="sidebar-nav">
+      <li><a href="index.html"><span class="nav-icon">🏠</span> Overview</a></li>
+      <li><a href="research.html"><span class="nav-icon">💡</span> Research</a></li>
+      <li><a href="teaching.html"><span class="nav-icon">🎓</span> Teaching</a></li>
+      <li><a href="publications.html"><span class="nav-icon">📚</span> Publications</a></li>
+      <li><a href="media.html" class="active"><span class="nav-icon">▶️</span> Media</a></li>
+      <li><a href="supervision.html"><span class="nav-icon">👥</span> Supervision</a></li>
+    </ul>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-profile-links">
+      <a href="mailto:h.khosravi@uq.edu.au" class="sidebar-plink">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
+        Email
+      </a>
+      <a href="https://researchers.uq.edu.au/researcher/15849" target="_blank" class="sidebar-plink">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        UQ Profile
+      </a>
+      <a href="https://au.linkedin.com/in/hassan-khosravi" target="_blank" class="sidebar-plink">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+      <a href="https://scholar.google.ca/citations?user=0U7jTbYAAAAJ&hl=en" target="_blank" class="sidebar-plink">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        Scholar
+      </a>
+      <a href="https://orcid.org/0000-0001-8664-6117" target="_blank" class="sidebar-plink">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zm-1.76 4.8c.693 0 1.254.56 1.254 1.254 0 .692-.561 1.253-1.254 1.253-.693 0-1.254-.561-1.254-1.253 0-.694.561-1.254 1.254-1.254zM9.6 9.12h1.44v7.68H9.6V9.12zm2.88 0h3.84c2.016 0 3.36 1.44 3.36 3.84 0 2.4-1.344 3.84-3.36 3.84H12.48V9.12zm1.44 1.44v5.04h2.4c1.2 0 1.92-.768 1.92-2.52 0-1.752-.72-2.52-1.92-2.52h-2.4z"/></svg>
+        ORCID
+      </a>
+    </div>
+  </aside>
+  <main class="main">
+  <div class="media-banner">
+    <img src="Media/Hassan.png" alt="Hassan Khosravi" class="media-banner-img">
+  </div>
+
+  <div class="page-header" style="margin-top:28px">
+    <h1>Media</h1>
+    <p>A collection of videos, interviews, talks, and stories featuring my work, ideas, and impact in AI, education, and beyond.</p>
+  </div>
+
+  <div class="media-grid" id="mediaGrid">
+    <div class="media-card" data-cat="video">
+      <a href="https://youtu.be/m7F6VhOkoYc" class="media-thumb-wrap">
+        <img class="media-thumb-img" src="Media/chatgpt2.png" alt="Panel on ChatGPT and the Future of Education" loading="lazy">
+        <div class="media-play-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+      </a>
+      <div class="media-body">
+        <div class="media-tag" style="color:#7c3aed;background:#f5f3ff">Panel</div>
+        <a href="https://youtu.be/m7F6VhOkoYc" class="media-title">Panel on ChatGPT and the Future of Education</a>
+        <p class="media-desc">A webinar exploring potential benefits and drawbacks of using ChatGPT in education — how instructors and students can leverage it, and how it may transform instruction, assessment, and feedback.</p>
+        <div class="media-date">2023</div>
+      </div>
+    </div>
+    <div class="media-card" data-cat="talk">
+      <a href="https://youtu.be/n8A16mSpw54" class="media-thumb-wrap">
+        <img class="media-thumb-img" src="Media/uq-talks.png" alt="UQ Talks: What AI Can and Can't Do for You (Yet)" loading="lazy">
+        <div class="media-play-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+      </a>
+      <div class="media-body">
+        <div class="media-tag" style="color:#7c3aed;background:#f5f3ff">Panel</div>
+        <a href="https://youtu.be/n8A16mSpw54 class="media-title">UQ Talks: What AI Can and Can't Do for You (Yet)</a>
+        <p class="media-desc">A UQ public talk exploring the real capabilities and current limitations of artificial intelligence — what it can do for you today, and where it still falls short.</p>
+        <div class="media-date">2024</div>
+      </div>
+    </div>
+
+        <div class="media-card" data-cat="talk">
+      <a href="https://youtu.be/O5Uj7InErAs" class="media-thumb-wrap">
+        <img class="media-thumb-img" src="Media/Ella-2026-llms.png" alt="Panel: From Large Language Models to Learning Companions" loading="lazy">
+        <div class="media-play-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+      </a>
+      <div class="media-body">
+        <div class="media-tag" style="color:#7c3aed;background:#f5f3ff">Panel</div>
+        <a href="https://youtu.be/O5Uj7InErAs" class="media-title">Panel: From Large Language Models to Learning Companions</a>
+        <p class="media-desc">A panel discussion exploring how large language models are being transformed into intelligent learning companions — examining the opportunities, challenges, and future directions for AI in education.</p>
+        <div class="media-date">2024</div>
+      </div>
+    </div>
+    <div class="media-card" data-cat="talk">
+      <a href="https://youtu.be/wH78-JtuqqY" class="media-thumb-wrap">
+        <img class="media-thumb-img" src="Media/AI-for-Kids.png" alt="AI for Kids: Friend or Foe?" loading="lazy">
+        <div class="media-play-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+      </a>
+      <div class="media-body">
+        <div class="media-tag" style="color:#7c3aed;background:#f5f3ff">Panel</div>
+        <a href="https://youtu.be/wH78-JtuqqY class="media-title">AI for Kids: Friend or Foe?</a>
+        <p class="media-desc">A talk exploring the role of artificial intelligence in children's lives and education — examining whether AI is a helpful companion or a potential risk for young learners.</p>
+        <div class="media-date">2024</div>
+      </div>
+    </div>
+<div class="media-card" data-cat="video">
+      <a href="https://youtu.be/ugyfdjI9NEk" class="media-thumb-wrap">
+        <img class="media-thumb-img" src="Media/AI-applications.png" alt="Building AI Applications Based on Learning Research" loading="lazy">
+        <div class="media-play-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+      </a>
+      <div class="media-body">
+        <div class="media-tag" style="color:#1d4ed8;background:#eff6ff">Talk</div>
+        <a href="https://youtu.be/ugyfdjI9NEk" class="media-title">Building AI Applications Based on Learning Research</a>
+        <p class="media-desc">Before rushing blindly into the future of AI in education, looking at the legacy of research will help build applications with a better chance of improving outcomes. A behind-the-scenes look at how AI features were built into Khan Academy.</p>
+        <div class="media-date">2023</div>
+      </div>
+    </div>
+    <div class="media-card" data-cat="video">
+      <a href="https://youtu.be/do16jITdNFs" class="media-thumb-wrap">
+        <img class="media-thumb-img" src="https://img.youtube.com/vi/do16jITdNFs/hqdefault.jpg" alt="The RiPPLE Platform" loading="lazy">
+        <div class="media-play-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+      </a>
+      <div class="media-body">
+        <div class="media-tag" style="color:#0f766e;background:#f0fdfb">Demo</div>
+        <a href="https://youtu.be/do16jITdNFs" class="media-title">The RiPPLE Platform</a>
+        <p class="media-desc">A short video about RiPPLE — a platform leveraging learning sciences and AI to transform student learning into an active, social, and personalised experience. Students create and peer-review resources; instructors build large practice banks at low cost.</p>
+        <div class="media-date">2022</div>
+      </div>
+    </div>
+    <div class="media-card" data-cat="talk">
+      <a href="https://youtu.be/pEOKxPPinXQ" class="media-thumb-wrap">
+        <img class="media-thumb-img" src="Media/responsible-AI.png" alt="Responsible AI at UQ" loading="lazy">
+        <div class="media-play-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+      </a>
+      <div class="media-body">
+        <div class="media-tag" style="color:#0f766e;background:#f0fdfb">Short Video</div>
+        <a href="https://youtu.be/pEOKxPPinXQ" class="media-title">Responsible AI at UQ</a>
+        <p class="media-desc">Featuring Professor Nicole Gillespie, this short video discusses present issues regarding AI usage and suggests measures that could lead to its more responsible application.</p>
+        <div class="media-date">2023</div>
+      </div>
+    </div>
+    <div class="media-card" data-cat="video">
+      <a href="https://youtu.be/0eDqaFm_38s" class="media-thumb-wrap">
+        <img class="media-thumb-img" src="https://img.youtube.com/vi/0eDqaFm_38s/hqdefault.jpg" alt="AI in Education at The University of Queensland" loading="lazy">
+        <div class="media-play-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+      </a>
+      <div class="media-body">
+        <div class="media-tag" style="color:#0f766e;background:#f0fdfb">Short Video</div>
+        <a href="https://youtu.be/0eDqaFm_38s" class="media-title">AI in Education at The University of Queensland</a>
+        <p class="media-desc">A short video about current challenges in education and how AI can help address them, featuring an example AI-powered educational technology developed at UQ.</p>
+        <div class="media-date">2022</div>
+      </div>
+    </div>
+    <div class="media-card" data-cat="talk">
+      <a href="https://youtu.be/EdEYpLtpDdY" class="media-thumb-wrap">
+        <img class="media-thumb-img" src="Media/xaied.png" alt="A Panel on Explainable AI in Education" loading="lazy">
+        <div class="media-play-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+      </a>
+      <div class="media-body">
+        <div class="media-tag" style="color:#7c3aed;background:#f5f3ff">Panel</div>
+        <a href="https://youtu.be/EdEYpLtpDdY" class="media-title">A Panel on Explainable AI in Education</a>
+        <p class="media-desc">Exploring Fairness, Accountability, Transparency, and Ethics (FATE) of AI in education. The panel examines the role and need for explainable AI (XAI) — benefits, approaches, and potential pitfalls of providing explanations within education.</p>
+        <div class="media-date">2022</div>
+      </div>
+    </div>
+    <div class="media-card" data-cat="talk">
+      <a href="https://youtu.be/zyAzqoBQDnY" class="media-thumb-wrap">
+        <img class="media-thumb-img" src="Media/learner-profiles.png" alt="A Panel on Infrastructure for AI in Education" loading="lazy">
+        <div class="media-play-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+      </a>
+      <div class="media-body">
+        <div class="media-tag" style="color:#7c3aed;background:#f5f3ff">Panel</div>
+        <a href="https://youtu.be/zyAzqoBQDnY" class="media-title">A Panel on Infrastructure for AI in Education</a>
+        <p class="media-desc">Exploring the history of learner profiles, actual work being conducted, and setting the stage for future innovations. As individuals move through life, learning is a constant need requiring new mechanisms for communicating capabilities and competencies.</p>
+        <div class="media-date">2022</div>
+      </div>
+    </div>
+    <div class="media-card" data-cat="talk">
+      <a href="https://youtu.be/5a6WRDa7K0Y" class="media-thumb-wrap">
+        <img class="media-thumb-img" src="Media/AIED-kelly.png" alt="Education and AI with Kelly Matthews" loading="lazy">
+        <div class="media-play-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+      </a>
+      <div class="media-body">
+        <div class="media-tag" style="color:#0f766e;background:#f0fdfb">Short Video</div>
+        <a href="https://youtu.be/5a6WRDa7K0Y" class="media-title">Education and AI</a>
+        <p class="media-desc">A short video with Associate Professor Kelly Matthews discussing current challenges in education and how AI can help address them.</p>
+        <div class="media-date">2022</div>
+      </div>
+    </div>
+    <div class="media-card" data-cat="video">
+      <a href="https://youtu.be/aoJXHZ6Upm0" class="media-thumb-wrap">
+        <img class="media-thumb-img" src="Media/debate-evaluation.png" alt="Higher Education Debate: Should We Abolish Student Evaluation of Teaching?" loading="lazy">
+        <div class="media-play-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+      </a>
+      <div class="media-body">
+        <div class="media-tag" style="color:#dc2626;background:#fef2f2">Debate</div>
+        <a href="https://youtu.be/aoJXHZ6Upm0" class="media-title">Higher Education Debate: Should We Abolish Student Evaluation of Teaching?</a>
+        <p class="media-desc">From UQ's Higher Ed Debate series — staff and students debate whether SECaTs should be abolished, following the common debate style of two teams of three members.</p>
+        <div class="media-date">2022</div>
+      </div>
+    </div>
+    
+    <div class="media-card" data-cat="video">
+      <a href="https://itali.uq.edu.au/blog/2022/06/blog-post-%E2%80%93-should-we-ban-final-exams" class="media-thumb-wrap">
+        <img class="media-thumb-img" src="Media/debate-exam.png" alt="Higher Education Debate: Ban Final Exams" loading="lazy">
+      </a>
+      <div class="media-body">
+        <div class="media-tag" style="color:#dc2626;background:#fef2f2">Debate</div>
+        <a href="https://itali.uq.edu.au/blog/2022/06/blog-post-%E2%80%93-should-we-ban-final-exams" class="media-title">Higher Education Debate: That We Should Ban Final Exams</a>
+        <p class="media-desc">For centuries, exams have played a central role in assessing student competencies. In the first debate from UQ's Higher Ed Debate series, staff and students examined this controversy — two teams of three members debating whether we should ban final exams.</p>
+        <div class="media-date">2022</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-head" style="margin: 40px 0 20px;">Stories &amp; Features</div>
+  <div class="media-grid" id="storiesGrid" style="grid-template-columns: repeat(2, minmax(0,1fr));">
+    <div class="media-card" data-cat="story">
+      <a href="https://campusmorningmail.com.au/news/aus-education-innovation-more-than-an-emergency-response/" class="media-thumb-wrap">
+        <img class="media-thumb-img" src="Media/ausinnovation.png" alt="Australian Education Innovation" loading="lazy">
+      </a>
+      <div class="media-body">
+        <div class="media-tag" style="color:#059669;background:#ecfdf5">Blog</div>
+        <a href="https://campusmorningmail.com.au/news/aus-education-innovation-more-than-an-emergency-response/" class="media-title">Australian Education Innovation: More Than an Emergency Response</a>
+        <p class="media-desc">Much of the sector's discussion has focussed on challenges of shifting overnight to fully online delivery. This piece highlights innovative practices that were changing education well before COVID-19, including UQ's RiPPLE platform.</p>
+        <div class="media-date">2021</div>
+      </div>
+    </div>
+    <div class="media-card" data-cat="story">
+      <a href="https://www.uq.edu.au/news/node/130551" class="media-thumb-wrap">
+        <img class="media-thumb-img" src="Media/RiPPLEwaves.png" alt="The Ripple Effect" loading="lazy">
+      </a>
+      <div class="media-body">
+        <div class="media-tag" style="color:#7c3aed;background:#f5f3ff">Feature</div>
+        <a href="https://www.uq.edu.au/news/node/130551" class="media-title">The Ripple Effect: Making Waves in Teaching and Learning</a>
+        <p class="media-desc">A senior lecturer at The University of Queensland is gaining international attention for innovative efforts to change tertiary level teaching and learning with the help of artificial intelligence.</p>
+        <div class="media-date">2021</div>
+      </div>
+    </div>
+  </div>
+</main>
+</div>
+<script>
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('overlay').classList.toggle('open')}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('overlay').classList.remove('open')}
+</script>
+
+<script>
+document.querySelectorAll('.media-thumb-wrap').forEach(function(a) {
+  var href = a.getAttribute('href') || '';
+  var match = href.match(/youtu(?:be\.com\/watch\?v=|\.be\/)([\w-]+)/);
+  if (!match) return;
+  var videoId = match[1];
+  a.addEventListener('click', function(e) {
+    e.preventDefault();
+    var wrap = document.createElement('div');
+    wrap.style.cssText = 'position:relative;width:100%;padding-top:56.25%;background:#000;';
+    var iframe = document.createElement('iframe');
+    iframe.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1';
+    iframe.allow = 'autoplay; encrypted-media; fullscreen';
+    iframe.allowFullscreen = true;
+    iframe.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border:0;';
+    wrap.appendChild(iframe);
+    a.parentNode.replaceChild(wrap, a);
+  });
+});
+</script>
+</body>
+</html>

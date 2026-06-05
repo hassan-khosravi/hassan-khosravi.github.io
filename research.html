@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hassan Khosravi — Research</title>
+<style>
+:root {
+  --sidebar-w: 240px;
+  --accent: #5b50d6;
+  --accent-light: #eeecfb;
+  --text: #1a1a2e;
+  --muted: #64748b;
+  --subtle: #94a3b8;
+  --border: #e8e8f0;
+  --bg: #f5f5fa;
+  --card: #ffffff;
+  --sidebar-bg: #ffffff;
+  --radius: 12px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); font-size: 15px; line-height: 1.6; }
+
+.layout { display: flex; min-height: 100vh; }
+.sidebar { width: var(--sidebar-w); background: var(--sidebar-bg); border-right: 1px solid var(--border); position: fixed; top: 0; left: 0; bottom: 0; overflow-y: auto; z-index: 200; display: flex; flex-direction: column; padding: 28px 20px 24px; transition: transform 0.25s ease; }
+.main { margin-left: var(--sidebar-w); flex: 1; min-width: 0; padding: 40px 44px; }
+
+.sidebar-avatar-wrap { display: flex; justify-content: center; margin-bottom: 12px; }
+.sidebar-avatar { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 3px solid var(--border); display: block; }
+.sidebar-avatar-fb { width: 150px; height: 150px; border-radius: 50%; background: linear-gradient(135deg, #5b50d6, #818cf8); display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 700; color: #fff; }
+.sidebar-name { text-align: center; font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.sidebar-role { text-align: center; font-size: 12px; color: var(--muted); margin-bottom: 24px; line-height: 1.4; }
+.sidebar-nav { list-style: none; margin-bottom: 28px; }
+.sidebar-nav li { margin-bottom: 2px; }
+.sidebar-nav a { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 8px; font-size: 14px; color: var(--muted); text-decoration: none; transition: background 0.15s, color 0.15s; }
+.sidebar-nav a:hover { background: var(--accent-light); color: var(--accent); }
+.sidebar-nav a.active { background: var(--accent-light); color: var(--accent); font-weight: 600; }
+.nav-icon { font-size: 16px; width: 20px; text-align: center; }
+.sidebar-divider { height: 1px; background: var(--border); margin-bottom: 20px; }
+.sidebar-contact { margin-bottom: 20px; }
+.contact-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); margin-bottom: 8px; text-decoration: none; }
+.contact-item:hover { color: var(--accent); }
+.contact-icon { font-size: 14px; width: 16px; }
+.sidebar-socials { display: flex; gap: 8px; justify-content: center; }
+.social-icon { width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; text-decoration: none; color: var(--muted); font-size: 14px; font-weight: 700; transition: background 0.15s, color 0.15s, border-color 0.15s; }
+.social-icon:hover { background: var(--accent-light); color: var(--accent); border-color: var(--accent); }
+
+.topbar { display: none; position: fixed; top: 0; left: 0; right: 0; height: 54px; background: var(--sidebar-bg); border-bottom: 1px solid var(--border); z-index: 300; align-items: center; justify-content: space-between; padding: 0 16px; }
+.topbar-name { font-size: 15px; font-weight: 700; color: var(--text); }
+.hamburger { background: none; border: none; cursor: pointer; padding: 6px; border-radius: 8px; }
+.hamburger:hover { background: var(--accent-light); }
+.hamburger span { display: block; width: 22px; height: 2px; background: var(--text); margin: 4px 0; border-radius: 2px; }
+.sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.35); z-index: 199; }
+
+/* PAGE */
+.page-header { margin-bottom: 28px; }
+.page-header h1 { font-size: 32px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 14px; }
+.page-intro { font-size: 15px; color: #334155; line-height: 1.75; margin-bottom: 10px; }
+.intro-with-diagram { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center; margin-bottom: 4px; }
+.intro-text { min-width: 0; }
+.intro-diagram { width: 100%; }
+@media (max-width: 900px) { .intro-with-diagram { grid-template-columns: 1fr; } .intro-diagram { max-width: 460px; margin: 0 auto; } }
+.theme-hint { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); margin: 20px 0 28px; }
+
+/* GRID */
+.strands-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+
+/* CARD */
+
+
+.strand-card {
+  --s-theme: #5b50d6;
+  --s-glow: rgba(91,80,214,0.14);
+  position: relative; overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  box-shadow: 0 8px 24px rgba(15,23,42,0.06), 0 0 0 1px rgba(255,255,255,0.75) inset;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.s1 { --s-theme: #072365; --s-glow: rgba(30,58,138,0.12); }
+.s2 { --s-theme: #0a646d; --s-glow: rgba(13,148,136,0.12); }
+.s3 { --s-theme: #083693; --s-glow: rgba(180,83,9,0.12); }
+.s4 { --s-theme: #f52d1b; --s-glow: rgba(109,40,217,0.12); }
+.s5 { --s-theme: #05808f; --s-glow: rgba(29,78,216,0.12); }
+.s6 { --s-theme: #031c59; --s-glow: rgba(3,105,161,0.12); }
+.strand-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 36px rgba(15,23,42,0.10), 0 0 0 1px rgba(255,255,255,0.8) inset;
+}
+.strand-card::after {
+  content: "";
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(circle at 88% 8%, var(--s-glow) 0, transparent 38%),
+    radial-gradient(circle at 8% 100%, var(--s-glow) 0, transparent 28%);
+  opacity: 0.45;
+  pointer-events: none;
+}
+/* ensure content sits above wash */
+.card-top, .strand-desc, .focus-list, 
+.strand-card.full { grid-column: 1 / -1; }
+
+/* card top: icon LEFT, num+title RIGHT */
+.card-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.icon-circle svg { display: none; }
+.icon-circle img { width: 100px; height: 100px; object-fit: contain; }
+
+.card-title-block { display: flex; align-items: center; gap: 8px; flex: 1; min-width: 0; }
+.strand-num {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--s-theme);
+  color: #fff;
+  font-size: 20px; font-weight: 800;
+  display: inline-flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.strand-title {
+  font-size: 20px; font-weight: 800;
+  color: var(--s-theme);
+  line-height: 1.2;
+}
+
+.strand-desc { font-size: 13.5px; color: #475569; line-height: 1.7; }
+
+.focus-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 12px;
+  padding-left: 18px;
+  margin: 0;
+  font-size: 13px;
+  color: #475569;
+}
+.focus-list li {
+  font-size: 13px; color: var(--muted);
+  display: flex; align-items: center; gap: 7px;
+}
+.focus-list li::before { content: '•'; font-size: 16px; line-height: 1; }
+
+
+
+
+/* ── COLOUR THEMES ── */
+/* s1 navy */
+
+.s1 
+.s1 .strand-num  { color: #1e3a8a; }
+.s1 .strand-title { color: #1e3a8a; }
+.s1 .focus-list li::before { color: #3b82f6; }
+.s1 
+
+/* s2 teal */
+
+.s2 
+.s2 .strand-num  { color: #0f766e; }
+.s2 .strand-title { color: #0f766e; }
+.s2 .focus-list li::before { color: #14b8a6; }
+.s2 
+
+/* s3 blue */
+
+.s3 
+.s3 .strand-num  { color: #1d4ed8; }
+.s3 .strand-title { color: #1d4ed8; }
+.s3 .focus-list li::before { color: #3b82f6; }
+.s3 
+
+/* s4 red */
+
+.s4 
+.s4 .strand-num  { color: #dc2626; }
+.s4 .strand-title { color: #dc2626; }
+.s4 .focus-list li::before { color: #ef4444; }
+.s4 
+
+/* s5 teal */
+
+.s5 
+.s5 .strand-num  { color: #0f766e; }
+.s5 .strand-title { color: #0f766e; }
+.s5 .focus-list li::before { color: #14b8a6; }
+.s5 
+
+/* s6 indigo */
+
+.s6 
+.s6 .strand-num  { color: #1e3a8a; }
+.s6 .strand-title { color: #1e3a8a; }
+.s6 .focus-list li::before { color: #4f46e5; }
+.s6 
+
+/* s7 teal */
+
+.s7 
+
+/* full-width card: 4-col bullets */
+.strand-card.full .focus-list { grid-template-columns: repeat(4, 1fr); }
+
+@media (max-width: 1000px) {
+  .strands-grid { grid-template-columns: 1fr; }
+  .strand-card.full { grid-column: 1; }
+  .strand-card.full .focus-list { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 768px) {
+  .topbar { display: flex; }
+  .sidebar { transform: translateX(-100%); box-shadow: 4px 0 20px rgba(0,0,0,0.1); }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-overlay.open { display: block; }
+  .main { margin-left: 0; padding: 80px 20px 40px; }
+  
+  .icon-circle svg { width: 42px; height: 42px; }
+  .strand-title { font-size: 16px; }
+  .focus-list, .strand-card.full .focus-list { grid-template-columns: 1fr; }
+}
+
+.research-metrics { display: flex; flex-direction: row; gap: 16px; flex-wrap: nowrap; margin: 24px 0; width: 100%; }
+.metric-badge {
+  background: #fff; border: 1px solid #e2e8f0; border-radius: 16px;
+  padding: 16px 20px; flex: 1 1 0%; min-width: 0; display: flex; align-items: center; gap: 14px; overflow: hidden;
+  box-shadow: 0 4px 16px rgba(15,23,42,0.06), 0 0 0 1px rgba(255,255,255,0.8) inset;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative; overflow: hidden;
+}
+.metric-badge::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(circle at 85% 10%, rgba(91,80,214,0.10) 0, transparent 45%),
+    radial-gradient(circle at 10% 90%, rgba(91,80,214,0.07) 0, transparent 35%);
+}
+.metric-badge:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(91,80,214,0.14); }
+.metric-icon { font-size: 28px; position: relative; z-index: 1; }
+.metric-text { display: flex; flex-direction: column; position: relative; z-index: 1; }
+.metric-value { font-size: 26px; font-weight: 800; color: var(--accent); letter-spacing: -0.03em; line-height: 1; margin-bottom: 3px; }
+.metric-label { font-size: 12px; color: var(--muted); line-height: 1.3; }
+.metric-note { font-size: 11px; color: #94a3b8; font-style: italic; }
+.research-foundations { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 18px; padding: 36px; margin: 8px 0 28px; }
+.foundations-text h2 { font-size: 22px; font-weight: 800; color: #1e293b; margin: 0 0 8px; }
+.foundations-text h2::after { content: ""; display: block; width: 40px; height: 3px; background: var(--accent); margin-top: 8px; border-radius: 2px; }
+.foundations-text p { font-size: 14px; line-height: 1.8; color: #475569; margin: 16px 0; }
+.foundations-diagram img { width: 100%; }
+@media (max-width: 768px) { .research-foundations { grid-template-columns: 1fr; } .research-metrics { flex-direction: column; } }
+
+.seven-strands-section { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; margin: 0 0 28px; }
+.seven-strands-section .seven-strands-img { order: -1; }
+.seven-strands-title { font-size: 22px; font-weight: 800; color: #1e293b; margin: 0 0 8px; }
+.seven-strands-underline { width: 40px; height: 3px; background: var(--accent); border-radius: 2px; margin-bottom: 16px; }
+.seven-strands-desc { font-size: 14px; line-height: 1.8; color: #475569; }
+.seven-strands-img img { width: 100%; }
+@media (max-width: 768px) { .seven-strands-section { grid-template-columns: 1fr; } }
+
+.strand-header-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 14px 14px 0 0;
+  flex-shrink: 0;
+  background: #f8fafc;
+}
+.strand-body {
+  padding: 16px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+  min-height: 0;
+}
+.strand-footer-img { display: none; }
+
+.strand-ghost { visibility: hidden; pointer-events: none; }
+.icon-circle {
+  display: inline-flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.icon-circle img { width: 80px; height: 80px; object-fit: contain; }
+.view-link {
+  flex: 1;
+  display: flex; align-items: center; justify-content: center;
+  background: #fff;
+  border: 2.5px solid var(--s-theme);
+  border-radius: 10px;
+  padding: 11px 16px;
+  color: var(--s-theme);
+  font-weight: 700; font-size: 15px;
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+}
+.view-link:hover { background: var(--s-theme); color: #fff; }
+
+
+.strand-subtitle {
+  font-size: 13px;
+  color: #64748b;
+  margin: 4px 0 0 0;
+  line-height: 1.4;
+}
+
+.strand-footer {
+  display: flex; align-items: center; gap: 12px;
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.view-link:hover { text-decoration: underline; }
+
+.s7 { --s-theme: #e07520; --s-glow: rgba(224,117,32,0.15); }
+.s7 .strand-title { color: #e07520; }
+.s7 .strand-num { background: #e07520; }
+.s7 .strand-subtitle { color: #b85a10; }
+.s7 .icon-circle img { filter: invert(52%) sepia(85%) saturate(600%) hue-rotate(345deg) brightness(1.05); }
+
+    .sidebar-profile-links { display: flex; flex-direction: column; gap: 6px; padding: 0 8px; }
+    .sidebar-plink {
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 14px; border-radius: 10px;
+      background: var(--bg); border: 1px solid var(--border);
+      font-size: 13px; font-weight: 500; color: var(--text);
+      text-decoration: none;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .sidebar-plink:hover { background: #e8edf5; border-color: var(--accent); color: var(--accent); }
+    .sidebar-plink svg { flex-shrink: 0; opacity: 0.7; }
+
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="topbar-name">Hassan Khosravi</span>
+  <button class="hamburger" onclick="toggleSidebar()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</div>
+<div class="sidebar-overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-avatar-wrap">
+      <img class="sidebar-avatar" src="assets/avatar.jpg" alt="Hassan Khosravi"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="sidebar-avatar-fb" style="display:none">HK</div>
+    </div>
+    <div class="sidebar-name">Hassan Khosravi</div>
+    <div class="sidebar-role">Associate Professor<br>AI &amp; Education · UQ</div>
+    <ul class="sidebar-nav">
+      <li><a href="index.html"><span class="nav-icon">🏠</span> Overview</a></li>
+      <li><a href="research.html" class="active"><span class="nav-icon">💡</span> Research</a></li>
+      <li><a href="teaching.html"><span class="nav-icon">🎓</span> Teaching</a></li>
+      <li><a href="publications.html"><span class="nav-icon">📚</span> Publications</a></li>
+      <li><a href="media.html"><span class="nav-icon">▶️</span> Media</a></li>
+      <li><a href="supervision.html"><span class="nav-icon">👥</span> Supervision</a></li>
+    </ul>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-profile-links">
+      <a href="mailto:h.khosravi@uq.edu.au" class="sidebar-plink">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
+        Email
+      </a>
+      <a href="https://researchers.uq.edu.au/researcher/15849" target="_blank" class="sidebar-plink">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        UQ Profile
+      </a>
+      <a href="https://au.linkedin.com/in/hassan-khosravi" target="_blank" class="sidebar-plink">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+      <a href="https://scholar.google.ca/citations?user=0U7jTbYAAAAJ&hl=en" target="_blank" class="sidebar-plink">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        Scholar
+      </a>
+      <a href="https://orcid.org/0000-0001-8664-6117" target="_blank" class="sidebar-plink">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zm-1.76 4.8c.693 0 1.254.56 1.254 1.254 0 .692-.561 1.253-1.254 1.253-.693 0-1.254-.561-1.254-1.253 0-.694.561-1.254 1.254-1.254zM9.6 9.12h1.44v7.68H9.6V9.12zm2.88 0h3.84c2.016 0 3.36 1.44 3.36 3.84 0 2.4-1.344 3.84-3.36 3.84H12.48V9.12zm1.44 1.44v5.04h2.4c1.2 0 1.92-.768 1.92-2.52 0-1.752-.72-2.52-1.92-2.52h-2.4z"/></svg>
+        ORCID
+      </a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="page-header">
+      <h1>Research</h1>
+      <p class="page-intro">My research sits at the intersection of the learning sciences, human–computer interaction, and artificial intelligence. It aims to design intelligent, fair, and human-centred technologies that enhance learning experiences and outcomes. My work is recognised internationally and informs both theory and practice.</p>
+
+      <div class="research-metrics">
+        <div class="metric-badge">
+<div style="width:48px;height:48px;border-radius:14px;background:var(--accent-light);display:flex;align-items:center;justify-content:center;margin:0;flex-shrink:0;position:relative;z-index:1"><svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><path d="M6 9H4a2 2 0 0 1-2-2V5h4"/><path d="M18 9h2a2 2 0 0 0 2-2V5h-4"/><path d="M12 17v4"/><path d="M8 21h8"/><path d="M6 5h12v4a6 6 0 0 1-12 0V5z"/></svg></div>
+          <div class="metric-text">
+            <div class="metric-value">Top 2%</div>
+            <div class="metric-label">Scientists worldwide</div>
+            <div class="metric-note">Stanford/Elsevier ranking</div>
+          </div>
+        </div>
+        <div class="metric-badge">
+<div style="width:48px;height:48px;border-radius:14px;background:var(--accent-light);display:flex;align-items:center;justify-content:center;margin:0;flex-shrink:0;position:relative;z-index:1"><svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg></div>
+          <div class="metric-text">
+            <div class="metric-value">8.27</div>
+            <div class="metric-label">Field-Weighted Citation Impact</div>
+            <div class="metric-note">8× the global average</div>
+          </div>
+        </div>
+        <div class="metric-badge">
+<div style="width:48px;height:48px;border-radius:14px;background:var(--accent-light);display:flex;align-items:center;justify-content:center;margin:0;flex-shrink:0;position:relative;z-index:1"><svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+          <div class="metric-text">
+            <div class="metric-value">100+</div>
+            <div class="metric-label">Publications</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="research-foundations">
+        <div class="foundations-text">
+          <h2>Research Foundations</h2>
+          <p>My research sits at the intersection of <strong>Computer Science</strong>, <strong>Learning Sciences</strong>, and <strong>Human–Computer Interaction</strong>. I draw on these fields to design and evaluate AI-powered educational technologies that make learning more effective, equitable, and engaging. This includes work in <strong>AI in Education</strong>, <strong>Learning Analytics</strong>, <strong>Educational Technologies</strong>, <strong>Crowdsourcing</strong>, <strong>Intelligent Systems</strong>, and <strong>Human-Centred AI</strong>. Together, these strands reflect a vision of educational technology that is scientifically grounded, computationally sophisticated, and deeply human.</p>
+        </div>
+        <div class="foundations-diagram"><img src="assets/hero.png" alt="Research Foundations" style="width:100%"></div>
+      </div>
+    </div>
+
+    <div class="seven-strands-section">
+      <div class="seven-strands-text">
+        <h2 class="seven-strands-title">Seven Connected Research Strands</h2>
+        <div class="seven-strands-underline"></div>
+        <p class="seven-strands-desc">My research agenda is organised around seven interlinked strands that span methods, theory and practice. Together, they form a coherent journey from foundational methods to real-world impact in learning and education. Some strands focus on building the technical foundations that make intelligent educational systems possible, while others examine how those systems can be designed to be fair, effective, and human-centred. Others still explore how learners themselves can be empowered as active participants in the knowledge-creation process. Across all of this work, the unifying goal is the same: to understand how technology and data can be harnessed to make learning more personalised, equitable, and impactful at scale.</p>
+      </div>
+      <div class="seven-strands-img"><img src="assets/research-strands-new.png" alt="Research Journey diagram" style="width:100%;display:block"></div>
+    </div>
+
+    <div class="theme-hint">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1l1.5 4.5H14l-3.5 2.5 1.5 4.5L8 10 4 12.5l1.5-4.5L2 5.5h4.5L8 1z" fill="#94a3b8"/></svg>
+      Select a theme to explore related papers
+    </div>
+
+    <div class="strands-grid">
+
+      <div class="strand-card s1" onclick="location.href='publications.html?filter=foundational-ml'">
+        <img class="strand-header-img" src="Research/foundational-AI.png" alt="Foundational Machine Learning">
+        <div class="strand-body">
+          <div class="card-top">
+            <div class="card-title-block">
+              <div class="strand-num">1</div>
+              <div class="strand-title">Foundational Machine Learning</div>
+            </div>
+          </div>
+          <p class="strand-subtitle">Machine learning methods for educational data</p>
+          <p class="strand-desc">This strand captures my earlier methodological work on machine learning approaches that support prediction, modelling, and discovery from complex educational and behavioural data. It provides the technical foundation for later work in learner modelling, adaptive learning, and learning analytics.</p>
+          <div class="strand-footer">
+            <div class="icon-circle"><img src="Research/research-category-icons/neural_network_icon_with_accent.png" alt="Foundational Machine Learning" style="width:100px;height:100px;object-fit:contain"></div>
+            <a class="view-link" href="publications.html?filter=foundational-ml">View papers on this topic →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="strand-card s2" onclick="location.href='publications.html?filter=learner-modelling'">
+        <img class="strand-header-img" src="Research/learner-modelling.png" alt="Learner Modelling">
+        <div class="strand-body">
+          <div class="card-top">
+            <div class="card-title-block">
+              <div class="strand-num">2</div>
+              <div class="strand-title">Learner Modelling</div>
+            </div>
+          </div>
+          <p class="strand-subtitle">Knowledge tracing, skill modelling, and learner affect</p>
+          <p class="strand-desc">Learner modelling is about building computational representations of what a student knows, how they think, and how their understanding evolves over time. This strand spans knowledge tracing, skill modelling, and affect-aware systems.</p>
+          <div class="strand-footer">
+            <div class="icon-circle"><img src="Research/research-category-icons/profile_and_data_summary_icon.png" alt="Learner Modelling" style="width:100px;height:100px;object-fit:contain"></div>
+            <a class="view-link" href="publications.html?filter=learner-modelling">View papers on this topic →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="strand-card s3" onclick="location.href='publications.html?filter=adaptive-learning'">
+        <img class="strand-header-img" src="Research/adaptive-learning.png" alt="Adaptive Learning">
+        <div class="strand-body">
+          <div class="card-top">
+            <div class="card-title-block">
+              <div class="strand-num">3</div>
+              <div class="strand-title">Adaptive Learning</div>
+            </div>
+          </div>
+          <p class="strand-subtitle">Personalised content, pacing, and feedback</p>
+          <p class="strand-desc">This strand focuses on designing systems that personalise the learning experience in real time — adapting content, difficulty, pacing, and feedback to each learner's needs and goals.</p>
+          <div class="strand-footer">
+            <div class="icon-circle"><img src="Research/research-category-icons/learning_journey_icon_with_achievement_flow.png" alt="Adaptive Learning" style="width:100px;height:100px;object-fit:contain"></div>
+            <a class="view-link" href="publications.html?filter=adaptive-learning">View papers on this topic →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="strand-card s4" onclick="location.href='publications.html?filter=co-creation'">
+        <img class="strand-header-img" src="Research/cocreation.png" alt="Students as Creators">
+        <div class="strand-body">
+          <div class="card-top">
+            <div class="card-title-block">
+              <div class="strand-num">4</div>
+              <div class="strand-title">Students as Creators</div>
+            </div>
+          </div>
+          <p class="strand-subtitle">Co-creation, learnersourcing, and knowledge building</p>
+          <p class="strand-desc">This strand explores approaches where students move beyond passive consumption to become active producers of knowledge and learning materials. It includes learnersourcing, student-generated content, and students as partners in educational design.</p>
+          <div class="strand-footer">
+            <div class="icon-circle"><img src="Research/research-category-icons/customer_feedback_discussion_icon.png" alt="Students as Creators" style="width:100px;height:100px;object-fit:contain"></div>
+            <a class="view-link" href="publications.html?filter=co-creation">View papers on this topic →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="strand-card s5" onclick="location.href='publications.html?filter=peer-learning'">
+        <img class="strand-header-img" src="Research/peer-learning.png" alt="AI-Supported Peer Learning">
+        <div class="strand-body">
+          <div class="card-top">
+            <div class="card-title-block">
+              <div class="strand-num">5</div>
+              <div class="strand-title">AI-Supported Peer Learning</div>
+            </div>
+          </div>
+          <p class="strand-subtitle">Peer feedback, assessment, and evaluative judgement</p>
+          <p class="strand-desc">This strand focuses on how students learn with and from one another through feedback, peer assessment, and evaluative judgement. More recently, this work has examined how AI can support students to give, receive, evaluate, and act on feedback in ways that strengthen learning.</p>
+          <div class="strand-footer">
+            <div class="icon-circle"><img src="Research/research-category-icons/group_conversation_icon_with_speech_bubbles.png" alt="AI-Supported Peer Learning" style="width:100px;height:100px;object-fit:contain"></div>
+            <a class="view-link" href="publications.html?filter=peer-learning">View papers on this topic →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="strand-card s6" onclick="location.href='publications.html?filter=ai-education'">
+        <img class="strand-header-img" src="Research/aied.png" alt="AI in Education">
+        <div class="strand-body">
+          <div class="card-top">
+            <div class="card-title-block">
+              <div class="strand-num">6</div>
+              <div class="strand-title">AI in Education</div>
+            </div>
+          </div>
+          <p class="strand-subtitle">Generative AI, ethics, and institutional readiness</p>
+          <p class="strand-desc">This strand examines the broader implications of AI for teaching and learning — including generative AI tools, the ethics of AI in education, student adoption and resistance, and institutional policy. It bridges technical development and educational practice.</p>
+          <div class="strand-footer">
+            <div class="icon-circle"><img src="Research/research-category-icons/ai_conversation_icon_symbol.png" alt="AI in Education" style="width:100px;height:100px;object-fit:contain"></div>
+            <a class="view-link" href="publications.html?filter=ai-education">View papers on this topic →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="strand-card s7" onclick="location.href='publications.html?filter=evidence-synthesis'">
+        <img class="strand-header-img" src="Research/evidence-synthesis.png" alt="Evidence Synthesis and Systematic Reviews">
+        <div class="strand-body">
+          <div class="card-top">
+            <div class="card-title-block">
+              <div class="strand-num">7</div>
+              <div class="strand-title">Evidence Synthesis and Systematic Reviews</div>
+            </div>
+          </div>
+          <p class="strand-subtitle">Systematic reviews, meta-analysis, and scoping reviews</p>
+          <p class="strand-desc">This strand applies rigorous synthesis methods — including systematic reviews, meta-analyses, and scoping reviews — to consolidate and critique the state of evidence in educational technology and AI. It provides the empirical foundation for policy and practice.</p>
+          <div class="strand-footer">
+            <div class="icon-circle"><img src="Research/research-category-icons/document_search_icon_in_teal.png" alt="Evidence Synthesis and Systematic Reviews" style="width:100px;height:100px;object-fit:contain"></div>
+            <a class="view-link" href="publications.html?filter=evidence-synthesis">View papers on this topic →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="strand-card strand-ghost"></div>
+
+      <div class="strand-card strand-ghost"></div>
+
+    </div>
+
+<script>
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('open');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+</script>
+</body>
+</html>

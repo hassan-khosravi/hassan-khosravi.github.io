@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hassan Khosravi — Academic Website Preview</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f7f7f5; color: #1a1a1a; font-size: 16px; }
+
+  /* NAV */
+  nav { background: #fff; border-bottom: 1px solid #e8e8e4; padding: 0 40px; display: flex; align-items: center; justify-content: space-between; height: 56px; position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  .nav-name { font-weight: 600; font-size: 15px; }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a { font-size: 14px; color: #555; text-decoration: none; }
+  .nav-links a:hover { color: #1a1a1a; }
+
+  /* LAYOUT */
+  .page { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+
+  /* HERO */
+  .hero { display: flex; gap: 48px; align-items: flex-start; padding: 56px 0 48px; }
+  .avatar { width: 170px; height: 170px; border-radius: 50%; background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); display: flex; align-items: center; justify-content: center; font-size: 52px; font-weight: 700; color: #fff; flex-shrink: 0; }
+  .hero-body { flex: 1; }
+  h1 { font-size: 30px; font-weight: 700; line-height: 1.2; margin-bottom: 6px; }
+  .role { font-size: 16px; color: #555; margin-bottom: 2px; }
+  .org { font-size: 14px; color: #888; margin-bottom: 20px; }
+  .bio { font-size: 15px; line-height: 1.75; color: #333; margin-bottom: 22px; }
+  .interests-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #999; margin-bottom: 10px; }
+  .tag { display: inline-block; font-size: 13px; padding: 4px 12px; border-radius: 20px; background: #eef2ff; color: #3730a3; margin: 3px 4px 3px 0; border: 1px solid #c7d2fe; }
+  .socials { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+  .social-btn { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; padding: 7px 14px; border: 1px solid #d1d5db; border-radius: 8px; color: #444; text-decoration: none; background: #fff; transition: background 0.15s; }
+  .social-btn:hover { background: #f3f4f6; }
+  .social-icon { font-size: 16px; }
+
+  /* DIVIDER */
+  hr { border: none; border-top: 1px solid #e5e5e0; margin: 8px 0 40px; }
+
+  /* TWO COL */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; padding: 0 0 48px; }
+  .col-title { font-size: 17px; font-weight: 600; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid #3b82f6; display: inline-block; }
+  .edu-item { display: flex; gap: 14px; margin-bottom: 18px; }
+  .edu-icon { width: 36px; height: 36px; border-radius: 50%; background: #eff6ff; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 18px; }
+  .edu-degree { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+  .edu-school { font-size: 13px; color: #666; }
+
+  /* SECTIONS */
+  .section { padding: 0 0 48px; }
+  .section-title { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
+  .section-sub { font-size: 14px; color: #888; margin-bottom: 28px; }
+
+  /* PUBLICATIONS */
+  .pub { display: flex; gap: 16px; padding: 22px 0; border-bottom: 1px solid #ececea; }
+  .pub:last-child { border-bottom: none; }
+  .pub-year { font-size: 13px; color: #999; min-width: 40px; padding-top: 3px; font-weight: 500; }
+  .pub-content { flex: 1; }
+  .pub-title { font-size: 15px; font-weight: 600; margin-bottom: 5px; color: #1a1a1a; }
+  .pub-authors { font-size: 13px; color: #555; margin-bottom: 4px; }
+  .pub-venue { font-size: 13px; color: #888; font-style: italic; margin-bottom: 10px; }
+  .pub-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+  .pub-tag { font-size: 11px; padding: 3px 9px; background: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 6px; color: #555; }
+  .pub-links { display: flex; gap: 14px; }
+  .pub-link { font-size: 12px; font-weight: 600; color: #2563eb; text-decoration: none; }
+  .pub-link:hover { text-decoration: underline; }
+  .featured-badge { display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; background: #fef3c7; color: #92400e; border: 1px solid #fde68a; border-radius: 4px; padding: 2px 7px; margin-left: 8px; vertical-align: middle; }
+
+  /* PROJECTS */
+  .proj-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
+  .proj-card { background: #fff; border: 1px solid #e5e5e0; border-radius: 12px; padding: 22px; transition: box-shadow 0.15s; }
+  .proj-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+  .proj-icon-wrap { width: 44px; height: 44px; border-radius: 10px; background: #eff6ff; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 14px; }
+  .proj-name { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+  .proj-desc { font-size: 13px; color: #666; line-height: 1.6; margin-bottom: 14px; }
+  .proj-tags { display: flex; gap: 5px; flex-wrap: wrap; }
+  .proj-tag { font-size: 11px; padding: 3px 9px; background: #f3f4f6; border-radius: 6px; color: #666; }
+
+  /* FOOTER */
+  footer { background: #fff; border-top: 1px solid #e8e8e4; text-align: center; padding: 28px; font-size: 13px; color: #aaa; margin-top: 20px; }
+
+  /* PREVIEW BANNER */
+  .banner { background: #1d4ed8; color: #fff; text-align: center; padding: 10px; font-size: 13px; font-weight: 500; }
+  .banner span { background: rgba(255,255,255,0.2); padding: 2px 10px; border-radius: 20px; margin-left: 8px; font-size: 12px; }
+</style>
+</head>
+<body>
+
+<div class="banner">
+  Preview — this is what your live site will look like <span>Replace placeholder text with your real info</span>
+</div>
+
+<nav>
+  <span class="nav-name">Hassan Khosravi</span>
+  <div class="nav-links">
+    <a href="#about">Home</a>
+    <a href="#publications">Publications</a>
+    <a href="#projects">Projects</a>
+    <a href="#">CV</a>
+  </div>
+</nav>
+
+<div class="page">
+
+  <!-- HERO / ABOUT -->
+  <section class="hero" id="about">
+    <div class="avatar">HK</div>
+    <div class="hero-body">
+      <h1>Hassan Khosravi</h1>
+      <p class="role">Associate Professor · School of ITEE</p>
+      <p class="org">The University of Queensland, Australia</p>
+      <p class="bio">I research the intersection of artificial intelligence and education, focusing on human-centred AI systems, learning analytics, and intelligent tutoring. My work explores how AI tools can be designed to genuinely support students and teachers — not just automate tasks, but improve understanding and outcomes at scale.</p>
+      <div>
+        <div class="interests-label">Research interests</div>
+        <span class="tag">Human-centred AI</span>
+        <span class="tag">Learning analytics</span>
+        <span class="tag">Intelligent tutoring systems</span>
+        <span class="tag">Educational technology</span>
+        <span class="tag">Adaptive learning</span>
+      </div>
+      <div class="socials">
+        <a class="social-btn" href="#">
+          <span class="social-icon">✉️</span> Email
+        </a>
+        <a class="social-btn" href="#">
+          <span class="social-icon">🎓</span> Google Scholar
+        </a>
+        <a class="social-btn" href="https://github.com/hassan-khosravi">
+          <span class="social-icon">🐙</span> GitHub
+        </a>
+        <a class="social-btn" href="#">
+          <span class="social-icon">💼</span> LinkedIn
+        </a>
+        <a class="social-btn" href="#">
+          <span class="social-icon">📄</span> Download CV
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- EDUCATION & INTERESTS -->
+  <div class="two-col">
+    <div>
+      <div class="col-title">Education</div>
+      <div class="edu-item">
+        <div class="edu-icon">🎓</div>
+        <div>
+          <div class="edu-degree">PhD in Computer Science</div>
+          <div class="edu-school">University of Melbourne, 2013</div>
+        </div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-icon">🎓</div>
+        <div>
+          <div class="edu-degree">BSc in Software Engineering</div>
+          <div class="edu-school">Sharif University of Technology, 2008</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="col-title">Current roles</div>
+      <div class="edu-item">
+        <div class="edu-icon">🏫</div>
+        <div>
+          <div class="edu-degree">Associate Professor</div>
+          <div class="edu-school">University of Queensland</div>
+        </div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-icon">🔬</div>
+        <div>
+          <div class="edu-degree">Researcher, AI in Education</div>
+          <div class="edu-school">ITEE, UQ</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- PUBLICATIONS -->
+  <section class="section" id="publications">
+    <div class="section-title">Publications</div>
+    <div class="section-sub">Selected recent publications — <a href="#" style="color:#2563eb;">see full list →</a></div>
+
+    <div class="pub">
+      <span class="pub-year">2024</span>
+      <div class="pub-content">
+        <div class="pub-title">Towards human-centred explainability in learning analytics dashboards <span class="featured-badge">Featured</span></div>
+        <div class="pub-authors"><strong>H. Khosravi</strong>, S. Chen, R. Martinez</div>
+        <div class="pub-venue">Computers & Education · Volume 198, 2024</div>
+        <div class="pub-tags">
+          <span class="pub-tag">Learning analytics</span>
+          <span class="pub-tag">Explainable AI</span>
+          <span class="pub-tag">Dashboard design</span>
+        </div>
+        <div class="pub-links">
+          <a class="pub-link" href="#">PDF</a>
+          <a class="pub-link" href="#">DOI</a>
+          <a class="pub-link" href="#">Cite</a>
+          <a class="pub-link" href="#">Code</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="pub">
+      <span class="pub-year">2023</span>
+      <div class="pub-content">
+        <div class="pub-title">Adaptive question sequencing for personalised learning at scale</div>
+        <div class="pub-authors"><strong>H. Khosravi</strong>, A. Pardo, G. Siemens</div>
+        <div class="pub-venue">IEEE Transactions on Learning Technologies · Vol. 16(4), 2023</div>
+        <div class="pub-tags">
+          <span class="pub-tag">Adaptive learning</span>
+          <span class="pub-tag">Personalisation</span>
+          <span class="pub-tag">Scale</span>
+        </div>
+        <div class="pub-links">
+          <a class="pub-link" href="#">PDF</a>
+          <a class="pub-link" href="#">DOI</a>
+          <a class="pub-link" href="#">Cite</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="pub">
+      <span class="pub-year">2023</span>
+      <div class="pub-content">
+        <div class="pub-title">Student performance prediction using multimodal learning signals</div>
+        <div class="pub-authors"><strong>H. Khosravi</strong>, L. Wang, T. Nguyen</div>
+        <div class="pub-venue">LAK '23: Learning Analytics & Knowledge Conference · ACM, 2023</div>
+        <div class="pub-tags">
+          <span class="pub-tag">Prediction</span>
+          <span class="pub-tag">Multimodal</span>
+          <span class="pub-tag">Deep learning</span>
+        </div>
+        <div class="pub-links">
+          <a class="pub-link" href="#">PDF</a>
+          <a class="pub-link" href="#">DOI</a>
+          <a class="pub-link" href="#">Cite</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="pub">
+      <span class="pub-year">2022</span>
+      <div class="pub-content">
+        <div class="pub-title">Ripple: A crowdsourcing platform for scalable, adaptive practice at university</div>
+        <div class="pub-authors"><strong>H. Khosravi</strong>, K. Kitto, J. Williams</div>
+        <div class="pub-venue">ACM Transactions on Computing Education · Vol. 22(1), 2022</div>
+        <div class="pub-tags">
+          <span class="pub-tag">Crowdsourcing</span>
+          <span class="pub-tag">Peer learning</span>
+          <span class="pub-tag">Formative assessment</span>
+        </div>
+        <div class="pub-links">
+          <a class="pub-link" href="#">PDF</a>
+          <a class="pub-link" href="#">DOI</a>
+          <a class="pub-link" href="#">Cite</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- PROJECTS -->
+  <section class="section" id="projects">
+    <div class="section-title">Projects</div>
+    <div class="section-sub">Active research projects</div>
+    <div class="proj-grid">
+      <div class="proj-card">
+        <div class="proj-icon-wrap">🧠</div>
+        <div class="proj-name">Adaptive tutoring at scale</div>
+        <div class="proj-desc">AI-driven question sequencing that personalises the learning path for each student in real time, tested across large undergraduate cohorts.</div>
+        <div class="proj-tags"><span class="proj-tag">AI</span><span class="proj-tag">EdTech</span><span class="proj-tag">Personalisation</span></div>
+      </div>
+      <div class="proj-card">
+        <div class="proj-icon-wrap">📊</div>
+        <div class="proj-name">Teacher dashboard design</div>
+        <div class="proj-desc">Co-designing explainable analytics dashboards with instructors to support early at-risk identification and intervention.</div>
+        <div class="proj-tags"><span class="proj-tag">Dashboard</span><span class="proj-tag">XAI</span><span class="proj-tag">HCI</span></div>
+      </div>
+      <div class="proj-card">
+        <div class="proj-icon-wrap">👥</div>
+        <div class="proj-name">Collaborative learning systems</div>
+        <div class="proj-desc">Studying how AI-mediated peer matching affects group outcomes and knowledge transfer in online courses.</div>
+        <div class="proj-tags"><span class="proj-tag">CSCL</span><span class="proj-tag">Peer learning</span></div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  Hassan Khosravi · The University of Queensland · Built with Hugo Academic
+</footer>
+
+</body>
+</html>
