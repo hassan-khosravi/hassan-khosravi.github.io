@@ -160,7 +160,7 @@
         <div class="media-tag" style="color:#7c3aed;background:#f5f3ff">Panel</div>
         <a href="https://youtu.be/n8A16mSpw54 class="media-title">UQ Talks: What AI Can and Can't Do for You (Yet)</a>
         <p class="media-desc">A UQ public talk exploring the real capabilities and current limitations of artificial intelligence — what it can do for you today, and where it still falls short.</p>
-        <div class="media-date">2024</div>
+        <div class="media-date">2025</div>
       </div>
     </div>
 
@@ -175,7 +175,7 @@
         <div class="media-tag" style="color:#7c3aed;background:#f5f3ff">Panel</div>
         <a href="https://youtu.be/O5Uj7InErAs" class="media-title">Panel: From Large Language Models to Learning Companions</a>
         <p class="media-desc">A panel discussion exploring how large language models are being transformed into intelligent learning companions — examining the opportunities, challenges, and future directions for AI in education.</p>
-        <div class="media-date">2024</div>
+        <div class="media-date">2025</div>
       </div>
     </div>
     <div class="media-card" data-cat="talk">
@@ -189,7 +189,7 @@
         <div class="media-tag" style="color:#7c3aed;background:#f5f3ff">Panel</div>
         <a href="https://youtu.be/wH78-JtuqqY class="media-title">AI for Kids: Friend or Foe?</a>
         <p class="media-desc">A talk exploring the role of artificial intelligence in children's lives and education — examining whether AI is a helpful companion or a potential risk for young learners.</p>
-        <div class="media-date">2024</div>
+        <div class="media-date">2026</div>
       </div>
     </div>
 <div class="media-card" data-cat="video">
@@ -348,6 +348,20 @@
 <script>
 function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('overlay').classList.toggle('open')}
 function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('overlay').classList.remove('open')}
+
+function sortGridByDate(gridId) {
+  var grid = document.getElementById(gridId);
+  if (!grid) return;
+  var cards = Array.from(grid.querySelectorAll('.media-card'));
+  cards.sort(function(a, b) {
+    var da = parseInt(a.querySelector('.media-date') ? a.querySelector('.media-date').textContent : 0);
+    var db = parseInt(b.querySelector('.media-date') ? b.querySelector('.media-date').textContent : 0);
+    return db - da;
+  });
+  cards.forEach(function(c) { grid.appendChild(c); });
+}
+sortGridByDate('mediaGrid');
+sortGridByDate('storiesGrid');
 </script>
 
 <script>
