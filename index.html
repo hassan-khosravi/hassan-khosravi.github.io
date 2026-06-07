@@ -92,8 +92,8 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
   .overview-research-wrap { display: none; }
   .overview-hero { grid-template-columns: 1fr; }
   .topbar { display: flex; }
-  .sidebar { transform: translateX(-100%); box-shadow: 4px 0 20px rgba(0,0,0,0.1); }
-  .sidebar.open { transform: translateX(0); }
+  .sidebar { display: none; }
+  
   .sidebar-overlay.open { display: block; }
   .main { margin-left: 0; padding: 80px 20px 40px; }
   .overview-hero { grid-template-columns: 1fr; text-align: center; justify-items: center; }
@@ -130,6 +130,38 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
     .sidebar-plink:hover { background: #e8edf5; border-color: var(--accent); color: var(--accent); }
     .sidebar-plink svg { flex-shrink: 0; opacity: 0.7; }
 
+
+/* MOBILE DROPDOWN MENU */
+#mobile-dropdown {
+  display: none;
+  position: fixed;
+  top: 54px;
+  left: 0;
+  right: 0;
+  background: var(--sidebar-bg);
+  border-bottom: 1px solid var(--border);
+  z-index: 299;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.28s cubic-bezier(0.4,0,0.2,1);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+#mobile-dropdown.open { max-height: 420px; }
+@media (max-width: 768px) { #mobile-dropdown { display: block; } }
+.mob-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 20px;
+  font-size: 15px;
+  color: var(--muted);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s, color 0.15s;
+}
+.mob-nav-link:last-child { border-bottom: none; }
+.mob-nav-link.active { color: var(--accent); font-weight: 600; background: var(--accent-light); }
+.mob-nav-link:hover { background: var(--accent-light); color: var(--accent); }
 </style>
 </head>
 <body>
@@ -139,6 +171,14 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
   <button class="hamburger" onclick="toggleSidebar()" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
+</div>
+<div id="mobile-dropdown">
+  <a class="mob-nav-link active" href="index.html" onclick="closeSidebar()">🏠 Overview</a>
+  <a class="mob-nav-link" href="research.html" onclick="closeSidebar()">💡 Research</a>
+  <a class="mob-nav-link" href="teaching.html" onclick="closeSidebar()">🎓 Teaching</a>
+  <a class="mob-nav-link" href="publications.html" onclick="closeSidebar()">📚 Publications</a>
+  <a class="mob-nav-link" href="media.html" onclick="closeSidebar()">▶️ Media</a>
+  <a class="mob-nav-link" href="supervision.html" onclick="closeSidebar()">👥 Supervision</a>
 </div>
 <div class="sidebar-overlay" id="overlay" onclick="closeSidebar()"></div>
 
@@ -250,11 +290,11 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 
 <script>
 function toggleSidebar() {
-  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('mobile-dropdown').classList.toggle('open');
   document.getElementById('overlay').classList.toggle('open');
 }
 function closeSidebar() {
-  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('mobile-dropdown').classList.remove('open');
   document.getElementById('overlay').classList.remove('open');
 }
 function toggleBio() {

@@ -78,10 +78,50 @@
 @media (max-width: 900px) { .media-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 600px) { .media-grid { grid-template-columns: 1fr; } }
 
+
+/* MOBILE DROPDOWN MENU */
+#mobile-dropdown {
+  display: none;
+  position: fixed;
+  top: 54px;
+  left: 0;
+  right: 0;
+  background: var(--sidebar-bg);
+  border-bottom: 1px solid var(--border);
+  z-index: 299;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.28s cubic-bezier(0.4,0,0.2,1);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+#mobile-dropdown.open { max-height: 420px; }
+@media (max-width: 768px) { #mobile-dropdown { display: block; } }
+.mob-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 20px;
+  font-size: 15px;
+  color: var(--muted);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s, color 0.15s;
+}
+.mob-nav-link:last-child { border-bottom: none; }
+.mob-nav-link.active { color: var(--accent); font-weight: 600; background: var(--accent-light); }
+.mob-nav-link:hover { background: var(--accent-light); color: var(--accent); }
 </style>
 </head>
 <body>
 <div class="topbar"><span class="topbar-name">Hassan Khosravi</span><button class="hamburger" onclick="toggleSidebar()" aria-label="Menu"><span></span><span></span><span></span></button></div>
+<div id="mobile-dropdown">
+  <a class="mob-nav-link" href="index.html" onclick="closeSidebar()">🏠 Overview</a>
+  <a class="mob-nav-link" href="research.html" onclick="closeSidebar()">💡 Research</a>
+  <a class="mob-nav-link" href="teaching.html" onclick="closeSidebar()">🎓 Teaching</a>
+  <a class="mob-nav-link" href="publications.html" onclick="closeSidebar()">📚 Publications</a>
+  <a class="mob-nav-link active" href="media.html" onclick="closeSidebar()">▶️ Media</a>
+  <a class="mob-nav-link" href="supervision.html" onclick="closeSidebar()">👥 Supervision</a>
+</div>
 <div class="sidebar-overlay" id="overlay" onclick="closeSidebar()"></div>
 <div class="layout">
   <aside class="sidebar" id="sidebar">
@@ -346,8 +386,14 @@
 </main>
 </div>
 <script>
-function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('overlay').classList.toggle('open')}
-function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('overlay').classList.remove('open')}
+function toggleSidebar() {
+  document.getElementById('mobile-dropdown').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('open');
+}
+function closeSidebar() {
+  document.getElementById('mobile-dropdown').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
 
 function sortGridByDate(gridId) {
   var grid = document.getElementById(gridId);
