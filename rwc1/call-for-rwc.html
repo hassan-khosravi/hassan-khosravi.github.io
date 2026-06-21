@@ -222,6 +222,9 @@
   .stepper .st.active .dot{background:var(--green);border-color:var(--green);color:#fff}
   .stepper .st.active small{color:var(--green);font-weight:700}
   .stepper .st.done .dot{background:var(--green-light);border-color:var(--green-light);color:#fff}
+  .stepper .st.clk{cursor:pointer}
+  .stepper .st.clk:hover .dot{background:var(--green);border-color:var(--green);transform:scale(1.08)}
+  .stepper .st.clk:hover small{color:var(--green)}
   .stepper .bar{flex:1;height:2px;background:var(--line);margin:0 6px;position:relative;top:-9px;z-index:1}
 
   /* block */
@@ -306,6 +309,15 @@
   .est{margin-top:14px;background:#eef5f0;border:1px solid #d8e7dd;border-radius:12px;padding:16px 18px;display:flex;align-items:center;justify-content:space-between}
 .est.est-locked{background:#f4f6f5;border-style:dashed;border-color:#d3ddd6;color:var(--muted)}
 .est.est-locked .est-l svg{color:var(--muted)}
+.estbd{margin-top:14px;background:#eef5f0;border:1px solid #d8e7dd;border-radius:12px;padding:14px 18px}
+.estbd .er{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:.86rem;color:var(--muted);padding:5px 0}
+.estbd .er .v{color:var(--ink);font-weight:600;white-space:nowrap}
+.estbd .er.tot{border-top:1px solid #d8e7dd;margin-top:6px;padding-top:11px}
+.estbd .er.tot .lbl{font-size:.92rem;color:var(--ink);font-weight:700}
+.estbd .er.tot .amt{font-size:1.45rem;font-weight:800;color:var(--green);white-space:nowrap}
+.estbd .efoot{font-size:.74rem;color:var(--muted);margin-top:9px;line-height:1.4}
+.estbd .ehead{display:flex;align-items:center;gap:8px;font-size:.85rem;font-weight:700;color:var(--ink);margin-bottom:4px}
+.estbd .ehead svg{color:var(--green)}
   .est .est-l{display:flex;align-items:center;gap:10px}
   .est .est-l svg{color:var(--green)}
   .est .est-amt{font-size:1.5rem;font-weight:800;color:var(--green)}
@@ -862,7 +874,25 @@
             <div class="field"><label>Mobile number</label><input type="tel" id="dPhone" placeholder="e.g. 0420 686 509"></div>
           </div>
           <div class="field"><label>Email</label><input type="email" id="dEmail" placeholder="you@email.com"></div>
-          <div class="field"><label>Service address</label><input type="text" id="dAddr" placeholder="e.g. Yarrabilba QLD 4207"></div>
+          <div class="field"><label>Service suburb</label>
+            <select id="dSuburb">
+              <option value="">Select your suburb…</option>
+              <option value="Yarrabilba">Yarrabilba</option>
+              <option value="Chambers Flat">Chambers Flat</option>
+              <option value="Logan Village">Logan Village</option>
+              <option value="Bahrs Scrub">Bahrs Scrub</option>
+              <option value="Logan Reserve">Logan Reserve</option>
+              <option value="Munruben">Munruben</option>
+              <option value="Jimboomba">Jimboomba</option>
+              <option value="Tamborine">Tamborine</option>
+              <option value="Flagstone">Flagstone</option>
+              <option value="Logan">Logan</option>
+              <option value="Ormeau">Ormeau</option>
+              <option value="Mundoolun">Mundoolun</option>
+              <option value="Other">Other location</option>
+            </select>
+          </div>
+          <div class="field"><label>Street address</label><input type="text" id="dAddr" placeholder="e.g. 12 Example St"></div>
         </div>
 
         <!-- Summary -->
@@ -877,20 +907,14 @@
           </div>
         </div>
 
-        <!-- Estimate (revealed once a service address is entered) -->
+        <!-- Estimate (revealed once a service suburb is selected) -->
         <div class="est est-locked" id="estWait">
           <div class="est-l">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="9" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-            <div><strong style="font-size:.85rem;color:var(--ink)">Estimated cost</strong><small>Enter your service address above to reveal your estimate.</small></div>
+            <div><strong style="font-size:.85rem;color:var(--ink)">Estimated cost</strong><small>Select your service suburb above to reveal your estimate.</small></div>
           </div>
         </div>
-        <div class="est" id="estBlock" style="display:none">
-          <div class="est-l">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 12l9-9 9 9-9 9-9-9z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="8.5" cy="8.5" r="1.3" fill="currentColor"/></svg>
-            <div><strong style="font-size:.85rem;color:var(--ink)">Estimated cost</strong><small>Final price confirmed before work begins.</small></div>
-          </div>
-          <div style="text-align:right"><div class="est-amt" id="estAmt">$99 – $129</div><div class="est-note">Estimate only</div></div>
-        </div>
+        <div class="estbd" id="estBlock" style="display:none"></div>
 
         <!-- Perks -->
         <div class="perks">
@@ -938,6 +962,19 @@
   ];
   var MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
   var DOW=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+
+  // ---- Pricing (all base amounts are ex-GST; GST added at 10%) ----
+  var GST_RATE=0.10;
+  var SERVICE_BASE={ rwc:90, ppi:300, mech:null };   // null = price quoted on site
+  var SERVICE_SHORT={ rwc:'Roadworthy Certificate', ppi:'Pre-Purchase Inspection', mech:'Mobile Mechanic' };
+  // Call-out fee by suburb (ex-GST). Suburbs not listed require approval / a custom quote.
+  var CALLOUT={
+    'Yarrabilba':30,
+    'Chambers Flat':60, 'Logan Village':60, 'Bahrs Scrub':60, 'Logan Reserve':60,
+    'Munruben':80, 'Jimboomba':80, 'Tamborine':80, 'Flagstone':80, 'Logan':80, 'Mundoolun':80,
+    'Ormeau':120
+  };
+  function money(n){ return '$'+n.toFixed(2); }
 
   var state={service:null, date:null, time:null, idType:'rego', mechOptions:[]};
   var ID_META={rego:{label:'Rego', ph:'e.g. ABC123'}, vin:{label:'VIN', ph:'e.g. 1HGBH41JXMN109186'}};
@@ -1080,9 +1117,65 @@
     }
     return s;
   }
+  var DIAMOND='<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 12l9-9 9 9-9 9-9-9z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>';
+  // Returns a plain-text one-line estimate (used for the form submission)
+  function estimateText(){
+    var sub=val('dSuburb');
+    if(!state.service || !sub) return '';
+    var fee=CALLOUT[sub];
+    if(fee===undefined) return 'Approval required for '+(sub==='Other'?'this area':sub);
+    var base=SERVICE_BASE[state.service.id];
+    if(base==null) return 'From '+money(fee*(1+GST_RATE))+' inc GST + service (quoted on site) — '+sub;
+    var total=(base+fee)*(1+GST_RATE);
+    return money(total)+' inc GST ('+SERVICE_SHORT[state.service.id]+', '+sub+')';
+  }
+  // Builds the Option-A itemised breakdown in the estimate box
+  function computeEstimate(){
+    var estBlock=document.getElementById('estBlock'), estWait=document.getElementById('estWait');
+    var sub=val('dSuburb');
+    var ready = state.service && sub;
+    if(estWait) estWait.style.display = ready ? 'none' : 'flex';
+    if(!estBlock) return;
+    estBlock.style.display = ready ? 'block' : 'none';
+    if(!ready) return;
+
+    var fee=CALLOUT[sub];
+    // Approval-required suburbs (not in the fee table, incl. "Other")
+    if(fee===undefined){
+      estBlock.innerHTML =
+        '<div class="ehead">'+DIAMOND+'Estimated cost</div>'+
+        '<div class="er"><span>Service suburb</span><span class="v">'+(sub==='Other'?'Other location':sub)+'</span></div>'+
+        '<div class="er tot"><span class="lbl">Approval required</span><span class="amt" style="font-size:1.05rem">Contact us</span></div>'+
+        '<div class="efoot">We’ll confirm pricing for your area before any work begins — call 0420 686 509 or send your request and we’ll quote you.</div>';
+      return;
+    }
+    var base=SERVICE_BASE[state.service.id];
+    var feeInc=fee*(1+GST_RATE);
+    // Mobile Mechanic — call-out known, service quoted on site
+    if(base==null){
+      estBlock.innerHTML =
+        '<div class="ehead">'+DIAMOND+'Estimated cost</div>'+
+        '<div class="er"><span>Call-out fee ('+sub+')</span><span class="v">'+money(fee)+'</span></div>'+
+        '<div class="er"><span>Mobile mechanic service</span><span class="v">Quoted on site</span></div>'+
+        '<div class="er"><span>GST (10%)</span><span class="v">'+money(fee*GST_RATE)+'</span></div>'+
+        '<div class="er tot"><span class="lbl">From</span><span class="amt">'+money(feeInc)+'</span></div>'+
+        '<div class="efoot">Call-out shown inc GST. Service work is quoted on site before any work begins.</div>';
+      return;
+    }
+    // RWC / PPI — full estimate
+    var sub_total=base+fee;
+    var gst=sub_total*GST_RATE;
+    var total=sub_total*(1+GST_RATE);
+    estBlock.innerHTML =
+      '<div class="ehead">'+DIAMOND+'Estimated cost</div>'+
+      '<div class="er"><span>'+SERVICE_SHORT[state.service.id]+'</span><span class="v">'+money(base)+'</span></div>'+
+      '<div class="er"><span>Call-out fee ('+sub+')</span><span class="v">'+money(fee)+'</span></div>'+
+      '<div class="er"><span>GST (10%)</span><span class="v">'+money(gst)+'</span></div>'+
+      '<div class="er tot"><span class="lbl">Estimated total</span><span class="amt">'+money(total)+'</span></div>'+
+      '<div class="efoot">Estimate only · includes GST. Final price confirmed before work begins.</div>';
+  }
   function updateSummary(){
     document.getElementById('sumService').textContent=svcLine();
-    document.getElementById('estAmt').textContent=state.service?state.service.est:'—';
     var veh=val('dVehicle'), idv=val('dIdentifier');
     var idStr='';
     if(idv){ idStr=ID_META[state.idType].label+' '+idv; if(state.idType==='rego'){ idStr+=' ('+val('dState')+')'; } }
@@ -1092,13 +1185,10 @@
     if(state.date) when.push(fmtDate(state.date));
     if(state.time) when.push('at '+state.time.time);
     document.getElementById('sumWhen').textContent=when.length?when.join(' '):'Select a date and time';
-    document.getElementById('sumWhere').textContent=val('dAddr')||'Add your suburb';
+    var where=[val('dSuburb'), val('dAddr')].filter(Boolean).join(' · ');
+    document.getElementById('sumWhere').textContent=where||'Add your suburb';
     document.getElementById('timeSub').textContent=state.date?('Available times for '+fmtDate(state.date)):'Available times';
-    // Reveal the estimate only once a service address has been captured
-    var hasAddr=!!val('dAddr');
-    var estBlock=document.getElementById('estBlock'), estWait=document.getElementById('estWait');
-    if(estBlock) estBlock.style.display=hasAddr?'flex':'none';
-    if(estWait) estWait.style.display=hasAddr?'none':'flex';
+    computeEstimate();
   }
 
   /* ===================== GATED STEP WIZARD (Book / Quote) ===================== */
@@ -1112,9 +1202,17 @@
     seq.forEach(function(sid,i){
       if(i>0) html+='<div class="bar"></div>';
       var cls = i===idx ? 'active' : (i<idx ? 'done' : '');
-      html+='<div class="st '+cls+'"><div class="dot">'+(i+1)+'</div><small>'+STEP_LABELS[sid]+'</small></div>';
+      if(i<idx) cls+=' clk';
+      html+='<div class="st '+cls+'" data-i="'+i+'"><div class="dot">'+(i+1)+'</div><small>'+STEP_LABELS[sid]+'</small></div>';
     });
-    document.getElementById('stepper').innerHTML=html;
+    var sw=document.getElementById('stepper');
+    sw.innerHTML=html;
+    sw.querySelectorAll('.st.clk').forEach(function(el){
+      el.addEventListener('click',function(){
+        var t=parseInt(el.dataset.i,10);
+        if(t<idx){ idx=t; showStep(); }   // jump straight back to an earlier step
+      });
+    });
   }
 
   function showStep(){
@@ -1153,7 +1251,8 @@
     if(n===4){
       if(!val('dName')){alert('Please enter your full name.');return false;}
       if(!val('dPhone')){alert('Please enter your mobile number.');return false;}
-      if(!val('dAddr')){alert('Please enter your service address.');return false;}
+      if(!val('dSuburb')){alert('Please select your service suburb.');return false;}
+      if(!val('dAddr')){alert('Please enter your street address.');return false;}
       return true;
     }
     return true;
@@ -1212,7 +1311,8 @@
       'Name': val('dName'),
       'Phone': val('dPhone'),
       'email': val('dEmail'),
-      'Estimated cost': state.service ? state.service.est : '',
+      'Service suburb': val('dSuburb'),
+      'Estimated cost': estimateText(),
       '_subject': (isQuote ? 'New quote request' : 'New booking request')+' — Call for RWC'
     };
     var idv=val('dIdentifier');
@@ -1220,7 +1320,7 @@
     if(!isQuote){
       data['Preferred date']=fmtDate(state.date);
       data['Preferred time']=state.time ? state.time.time : '';
-      data['Service address']=val('dAddr');
+      data['Service address']=[val('dAddr'), val('dSuburb')].filter(Boolean).join(', ');
     }
 
     fetch(BOOKING_ENDPOINT,{
@@ -1250,6 +1350,7 @@
     document.addEventListener('input',function(e){ if(e.target && e.target.id===id) updateSummary(); });
   });
   document.getElementById('dState').addEventListener('change',updateSummary);
+  document.getElementById('dSuburb').addEventListener('change',updateSummary);
 </script>
 
 <script>
