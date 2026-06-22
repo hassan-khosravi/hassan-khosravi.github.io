@@ -1323,10 +1323,13 @@
       data['Service address']=[val('dAddr'), val('dSuburb')].filter(Boolean).join(', ');
     }
 
+    var fd=new FormData();
+    Object.keys(data).forEach(function(k){ fd.append(k, data[k]==null ? '' : data[k]); });
+
     fetch(BOOKING_ENDPOINT,{
       method:'POST',
-      headers:{'Content-Type':'application/json','Accept':'application/json'},
-      body:JSON.stringify(data)
+      headers:{'Accept':'application/json'},
+      body:fd
     }).then(function(r){
       if(r.ok){
         closeModal();
