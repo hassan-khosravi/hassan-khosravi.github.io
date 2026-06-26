@@ -1336,15 +1336,17 @@
       headers:{'Accept':'application/json'},
       body:fd
     }).then(function(r){
-      if(r.ok){
+      return r.json().catch(function(){return {};}).then(function(d){ return {ok:r.ok, status:r.status, d:d}; });
+    }).then(function(res){
+      if(res.ok && res.d && res.d.success){
         closeModal();
         alert('Thanks '+val('dName')+'! Your '+(isQuote?'quote request':'booking request')+
           ' has been sent — we’ll be in touch shortly to confirm.');
       } else {
-        r.json().then(function(d){
-          alert((d.errors && d.errors.map(function(x){return x.message;}).join(', ')) ||
-            'Sorry, something went wrong. Please call us on 0420 686 509.');
-        });
+        var msg = (res.d && (res.d.message ||
+          (res.d.errors && res.d.errors.map(function(x){return x.message;}).join(', ')))) ||
+          ('HTTP '+res.status);
+        alert('Sorry, we couldn’t send your request.\n\nReason: '+msg+'\n\nPlease call us on 0420 686 509.');
       }
     }).catch(function(){
       alert('Network error — please call us on 0420 686 509 instead.');
@@ -1387,16 +1389,16 @@
     });
   });
 
-  // ---- Contact form submit via Formspree (AJAX, stays on page) ----
+  // ---- Contact form submit via Web3Forms (AJAX, stays on page) ----
   (function(){
     var form=document.getElementById('contactForm');
     if(!form) return;
     var status=document.getElementById('formStatus');
     form.addEventListener('submit',function(e){
       e.preventDefault();
-      if(form.action.indexOf('YOUR_FORM_ID')>-1){
+      if(typeof WEB3_KEY==='undefined' || WEB3_KEY.indexOf('YOUR_WEB3FORMS')>-1){
         status.style.display='block'; status.style.color='#b23b3b';
-        status.textContent='Form not connected yet — add your Formspree form ID.';
+        status.textContent='Form not connected yet — add your Web3Forms access key.';
         return;
       }
       var btn=form.querySelector('button[type="submit"]');
