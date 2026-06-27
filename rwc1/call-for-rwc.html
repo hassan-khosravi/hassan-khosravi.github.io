@@ -894,6 +894,10 @@
             </select>
           </div>
           <div class="field"><label>Street address</label><input type="text" id="dAddr" placeholder="e.g. 12 Example St"></div>
+          <div class="field">
+            <label id="dNotesLabel">Anything we should know? <span style="color:var(--muted);font-weight:400">(optional)</span></label>
+            <textarea id="dNotes" rows="4" maxlength="600" placeholder="e.g. known issues, best time to reach you, gate code…"></textarea>
+          </div>
         </div>
 
         <!-- Summary -->
@@ -1189,7 +1193,25 @@
     var where=[val('dSuburb'), val('dAddr')].filter(Boolean).join(' · ');
     document.getElementById('sumWhere').textContent=where||'Add your suburb';
     document.getElementById('timeSub').textContent=state.date?('Available times for '+fmtDate(state.date)):'Available times';
+    setNotesContext();
     computeEstimate();
+  }
+  // Tailor the comment box to the chosen service
+  function setNotesContext(){
+    var lbl=document.getElementById('dNotesLabel'), box=document.getElementById('dNotes');
+    if(!lbl||!box) return;
+    var id=state.service && state.service.id;
+    var opt='<span style="color:var(--muted);font-weight:400">(optional)</span>';
+    if(id==='mech'){
+      lbl.innerHTML='Describe the problem '+opt;
+      box.placeholder='e.g. won’t start, grinding when braking, warning light on, noise at speed…';
+    } else if(mode==='quote'){
+      lbl.innerHTML='What do you need a quote for? '+opt;
+      box.placeholder='e.g. brakes and a logbook service, quote before I commit…';
+    } else {
+      lbl.innerHTML='Anything we should know? '+opt;
+      box.placeholder='e.g. known issues, best time to reach you, gate code…';
+    }
   }
 
   /* ===================== GATED STEP WIZARD (Book / Quote) ===================== */
@@ -1328,6 +1350,8 @@
       'Estimated cost': estimateText(),
       'subject': (isQuote ? 'New quote request' : 'New booking request')+' — Call for RWC ['+ref+']'
     };
+    var notes=val('dNotes');
+    if(notes){ data[isQuote ? 'What they need a quote for' : 'Notes from customer'] = notes; }
     var idv=val('dIdentifier');
     if(idv){ data[ID_META[state.idType].label] = idv + (state.idType==='rego' ? ' ('+val('dState')+')' : ''); }
     if(!isQuote){
