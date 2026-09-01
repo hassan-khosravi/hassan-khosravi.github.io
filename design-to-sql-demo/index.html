@@ -7,7 +7,7 @@
     --line:#DCE1DB; --accent:#2E7D5B; --accent-ink:#25674B; --accent-soft:#E7F0EA;
     --amber:#A8651F; --amber-soft:#F5EBDD; --code-bg:#F0F3EF; --code-line:#D8DFD8;
     --kw:#25674B; --str:#A8651F; --com:#7C8A81; --shadow:0 1px 2px rgba(30,45,38,.06),0 6px 24px -12px rgba(30,45,38,.14);
-    --er-ent:#2E7D5B; --er-rel:#A8651F; --er-attr:#EAEDE9;
+    --er-ent:#D9ECE1; --er-ent-line:#2E7D5B; --er-ent-ink:#173A29; --er-rel:#F7E4C8; --er-rel-line:#A8651F; --er-rel-ink:#4A2C10; --er-attr:#FFFFFF; --er-attr-line:#8C9A92;
   }
   @media (prefers-color-scheme: dark){
     :root:not([data-theme="light"]){
@@ -15,7 +15,7 @@
       --line:#2C3830; --accent:#5BBB8D; --accent-ink:#6FCB9E; --accent-soft:#213A2C;
       --amber:#D99A57; --amber-soft:#39301F; --code-bg:#151D18; --code-line:#26332B;
       --kw:#6FCB9E; --str:#D99A57; --com:#6E7F75; --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 24px -12px rgba(0,0,0,.5);
-      --er-ent:#35855F; --er-rel:#B97840; --er-attr:#242E27;
+      --er-ent:#1F3D2E; --er-ent-line:#6FCB9E; --er-ent-ink:#E7EDE8; --er-rel:#3E2C16; --er-rel-line:#D99A57; --er-rel-ink:#F3E6D2; --er-attr:#1A231D; --er-attr-line:#6E7F75;
     }
   }
   :root[data-theme="dark"]{
@@ -23,7 +23,7 @@
     --line:#2C3830; --accent:#5BBB8D; --accent-ink:#6FCB9E; --accent-soft:#213A2C;
     --amber:#D99A57; --amber-soft:#39301F; --code-bg:#151D18; --code-line:#26332B;
     --kw:#6FCB9E; --str:#D99A57; --com:#6E7F75; --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 24px -12px rgba(0,0,0,.5);
-    --er-ent:#35855F; --er-rel:#B97840; --er-attr:#242E27;
+    --er-ent:#1F3D2E; --er-ent-line:#6FCB9E; --er-ent-ink:#E7EDE8; --er-rel:#3E2C16; --er-rel-line:#D99A57; --er-rel-ink:#F3E6D2; --er-attr:#1A231D; --er-attr-line:#6E7F75;
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -214,12 +214,17 @@
 
   /* ER svg text */
   .ersvg text{font-family:"Instrument Sans",system-ui,sans-serif; fill:currentColor}
-  .ersvg .ename{font-weight:650; font-size:13px; letter-spacing:.04em}
-  .ersvg .attr{font-size:11.5px}
-  .ersvg .rname{font-size:11px; font-weight:650; letter-spacing:.02em}
-  .ersvg .cardlbl{font-size:13.5px; font-weight:700}
-  .ersvg .tag{font-size:11px; font-style:italic; fill-opacity:.75}
-  figure svg.ersvg{min-width:1000px}
+  .ersvg .ename{font-weight:700; font-size:15.5px; letter-spacing:.04em}
+  .ersvg .attr{font-size:13.5px}
+  .ersvg .rname{font-size:13px; font-weight:700; letter-spacing:.02em}
+  .ersvg .cardlbl{font-size:17px; font-weight:750}
+  .ersvg .tag{font-size:13px; font-style:italic; fill-opacity:.8}
+  figure svg.ersvg{min-width:940px}
+  .erwrap{position:relative}
+  .erwrap .enlarge{position:absolute; top:14px; right:14px; z-index:2; font:inherit; font-size:12.5px; font-weight:600; cursor:pointer; color:var(--accent-ink); background:var(--accent-soft); border:none; border-radius:999px; padding:6px 14px}
+  .erwrap.big{width:calc(100vw - 48px); margin-left:calc(50% - 50vw + 24px)}
+  .erwrap.big figure svg.ersvg{min-width:0; width:100%}
+  @media (max-width:1140px){ .erwrap.big{width:auto; margin-left:0} }
 </style>
 
 <nav class="stepnav" aria-label="Steps">
@@ -270,7 +275,8 @@
   <div class="wrap">
     <div class="sechead"><span class="bignum">2</span><h2>The entity–relationship diagram</h2></div>
     <p class="secsub">The story translated into ER notation — entities as rectangles, relationships as diamonds, attributes as ovals with key attributes underlined (the weak entity's partial key dashed).</p>
-    <div class="card erwrap">
+    <div class="card erwrap" id="erwrap">
+      <button class="enlarge" id="erbig" type="button" aria-pressed="false">Enlarge ⤢</button>
       <figure>
 <svg class="ersvg" role="img" aria-label="Entity-relationship diagram for the Whisker Haven shelter in Chen notation with attribute ovals: entities BREED, ANIMAL, STAFF, ADOPTER, weak entity MEDICAL RECORD, subclasses DOG and CAT of ANIMAL, relationships BELONGS_TO, HAS, TREATED_BY, APPLIES_FOR, SUPERVISES and the ternary ADOPTION" viewBox="0 0 1500 985">
 <line x1="75" y1="170" x2="190" y2="245" stroke="currentColor" stroke-width="1.1"/>
@@ -283,11 +289,11 @@
 <line x1="762" y1="55" x2="710" y2="240" stroke="currentColor" stroke-width="1.1"/>
 <line x1="880" y1="103" x2="730" y2="240" stroke="currentColor" stroke-width="1.1"/>
 <line x1="938" y1="168" x2="740" y2="240" stroke="currentColor" stroke-width="1.1"/>
-<line x1="1052" y1="168" x2="1180" y2="240" stroke="currentColor" stroke-width="1.1"/>
+<line x1="1040" y1="168" x2="1160" y2="240" stroke="currentColor" stroke-width="1.1"/>
 <line x1="1128" y1="95" x2="1210" y2="240" stroke="currentColor" stroke-width="1.1"/>
 <line x1="1248" y1="55" x2="1235" y2="240" stroke="currentColor" stroke-width="1.1"/>
 <line x1="1372" y1="95" x2="1260" y2="240" stroke="currentColor" stroke-width="1.1"/>
-<line x1="1445" y1="165" x2="1290" y2="245" stroke="currentColor" stroke-width="1.1"/>
+<line x1="1445" y1="165" x2="1320" y2="245" stroke="currentColor" stroke-width="1.1"/>
 <line x1="1418" y1="555" x2="1290" y2="632" stroke="currentColor" stroke-width="1.1"/>
 <line x1="1448" y1="622" x2="1290" y2="638" stroke="currentColor" stroke-width="1.1"/>
 <line x1="1444" y1="685" x2="1290" y2="645" stroke="currentColor" stroke-width="1.1"/>
@@ -305,100 +311,100 @@
 <line x1="700" y1="612" x2="642" y2="566" stroke="currentColor" stroke-width="1.1"/>
 <line x1="830" y1="782" x2="872" y2="692" stroke="currentColor" stroke-width="1.1"/>
 <line x1="982" y1="762" x2="890" y2="692" stroke="currentColor" stroke-width="1.1"/>
-<line x1="245" y1="262" x2="367" y2="262" stroke="currentColor" stroke-width="1.4"/>
-<line x1="523.0" y1="264.6" x2="625.0" y2="264.6" stroke="currentColor" stroke-width="1.4"/>
-<line x1="523.0" y1="259.4" x2="625.0" y2="259.4" stroke="currentColor" stroke-width="1.4"/>
-<line x1="775" y1="262" x2="900" y2="262" stroke="currentColor" stroke-width="1.4"/>
-<line x1="1020.0" y1="264.6" x2="1150.0" y2="264.6" stroke="currentColor" stroke-width="1.4"/>
-<line x1="1020.0" y1="259.4" x2="1150.0" y2="259.4" stroke="currentColor" stroke-width="1.4"/>
-<line x1="1227.4" y1="284.0" x2="1227.4" y2="420.0" stroke="currentColor" stroke-width="1.4"/>
-<line x1="1232.6" y1="284.0" x2="1232.6" y2="420.0" stroke="currentColor" stroke-width="1.4"/>
-<line x1="1230" y1="480" x2="1230" y2="618" stroke="currentColor" stroke-width="1.4"/>
-<line x1="1195" y1="662" x2="1218" y2="802" stroke="currentColor" stroke-width="1.4"/>
-<line x1="1265" y1="662" x2="1242" y2="802" stroke="currentColor" stroke-width="1.4"/>
-<line x1="560" y1="590" x2="560" y2="778" stroke="currentColor" stroke-width="1.4"/>
-<line x1="560" y1="530" x2="690" y2="284" stroke="currentColor" stroke-width="1.4"/>
-<line x1="880" y1="628" x2="760" y2="284" stroke="currentColor" stroke-width="1.4"/>
-<line x1="802" y1="660" x2="625" y2="790" stroke="currentColor" stroke-width="1.4"/>
-<line x1="958" y1="660" x2="1170" y2="650" stroke="currentColor" stroke-width="1.4"/>
-<line x1="480" y1="400" x2="655" y2="287" stroke="currentColor" stroke-width="1.4"/>
-<line x1="315" y1="480" x2="480" y2="400" stroke="currentColor" stroke-width="1.4"/>
-<line x1="315" y1="632" x2="480" y2="400" stroke="currentColor" stroke-width="1.4"/>
+<line x1="245" y1="262" x2="367" y2="262" stroke="currentColor" stroke-width="1.7"/>
+<line x1="523.0" y1="265.0" x2="625.0" y2="265.0" stroke="currentColor" stroke-width="1.7"/>
+<line x1="523.0" y1="259.0" x2="625.0" y2="259.0" stroke="currentColor" stroke-width="1.7"/>
+<line x1="775" y1="262" x2="900" y2="262" stroke="currentColor" stroke-width="1.7"/>
+<line x1="1020.0" y1="265.0" x2="1127.0" y2="265.0" stroke="currentColor" stroke-width="1.7"/>
+<line x1="1020.0" y1="259.0" x2="1127.0" y2="259.0" stroke="currentColor" stroke-width="1.7"/>
+<line x1="1227.0" y1="284.0" x2="1227.0" y2="420.0" stroke="currentColor" stroke-width="1.7"/>
+<line x1="1233.0" y1="284.0" x2="1233.0" y2="420.0" stroke="currentColor" stroke-width="1.7"/>
+<line x1="1230" y1="480" x2="1230" y2="618" stroke="currentColor" stroke-width="1.7"/>
+<line x1="1195" y1="662" x2="1218" y2="802" stroke="currentColor" stroke-width="1.7"/>
+<line x1="1265" y1="662" x2="1242" y2="802" stroke="currentColor" stroke-width="1.7"/>
+<line x1="560" y1="590" x2="560" y2="778" stroke="currentColor" stroke-width="1.7"/>
+<line x1="560" y1="530" x2="690" y2="284" stroke="currentColor" stroke-width="1.7"/>
+<line x1="880" y1="628" x2="760" y2="284" stroke="currentColor" stroke-width="1.7"/>
+<line x1="802" y1="660" x2="625" y2="790" stroke="currentColor" stroke-width="1.7"/>
+<line x1="958" y1="660" x2="1170" y2="650" stroke="currentColor" stroke-width="1.7"/>
+<line x1="480" y1="400" x2="655" y2="287" stroke="currentColor" stroke-width="1.7"/>
+<line x1="315" y1="480" x2="480" y2="400" stroke="currentColor" stroke-width="1.7"/>
+<line x1="315" y1="632" x2="480" y2="400" stroke="currentColor" stroke-width="1.7"/>
 <g transform="translate(397.5,440.0) rotate(-25.9)"><path d="M 0 -9 A 9 9 0 0 0 0 9" fill="none" stroke="currentColor" stroke-width="1.6"/></g>
 <g transform="translate(417.3,488.2) rotate(-54.6)"><path d="M 0 -9 A 9 9 0 0 0 0 9" fill="none" stroke="currentColor" stroke-width="1.6"/></g>
-<ellipse cx="75" cy="170" rx="38" ry="19" fill="var(--er-attr)" stroke="currentColor" stroke-width="1.1"/>
-<text class="attr" x="75" y="174" text-anchor="middle">breed_id</text>
-<line x1="51" y1="178" x2="99" y2="178" stroke="currentColor" stroke-width="1.1"/>
-<ellipse cx="135" cy="100" rx="45" ry="19" fill="var(--er-attr)" stroke="currentColor" stroke-width="1.1"/>
-<text class="attr" x="135" y="104" text-anchor="middle">breed_name</text>
-<ellipse cx="255" cy="75" rx="38" ry="19" fill="var(--er-attr)" stroke="currentColor" stroke-width="1.1"/>
-<text class="attr" x="255" y="79" text-anchor="middle">species</text>
-<ellipse cx="345" cy="148" rx="76" ry="19" fill="var(--er-attr)" stroke="currentColor" stroke-width="1.1"/>
-<text class="attr" x="345" y="152" text-anchor="middle">typical_lifespan_yrs</text>
-<ellipse cx="495" cy="168" rx="41" ry="19" fill="var(--er-attr)" stroke="currentColor" stroke-width="1.1"/>
-<text class="attr" x="495" y="172" text-anchor="middle">animal_id</text>
-<line x1="468" y1="176" x2="522" y2="176" stroke="currentColor" stroke-width="1.1"/>
-<ellipse cx="540" cy="103" rx="38" ry="19" fill="var(--er-attr)" stroke="currentColor" stroke-width="1.1"/>
-<text class="attr" x="540" y="107" text-anchor="middle">name</text>
-<ellipse cx="640" cy="55" rx="38" ry="19" fill="var(--er-attr)" stroke="currentColor" stroke-width="1.1"/>
-<text class="attr" x="640" y="59" text-anchor="middle">sex</text>
-<ellipse cx="762" cy="55" rx="54" ry="19" fill="var(--er-attr)" stroke="currentColor" stroke-width="1.1"/>
-<text class="attr" x="762" y="59" text-anchor="middle">date_of_birth</text>
-<ellipse cx="880" cy="103" rx="48" ry="19" fill="var(--er-attr)" stroke="currentColor" stroke-width="1.1"/>
-<text class="attr" x="880" y="107" text-anchor="middle">intake_date</text>
-<ellipse cx="938" cy="168" rx="38" ry="19" fill="var(--er-attr)" stroke="currentColor" stroke-width="1.1"/>
-<text class="attr" x="938" y="172" text-anchor="middle">status</text>
-<ellipse cx="1052" cy="168" rx="41" ry="19" fill="var(--er-attr)" stroke="currentColor" stroke-width="1.1"/>
-<text class="attr" x="1052" y="172" text-anchor="middle">record_no</text>
-<line x1="1025" y1="176" x2="1079" y2="176" stroke="currentColor" stroke-width="1.1" stroke-dasharray="4 3"/>
-<ellipse cx="1128" cy="95" rx="45" ry="19" fill="var(--er-attr)" stroke="currentColor" stroke-width="1.1"/>
-<text class="attr" x="1128" y="99" text-anchor="middle">visit_date</text>
-<ellipse cx="1248" cy="55" rx="41" ry="19" fill="var(--er-attr)" stroke="currentColor" stroke-width="1.1"/>
-<text class="attr" x="1248" y="59" text-anchor="middle">diagnosis</text>
-<ellipse cx="1372" cy="95" rx="41" ry="19" fill="var(--er-attr)" stroke="currentColor" stroke-width="1.1"/>
-<text class="attr" x="1372" y="99" text-anchor="middle">treatment</text>
-<ellipse cx="1445" cy="165" rx="38" ry="19" fill="var(--er-attr)" stroke="currentColor" stroke-width="1.1"/>
-<text class="attr" x="1445" y="169" text-anchor="middle">cost</text>
-<ellipse cx="1418" cy="555" rx="38" ry="19" fill="var(--er-attr)" stroke="currentColor" stroke-width="1.1"/>
-<text class="attr" x="1418" y="559" text-anchor="middle">staff_id</text>
-<line x1="1394" y1="563" x2="1442" y2="563" stroke="currentColor" stroke-width="1.1"/>
-<ellipse cx="1448" cy="622" rx="38" ry="19" fill="var(--er-attr)" stroke="currentColor" stroke-width="1.1"/>
-<text class="attr" x="1448" y="626" text-anchor="middle">name</text>
-<ellipse cx="1444" cy="685" rx="38" ry="19" fill="var(--er-attr)" stroke="currentColor" stroke-width="1.1"/>
-<text class="attr" x="1444" y="689" text-anchor="middle">role</text>
-<ellipse cx="1398" cy="748" rx="41" ry="19" fill="var(--er-attr)" stroke="currentColor" stroke-width="1.1"/>
-<text class="attr" x="1398" y="752" text-anchor="middle">hire_date</text>
-<ellipse cx="388" cy="878" rx="45" ry="19" fill="var(--er-attr)" stroke="currentColor" stroke-width="1.1"/>
-<text class="attr" x="388" y="882" text-anchor="middle">adopter_id</text>
-<line x1="358" y1="886" x2="418" y2="886" stroke="currentColor" stroke-width="1.1"/>
-<ellipse cx="482" cy="928" rx="38" ry="19" fill="var(--er-attr)" stroke="currentColor" stroke-width="1.1"/>
-<text class="attr" x="482" y="932" text-anchor="middle">name</text>
-<ellipse cx="596" cy="932" rx="38" ry="19" fill="var(--er-attr)" stroke="currentColor" stroke-width="1.1"/>
-<text class="attr" x="596" y="936" text-anchor="middle">email</text>
-<ellipse cx="700" cy="892" rx="38" ry="19" fill="var(--er-attr)" stroke="currentColor" stroke-width="1.1"/>
-<text class="attr" x="700" y="896" text-anchor="middle">suburb</text>
-<ellipse cx="762" cy="835" rx="41" ry="19" fill="var(--er-attr)" stroke="currentColor" stroke-width="1.1"/>
-<text class="attr" x="762" y="839" text-anchor="middle">home_type</text>
-<ellipse cx="102" cy="452" rx="63" ry="19" fill="var(--er-attr)" stroke="currentColor" stroke-width="1.1"/>
-<text class="attr" x="102" y="456" text-anchor="middle">needs_daily_walk</text>
-<ellipse cx="98" cy="538" rx="60" ry="19" fill="var(--er-attr)" stroke="currentColor" stroke-width="1.1"/>
-<text class="attr" x="98" y="542" text-anchor="middle">obedience_level</text>
-<ellipse cx="102" cy="608" rx="48" ry="19" fill="var(--er-attr)" stroke="currentColor" stroke-width="1.1"/>
-<text class="attr" x="102" y="612" text-anchor="middle">indoor_only</text>
-<ellipse cx="100" cy="692" rx="57" ry="19" fill="var(--er-attr)" stroke="currentColor" stroke-width="1.1"/>
-<text class="attr" x="100" y="696" text-anchor="middle">litter_trained</text>
-<ellipse cx="706" cy="502" rx="45" ry="19" fill="var(--er-attr)" stroke="currentColor" stroke-width="1.1"/>
-<text class="attr" x="706" y="506" text-anchor="middle">applied_on</text>
-<ellipse cx="700" cy="612" rx="38" ry="19" fill="var(--er-attr)" stroke="currentColor" stroke-width="1.1"/>
-<text class="attr" x="700" y="616" text-anchor="middle">status</text>
-<ellipse cx="830" cy="782" rx="54" ry="19" fill="var(--er-attr)" stroke="currentColor" stroke-width="1.1"/>
-<text class="attr" x="830" y="786" text-anchor="middle">adoption_date</text>
-<ellipse cx="982" cy="762" rx="38" ry="19" fill="var(--er-attr)" stroke="currentColor" stroke-width="1.1"/>
-<text class="attr" x="982" y="766" text-anchor="middle">fee</text>
+<ellipse cx="75" cy="170" rx="45" ry="21" fill="var(--er-attr)" stroke="var(--er-attr-line)" stroke-width="1.4"/>
+<text class="attr" x="75" y="174.5" text-anchor="middle">breed_id</text>
+<line x1="48" y1="179" x2="102" y2="179" stroke="currentColor" stroke-width="1.4"/>
+<ellipse cx="135" cy="100" rx="53" ry="21" fill="var(--er-attr)" stroke="var(--er-attr-line)" stroke-width="1.4"/>
+<text class="attr" x="135" y="104.5" text-anchor="middle">breed_name</text>
+<ellipse cx="255" cy="75" rx="42" ry="21" fill="var(--er-attr)" stroke="var(--er-attr-line)" stroke-width="1.4"/>
+<text class="attr" x="255" y="79.5" text-anchor="middle">species</text>
+<ellipse cx="345" cy="148" rx="90" ry="21" fill="var(--er-attr)" stroke="var(--er-attr-line)" stroke-width="1.4"/>
+<text class="attr" x="345" y="152.5" text-anchor="middle">typical_lifespan_yrs</text>
+<ellipse cx="495" cy="168" rx="49" ry="21" fill="var(--er-attr)" stroke="var(--er-attr-line)" stroke-width="1.4"/>
+<text class="attr" x="495" y="172.5" text-anchor="middle">animal_id</text>
+<line x1="464" y1="177" x2="526" y2="177" stroke="currentColor" stroke-width="1.4"/>
+<ellipse cx="540" cy="103" rx="42" ry="21" fill="var(--er-attr)" stroke="var(--er-attr-line)" stroke-width="1.4"/>
+<text class="attr" x="540" y="107.5" text-anchor="middle">name</text>
+<ellipse cx="640" cy="55" rx="42" ry="21" fill="var(--er-attr)" stroke="var(--er-attr-line)" stroke-width="1.4"/>
+<text class="attr" x="640" y="59.5" text-anchor="middle">sex</text>
+<ellipse cx="762" cy="55" rx="64" ry="21" fill="var(--er-attr)" stroke="var(--er-attr-line)" stroke-width="1.4"/>
+<text class="attr" x="762" y="59.5" text-anchor="middle">date_of_birth</text>
+<ellipse cx="880" cy="103" rx="56" ry="21" fill="var(--er-attr)" stroke="var(--er-attr-line)" stroke-width="1.4"/>
+<text class="attr" x="880" y="107.5" text-anchor="middle">intake_date</text>
+<ellipse cx="938" cy="168" rx="42" ry="21" fill="var(--er-attr)" stroke="var(--er-attr-line)" stroke-width="1.4"/>
+<text class="attr" x="938" y="172.5" text-anchor="middle">status</text>
+<ellipse cx="1040" cy="168" rx="49" ry="21" fill="var(--er-attr)" stroke="var(--er-attr-line)" stroke-width="1.4"/>
+<text class="attr" x="1040" y="172.5" text-anchor="middle">record_no</text>
+<line x1="1009" y1="177" x2="1071" y2="177" stroke="currentColor" stroke-width="1.4" stroke-dasharray="4 3"/>
+<ellipse cx="1128" cy="95" rx="53" ry="21" fill="var(--er-attr)" stroke="var(--er-attr-line)" stroke-width="1.4"/>
+<text class="attr" x="1128" y="99.5" text-anchor="middle">visit_date</text>
+<ellipse cx="1248" cy="55" rx="49" ry="21" fill="var(--er-attr)" stroke="var(--er-attr-line)" stroke-width="1.4"/>
+<text class="attr" x="1248" y="59.5" text-anchor="middle">diagnosis</text>
+<ellipse cx="1372" cy="95" rx="49" ry="21" fill="var(--er-attr)" stroke="var(--er-attr-line)" stroke-width="1.4"/>
+<text class="attr" x="1372" y="99.5" text-anchor="middle">treatment</text>
+<ellipse cx="1445" cy="165" rx="42" ry="21" fill="var(--er-attr)" stroke="var(--er-attr-line)" stroke-width="1.4"/>
+<text class="attr" x="1445" y="169.5" text-anchor="middle">cost</text>
+<ellipse cx="1418" cy="555" rx="45" ry="21" fill="var(--er-attr)" stroke="var(--er-attr-line)" stroke-width="1.4"/>
+<text class="attr" x="1418" y="559.5" text-anchor="middle">staff_id</text>
+<line x1="1391" y1="564" x2="1445" y2="564" stroke="currentColor" stroke-width="1.4"/>
+<ellipse cx="1448" cy="622" rx="42" ry="21" fill="var(--er-attr)" stroke="var(--er-attr-line)" stroke-width="1.4"/>
+<text class="attr" x="1448" y="626.5" text-anchor="middle">name</text>
+<ellipse cx="1444" cy="685" rx="42" ry="21" fill="var(--er-attr)" stroke="var(--er-attr-line)" stroke-width="1.4"/>
+<text class="attr" x="1444" y="689.5" text-anchor="middle">role</text>
+<ellipse cx="1398" cy="748" rx="49" ry="21" fill="var(--er-attr)" stroke="var(--er-attr-line)" stroke-width="1.4"/>
+<text class="attr" x="1398" y="752.5" text-anchor="middle">hire_date</text>
+<ellipse cx="388" cy="878" rx="53" ry="21" fill="var(--er-attr)" stroke="var(--er-attr-line)" stroke-width="1.4"/>
+<text class="attr" x="388" y="882.5" text-anchor="middle">adopter_id</text>
+<line x1="354" y1="887" x2="422" y2="887" stroke="currentColor" stroke-width="1.4"/>
+<ellipse cx="482" cy="928" rx="42" ry="21" fill="var(--er-attr)" stroke="var(--er-attr-line)" stroke-width="1.4"/>
+<text class="attr" x="482" y="932.5" text-anchor="middle">name</text>
+<ellipse cx="596" cy="932" rx="42" ry="21" fill="var(--er-attr)" stroke="var(--er-attr-line)" stroke-width="1.4"/>
+<text class="attr" x="596" y="936.5" text-anchor="middle">email</text>
+<ellipse cx="700" cy="892" rx="42" ry="21" fill="var(--er-attr)" stroke="var(--er-attr-line)" stroke-width="1.4"/>
+<text class="attr" x="700" y="896.5" text-anchor="middle">suburb</text>
+<ellipse cx="762" cy="835" rx="49" ry="21" fill="var(--er-attr)" stroke="var(--er-attr-line)" stroke-width="1.4"/>
+<text class="attr" x="762" y="839.5" text-anchor="middle">home_type</text>
+<ellipse cx="102" cy="452" rx="75" ry="21" fill="var(--er-attr)" stroke="var(--er-attr-line)" stroke-width="1.4"/>
+<text class="attr" x="102" y="456.5" text-anchor="middle">needs_daily_walk</text>
+<ellipse cx="98" cy="538" rx="71" ry="21" fill="var(--er-attr)" stroke="var(--er-attr-line)" stroke-width="1.4"/>
+<text class="attr" x="98" y="542.5" text-anchor="middle">obedience_level</text>
+<ellipse cx="102" cy="608" rx="56" ry="21" fill="var(--er-attr)" stroke="var(--er-attr-line)" stroke-width="1.4"/>
+<text class="attr" x="102" y="612.5" text-anchor="middle">indoor_only</text>
+<ellipse cx="100" cy="692" rx="67" ry="21" fill="var(--er-attr)" stroke="var(--er-attr-line)" stroke-width="1.4"/>
+<text class="attr" x="100" y="696.5" text-anchor="middle">litter_trained</text>
+<ellipse cx="706" cy="502" rx="53" ry="21" fill="var(--er-attr)" stroke="var(--er-attr-line)" stroke-width="1.4"/>
+<text class="attr" x="706" y="506.5" text-anchor="middle">applied_on</text>
+<ellipse cx="700" cy="612" rx="42" ry="21" fill="var(--er-attr)" stroke="var(--er-attr-line)" stroke-width="1.4"/>
+<text class="attr" x="700" y="616.5" text-anchor="middle">status</text>
+<ellipse cx="830" cy="782" rx="64" ry="21" fill="var(--er-attr)" stroke="var(--er-attr-line)" stroke-width="1.4"/>
+<text class="attr" x="830" y="786.5" text-anchor="middle">adoption_date</text>
+<ellipse cx="982" cy="762" rx="42" ry="21" fill="var(--er-attr)" stroke="var(--er-attr-line)" stroke-width="1.4"/>
+<text class="attr" x="982" y="766.5" text-anchor="middle">fee</text>
 <text class="cardlbl" x="262" y="252" text-anchor="start">1</text>
 <text class="cardlbl" x="610" y="250" text-anchor="end">N</text>
 <text class="cardlbl" x="790" y="252" text-anchor="start">1</text>
-<text class="cardlbl" x="1138" y="250" text-anchor="end">N</text>
+<text class="cardlbl" x="1118" y="250" text-anchor="end">N</text>
 <text class="cardlbl" x="1242" y="320" text-anchor="start">N</text>
 <text class="cardlbl" x="1242" y="602" text-anchor="start">1</text>
 <text class="cardlbl" x="1178" y="720" text-anchor="end">1</text>
@@ -410,36 +416,36 @@
 <text class="cardlbl" x="788" y="330" text-anchor="end">1</text>
 <text class="cardlbl" x="668" y="762" text-anchor="end">N</text>
 <text class="cardlbl" x="1148" y="638" text-anchor="end">N</text>
-<circle cx="480" cy="400" r="13" fill="var(--er-attr)" stroke="currentColor" stroke-width="1.2"/>
-<text class="attr" x="480" y="404" text-anchor="middle" font-style="italic">d</text>
-<rect x="135" y="240" width="110" height="44" fill="var(--er-ent)" stroke="currentColor" stroke-width="1.3"/>
-<text class="ename" x="190" y="267" text-anchor="middle" fill="#FFFFFF">BREED</text>
-<rect x="625" y="240" width="150" height="44" fill="var(--er-ent)" stroke="currentColor" stroke-width="1.3"/>
-<text class="ename" x="700" y="267" text-anchor="middle" fill="#FFFFFF">ANIMAL</text>
-<rect x="1150" y="240" width="160" height="44" fill="var(--er-ent)" stroke="currentColor" stroke-width="1.3"/>
-<rect x="1154" y="244" width="152" height="36" fill="none" stroke="#FFFFFF" stroke-width="1.2"/>
-<text class="ename" x="1230" y="267" text-anchor="middle" fill="#FFFFFF">MEDICAL RECORD</text>
-<rect x="1170" y="618" width="120" height="44" fill="var(--er-ent)" stroke="currentColor" stroke-width="1.3"/>
-<text class="ename" x="1230" y="645" text-anchor="middle" fill="#FFFFFF">STAFF</text>
-<rect x="495" y="778" width="130" height="44" fill="var(--er-ent)" stroke="currentColor" stroke-width="1.3"/>
-<text class="ename" x="560" y="805" text-anchor="middle" fill="#FFFFFF">ADOPTER</text>
-<rect x="205" y="468" width="110" height="44" fill="var(--er-ent)" stroke="currentColor" stroke-width="1.3"/>
-<text class="ename" x="260" y="495" text-anchor="middle" fill="#FFFFFF">DOG</text>
-<rect x="205" y="618" width="110" height="44" fill="var(--er-ent)" stroke="currentColor" stroke-width="1.3"/>
-<text class="ename" x="260" y="645" text-anchor="middle" fill="#FFFFFF">CAT</text>
-<polygon points="445,230 523,262 445,294 367,262" fill="var(--er-rel)" stroke="currentColor" stroke-width="1.3"/>
-<text class="rname" x="445" y="266" text-anchor="middle" fill="#FFFFFF">BELONGS_TO</text>
-<polygon points="960,232 1020,262 960,292 900,262" fill="var(--er-rel)" stroke="currentColor" stroke-width="1.3"/>
-<polygon points="960,238 1010,262 960,286 910,262" fill="none" stroke="#FFFFFF" stroke-width="1.1"/>
-<text class="rname" x="960" y="266" text-anchor="middle" fill="#FFFFFF">HAS</text>
-<polygon points="1230,420 1308,450 1230,480 1152,450" fill="var(--er-rel)" stroke="currentColor" stroke-width="1.3"/>
-<text class="rname" x="1230" y="454" text-anchor="middle" fill="#FFFFFF">TREATED_BY</text>
-<polygon points="1230,802 1312,832 1230,862 1148,832" fill="var(--er-rel)" stroke="currentColor" stroke-width="1.3"/>
-<text class="rname" x="1230" y="836" text-anchor="middle" fill="#FFFFFF">SUPERVISES</text>
-<polygon points="560,530 642,560 560,590 478,560" fill="var(--er-rel)" stroke="currentColor" stroke-width="1.3"/>
-<text class="rname" x="560" y="564" text-anchor="middle" fill="#FFFFFF">APPLIES_FOR</text>
-<polygon points="880,628 958,660 880,692 802,660" fill="var(--er-rel)" stroke="currentColor" stroke-width="1.3"/>
-<text class="rname" x="880" y="664" text-anchor="middle" fill="#FFFFFF">ADOPTION</text>
+<circle cx="480" cy="400" r="15" fill="var(--er-attr)" stroke="var(--er-attr-line)" stroke-width="1.6"/>
+<text class="attr" x="480" y="405" text-anchor="middle" font-style="italic" font-weight="700">d</text>
+<rect x="135" y="238" width="110" height="48" fill="var(--er-ent)" stroke="var(--er-ent-line)" stroke-width="2.2"/>
+<text class="ename" x="190" y="267" text-anchor="middle" fill="var(--er-ent-ink)">BREED</text>
+<rect x="625" y="238" width="150" height="48" fill="var(--er-ent)" stroke="var(--er-ent-line)" stroke-width="2.2"/>
+<text class="ename" x="700" y="267" text-anchor="middle" fill="var(--er-ent-ink)">ANIMAL</text>
+<rect x="1127" y="238" width="206" height="48" fill="var(--er-ent)" stroke="var(--er-ent-line)" stroke-width="2.2"/>
+<rect x="1132" y="243" width="196" height="38" fill="none" stroke="var(--er-ent-line)" stroke-width="1.6"/>
+<text class="ename" x="1230" y="267" text-anchor="middle" fill="var(--er-ent-ink)">MEDICAL RECORD</text>
+<rect x="1170" y="616" width="120" height="48" fill="var(--er-ent)" stroke="var(--er-ent-line)" stroke-width="2.2"/>
+<text class="ename" x="1230" y="645" text-anchor="middle" fill="var(--er-ent-ink)">STAFF</text>
+<rect x="495" y="776" width="130" height="48" fill="var(--er-ent)" stroke="var(--er-ent-line)" stroke-width="2.2"/>
+<text class="ename" x="560" y="805" text-anchor="middle" fill="var(--er-ent-ink)">ADOPTER</text>
+<rect x="205" y="466" width="110" height="48" fill="var(--er-ent)" stroke="var(--er-ent-line)" stroke-width="2.2"/>
+<text class="ename" x="260" y="495" text-anchor="middle" fill="var(--er-ent-ink)">DOG</text>
+<rect x="205" y="616" width="110" height="48" fill="var(--er-ent)" stroke="var(--er-ent-line)" stroke-width="2.2"/>
+<text class="ename" x="260" y="645" text-anchor="middle" fill="var(--er-ent-ink)">CAT</text>
+<polygon points="445,230 523,262 445,294 367,262" fill="var(--er-rel)" stroke="var(--er-rel-line)" stroke-width="2.2"/>
+<text class="rname" x="445" y="267" text-anchor="middle" fill="var(--er-rel-ink)">BELONGS_TO</text>
+<polygon points="960,232 1020,262 960,292 900,262" fill="var(--er-rel)" stroke="var(--er-rel-line)" stroke-width="2.2"/>
+<polygon points="960,238 1010,262 960,286 910,262" fill="none" stroke="var(--er-rel-line)" stroke-width="1.5"/>
+<text class="rname" x="960" y="267" text-anchor="middle" fill="var(--er-rel-ink)">HAS</text>
+<polygon points="1230,420 1308,450 1230,480 1152,450" fill="var(--er-rel)" stroke="var(--er-rel-line)" stroke-width="2.2"/>
+<text class="rname" x="1230" y="455" text-anchor="middle" fill="var(--er-rel-ink)">TREATED_BY</text>
+<polygon points="1230,802 1312,832 1230,862 1148,832" fill="var(--er-rel)" stroke="var(--er-rel-line)" stroke-width="2.2"/>
+<text class="rname" x="1230" y="837" text-anchor="middle" fill="var(--er-rel-ink)">SUPERVISES</text>
+<polygon points="560,530 642,560 560,590 478,560" fill="var(--er-rel)" stroke="var(--er-rel-line)" stroke-width="2.2"/>
+<text class="rname" x="560" y="565" text-anchor="middle" fill="var(--er-rel-ink)">APPLIES_FOR</text>
+<polygon points="880,628 958,660 880,692 802,660" fill="var(--er-rel)" stroke="var(--er-rel-line)" stroke-width="2.2"/>
+<text class="rname" x="880" y="665" text-anchor="middle" fill="var(--er-rel-ink)">ADOPTION</text>
 </svg>
 <figcaption>The Whisker Haven ER model. The double rectangle is the weak entity <em>MEDICAL RECORD</em>, identified through the double-diamond relationship <em>HAS</em>; double lines mark total participation, and its partial key <em>record_no</em> has a dashed underline. <em>DOG</em> and <em>CAT</em> are subclasses of ANIMAL (the circled <em>d</em> marks the specialisation as disjoint; the ⊂ symbol opens toward the superclass). <em>ADOPTION</em> connects three entity sets at once, <em>SUPERVISES</em> connects STAFF to itself, and <em>applied_on</em>, <em>status</em>, <em>adoption_date</em> and <em>fee</em> are attributes of relationships rather than entities.</figcaption>
 </figure>
@@ -1000,6 +1006,12 @@ $("sbrun").addEventListener("click", () => {
   const target = hosted ? "https://claude.ai/code/artifact/e1dfd54a-e727-4f3f-83be-7eb3795a6bb9" : "portal.html";
   document.querySelectorAll("[data-livelink]").forEach(a => { a.href = target; a.target = "_blank"; a.rel = "noopener"; });
 })();
+
+$("erbig").addEventListener("click", () => {
+  const on = $("erwrap").classList.toggle("big");
+  $("erbig").setAttribute("aria-pressed", String(on));
+  $("erbig").textContent = on ? "Fit to page ⤡" : "Enlarge ⤢";
+});
 
 buildCards();
 boot();
